@@ -1,5 +1,5 @@
 #pragma once
-#include "Sean.h"
+#include "Scene.h"
 class EndScreenScene : public Scene
 {
 };

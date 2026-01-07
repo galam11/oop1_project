@@ -1,1 +1,10 @@
-﻿#configure_file ("Wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Toolbar.txt" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("player.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("coin.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("floor.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("breakable_floor.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("ladder.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("rail.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("empty.png" ${CMAKE_BINARY_DIR} COPYONLY)
