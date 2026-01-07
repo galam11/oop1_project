@@ -12,54 +12,55 @@ int main()
     std::cout << "Done" << std::endl;
 }
 
-void test_demo() {
-    // 1. Setup Context Settings to help with driver detection
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 0; // Disable to reduce load on software driver
 
-    // 2. Create Window
-    sf::RenderWindow window(sf::VideoMode(800, 300), "SFML Assets Demo", sf::Style::Default, settings);
+
+void test_demo() {
+    // 1. Setup the Window (SFML 3 uses sf::VideoMode with a braced Vector2u)
+    sf::RenderWindow window(sf::VideoMode({ 1300, 300 }), "SFML 3 Texture Demo");
     window.setFramerateLimit(60);
 
-    // 3. Define the IDs to display
+    // 2. Prepare the list of IDs from macros.h
     std::vector<char> ids = {
         PLAYER, ENEMY, COIN, FLOOR,
         BREAKABLE_FLOOR, LADDER, RAIL, EMPTY
     };
 
-    // 4. Create Sprites
+    // 3. Create Sprites
     std::vector<sf::Sprite> sprites;
-    float xPos = 50.0f;
-    float yPos = 100.0f;
+    float xOffset = 30.0f;
 
     for (char id : ids) {
         const sf::Texture* tex = AssetsManager::instance().getTexture(id);
 
-        if (tex != nullptr) {
+        if (tex) {
             sf::Sprite sprite(*tex);
-            sprite.setPosition(xPos, yPos);
-
-            // Fix for "texture_edge_clamp" warning: 
-            // This prevents artifacts on the edges of your sprites
-            const_cast<sf::Texture*>(tex)->setSmooth(false);
-
+            sprite.setPosition({ xOffset, 100.0f }); // SFML 3 prefers sf::Vector2f
             sprites.push_back(sprite);
-            xPos += tex->getSize().x + 25.0f; // Space them out
+
+            // Increment x position based on texture width
+            xOffset += static_cast<float>(tex->getSize().x) + 20.0f;
         }
     }
 
-    // 5. App Loop
+    // 4. Main Loop (SFML 3 Event Handling)
     while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+        // pollEvent now returns an std::optional<sf::Event>
+        while (const std::optional event = window.pollEvent()) {
+            // Check for specific event types using .is<T>()
+            if (event->is<sf::Event::Closed>()) {
                 window.close();
+            }
+
+            // Example of handling window resize in SFML 3
+            if (const auto* resized = event->getIf<sf::Event::Resized>()) {
+                // Handle resize if needed
+            }
         }
 
-        window.clear(sf::Color(30, 30, 30)); // Dark background
+        window.clear(sf::Color(40, 40, 45)); // Slate background
 
-        for (const auto& s : sprites) {
-            window.draw(s);
+        for (const auto& sprite : sprites) {
+            window.draw(sprite);
         }
 
         window.display();

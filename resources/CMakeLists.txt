@@ -1,5 +1,3 @@
-configure_file ("Toolbar.txt" ${CMAKE_BINARY_DIR} COPYONLY)
-
 configure_file ("player.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("coin.png" ${CMAKE_BINARY_DIR} COPYONLY)

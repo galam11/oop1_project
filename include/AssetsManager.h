@@ -7,6 +7,7 @@
 
 class AssetsManager
 {
+public:
     ~AssetsManager() = default;
 
     static AssetsManager& instance();
