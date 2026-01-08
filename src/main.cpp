@@ -4,12 +4,15 @@
 #include "AssetsManager.h"
 #include "macros.h"
 
+#include "Conntroller.h"
+
+
 void test_demo();
 
 int main()
 {
-    test_demo();
-    std::cout << "Done" << std::endl;
+	Controller controller;
+	controller.run();
 }
 
 
