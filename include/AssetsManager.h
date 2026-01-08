@@ -11,8 +11,7 @@ public:
     ~AssetsManager() = default;
 
     static AssetsManager& instance();
-    const sf::Texture*
- getTexture(const char id) const;
+    const sf::Texture* getTexture(const char id) const;
     const sf::SoundBuffer* getSoundBuffer(const char id) const;
 
 private:
