@@ -39,13 +39,13 @@ void Controller::setScene(std::unique_ptr<Scene>& scene)
 
 void Controller::handleEvent(const auto& event) { }
 
-void Controller::handleKeyReleasedEvent(const sf::Event::KeyPressed& event)
+void Controller::handleEvent(const sf::Event::KeyPressed& event)
 {
 	std::cout << "Key Pressed: " << sf::Keyboard::getDescription(event.scancode).toAnsiString() << std::endl;
 	m_currentScene->onKeyPressed(event);
 }
 
-void Controller::handleKeyPressedEvent(const sf::Event::KeyReleased& event)
+void Controller::handleEvent(const sf::Event::KeyReleased& event)
 {
 	std::cout << "Key Released: " << sf::Keyboard::getDescription(event.scancode).toAnsiString() << std::endl;
 	m_currentScene->onKeyReleased(event);

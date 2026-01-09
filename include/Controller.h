@@ -13,15 +13,10 @@ public:
 	void setScene(std::unique_ptr<Scene>& scene);
 private:
 	std::unique_ptr<Scene> m_nextScene;
-	std::unique_ptr<Scene> m_currentScene = nullptr;
+	std::unique_ptr<Scene> m_currentScene;
 	sf::RenderWindow m_window;
 
 	void handleEvent(const auto& event);
-	void handleKeyReleasedEvent(const sf::Event::KeyPressed& event);
-	void handleKeyPressedEvent(const sf::Event::KeyReleased& event);
-
-	void processEvents()
-	{
-		
-	}
+	void handleEvent(const sf::Event::KeyPressed& event);
+	void handleEvent(const sf::Event::KeyReleased& event);
 };
