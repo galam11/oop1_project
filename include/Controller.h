@@ -17,6 +17,7 @@ private:
 	sf::RenderWindow m_window;
 
 	void handleEvent(const auto& event);
+	void handleEvent(const sf::Event::Closed& event);
 	void handleEvent(const sf::Event::KeyPressed& event);
 	void handleEvent(const sf::Event::KeyReleased& event);
 };

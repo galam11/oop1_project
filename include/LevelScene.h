@@ -1,18 +1,21 @@
 #pragma once
 #include "Scene.h"
 #include <SFML/Graphics.hpp>
-#include "GameObject.h"
 #include <vector>
+#include "GameObject.h"
+#include "Player.h"
+
 class LevelScene : public Scene
 {
 public:
-	LevelScene() = default;
-
-	void update() override;
-	void display(sf::RenderWindow& window) const override;
+	LevelScene();
+	~LevelScene();
+	void update(const sf::Time& dt) override;
 	void onKeyPressed(const sf::Event::KeyPressed& event) override;
 	void onKeyReleased(const sf::Event::KeyReleased& event) override;
 
+	void display(sf::RenderWindow& window) const override;
+
 private:
-	sf::RectangleShape	rs;
+	std::vector<MovableGameObject*> m_movableGameObjects;
 };

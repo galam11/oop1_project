@@ -13,17 +13,16 @@ Controller::Controller()
 
 void Controller::run()
 {
+
+	sf::Clock gameClock;
 	while (m_window.isOpen())
 	{
 		while (auto event = m_window.pollEvent())
-		{
-			if (event->is<sf::Event::Closed>())
-				m_window.close();
-			else 
-				event->visit([this](const auto& ev) { handleEvent(ev); });
-		}
+			event->visit([this](const auto& ev) { handleEvent(ev); });
 
-		m_currentScene->update();
+		//m_window.handleEvents([this](const auto& ev) { handleEvent(ev); }); // idk why dosen't work
+
+		m_currentScene->update(gameClock.restart());
 
 		m_window.clear();
 
@@ -37,7 +36,14 @@ void Controller::setScene(std::unique_ptr<Scene>& scene)
 	m_nextScene = std::move(scene);
 }
 
+
+
 void Controller::handleEvent(const auto& event) { }
+
+void Controller::handleEvent(const sf::Event::Closed& event)
+{
+	m_window.close();
+}
 
 void Controller::handleEvent(const sf::Event::KeyPressed& event)
 {

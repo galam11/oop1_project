@@ -21,14 +21,16 @@ AssetsManager::AssetsManager()
     m_textures[BREAKABLE_FLOOR] = loadTexture("breakable_floor.png");
     m_textures[LADDER] = loadTexture("ladder.png");
     m_textures[RAIL] = loadTexture("rail.png");
+
+	m_errTexture = loadTexture("error.png");
 }
 
-const sf::Texture* AssetsManager::getTexture(const char id) const
+const sf::Texture& AssetsManager::getTexture(const char id) const
 {
     auto it = m_textures.find(id);
     if (it != m_textures.end())
-        return &(it->second);
-    return nullptr;
+        return (it->second);
+    return m_errTexture;
 }
 
 const sf::SoundBuffer* AssetsManager::getSoundBuffer(const char id) const
