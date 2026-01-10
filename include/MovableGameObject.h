@@ -14,11 +14,14 @@ public:
 
 	void updatePositon(const sf::Time& dt);
 
+	// New method to reset to starting position
+	void resetPosition();
+
 	sf::Vector2f getMoveDirection() const;
 protected:
 	sf::Vector2f m_moveDirection = { 0, 0 };
 	float m_speed = 1.0f;
 
-	
-	
+	// Store the initial position
+	sf::Vector2f m_startPosition;
 };
