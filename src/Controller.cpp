@@ -6,14 +6,13 @@
 #include <iostream>
 
 Controller::Controller()
-	: m_window(sf::VideoMode({ 1600, 700 }), "Game Window")
+	: m_window(sf::VideoMode({ 1600, 900 }), "Game Window")
 {
 	m_currentScene = std::make_unique<LevelScene>();
 }
 
 void Controller::run()
 {
-
 	sf::Clock gameClock;
 	while (m_window.isOpen())
 	{
@@ -36,8 +35,6 @@ void Controller::setScene(std::unique_ptr<Scene>& scene)
 	m_nextScene = std::move(scene);
 }
 
-
-
 void Controller::handleEvent(const auto& event) { }
 
 void Controller::handleEvent(const sf::Event::Closed& event)
@@ -47,12 +44,10 @@ void Controller::handleEvent(const sf::Event::Closed& event)
 
 void Controller::handleEvent(const sf::Event::KeyPressed& event)
 {
-	std::cout << "Key Pressed: " << sf::Keyboard::getDescription(event.scancode).toAnsiString() << std::endl;
 	m_currentScene->onKeyPressed(event);
 }
 
 void Controller::handleEvent(const sf::Event::KeyReleased& event)
 {
-	std::cout << "Key Released: " << sf::Keyboard::getDescription(event.scancode).toAnsiString() << std::endl;
 	m_currentScene->onKeyReleased(event);
 }

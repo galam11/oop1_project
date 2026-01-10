@@ -19,45 +19,6 @@ void Player::update()
 		m_moveDirection += LEFT;
 }
 
-void Player::onKeyPressed(const sf::Event::KeyPressed& event)
-{
-	//switch (event.code)
-	//{
-	//	case sf::Keyboard::Key::Left: 
-	//		m_moveDirection.x = -1;
-	//		break;
-	//	case sf::Keyboard::Key::Right:
-	//		m_moveDirection.x = 1;
-	//		break;
-	//	case sf::Keyboard::Key::Up:
-	//		m_moveDirection.y = -1;
-	//		break;
-	//	case sf::Keyboard::Key::Down:
-	//		m_moveDirection.y = 1;
-	//		break;
-	//}
-}
-
-void Player::onKeyReleased(const sf::Event::KeyReleased& event)
-{
-	//switch (event.code)
-	//{
-	//case sf::Keyboard::Key::Left:
-	//	m_moveDirection.x = 0;
-	//	break;
-	//case sf::Keyboard::Key::Right:
-	//	m_moveDirection.x = 0;
-	//	break;
-	//case sf::Keyboard::Key::Up:
-	//	m_moveDirection.y = 0;
-	//	break;
-	//case sf::Keyboard::Key::Down:
-	//	m_moveDirection.y = 0;
-	//	break;
-	//}
-}
-
-
 int Player::getCoins()
 {
 	return m_coins;

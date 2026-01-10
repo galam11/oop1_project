@@ -14,3 +14,14 @@ Scene::~Scene()
 	
 	m_gameObjects.clear();
 }
+
+void Scene::onKeyPressed(const sf::Event::KeyPressed& event)
+{
+
+}
+
+
+void Scene::onKeyReleased(const sf::Event::KeyReleased& event)
+{
+
+}

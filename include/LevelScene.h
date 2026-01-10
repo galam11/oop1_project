@@ -13,8 +13,8 @@ public:
 
     void update(const sf::Time& dt) override;
     void display(sf::RenderWindow& window) const override;
-    void onKeyPressed(const sf::Event::KeyPressed& event) override;
-    void onKeyReleased(const sf::Event::KeyReleased& event) override;
+
+    void onKeyReleased(const sf::Event::KeyReleased& event);
 
 private:
     Board m_board;

@@ -1,10 +1,13 @@
 #include "Enemy.h"
 #include <cmath>
+#include <iostream>
 
 Enemy::Enemy(const sf::Vector2f& position)
 	: MovableGameObject(ENEMY, position), m_target(position)
 {
-	m_speed = 50.f; // Set a default speed for the enemy
+	m_target = { 0.f, 0.f }; // temp for testing algorithm
+
+	m_speed = 50.f;
 }
 
 void Enemy::update()
@@ -12,7 +15,7 @@ void Enemy::update()
 	// Simple AI: Move towards the target
 	sf::Vector2f direction = m_target - getPositon();
 	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
+	std::cout << distance << " : ";
 	// Only move if we are not already at the target
 	if (distance > 1.0f)
 	{

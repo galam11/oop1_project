@@ -11,6 +11,7 @@ Board::Board()
 	if (!m_file.is_open())
 	{
 		std::cerr << "Failed to open Board.txt" << std::endl;
+		exit(EXIT_FAILURE);
 	}
 }
 

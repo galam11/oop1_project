@@ -8,9 +8,6 @@ public:
 
 	void update() override;
 
-	void onKeyPressed(const sf::Event::KeyPressed& event) override;
-	void onKeyReleased(const sf::Event::KeyReleased& event) override;
-
 	int getCoins();
 	int getScore();
 	void increseCoins();
