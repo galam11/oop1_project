@@ -30,7 +30,7 @@ void LevelScene::loadLevel()
     // --- FIT LEVEL TO WINDOW ---
     // Make the camera show exactly the size of the level
     m_view.setSize(boardSize);
-    m_view.setCenter(boardSize.x / 2.f, boardSize.y / 2.f);
+    m_view.setCenter({ boardSize.x / 2.f, boardSize.y / 2.f });
 }
 
 void LevelScene::update(const sf::Time& dt)
