@@ -8,8 +8,8 @@ public:
 
 	void update() override;
 
-	int getCoins();
-	int getScore();
+	int getCoins() const;
+	int getScore() const;
 	void increseCoins();
 	void increseScore(int amount);
 
