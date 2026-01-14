@@ -45,33 +45,7 @@ void Board::display(sf::RenderWindow& window) const
 	window.setView(window.getDefaultView());
 }
 
-void Board::createGameObject(char type, const sf::Vector2f& position)
-{
-	switch (type)
-	{
-		case PLAYER:
-			m_player.setPosition(position);
-			break;
-		case ENEMY:
-			m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
-			break;
-		case COIN:
-			m_gameObjects.push_back(std::make_unique<Coin>(position));
-			break;
-		case FLOOR:
-			m_gameObjects.push_back(std::make_unique<Floor>(position));
-			break;
-		case BREAKABLE_FLOOR:
-			m_gameObjects.push_back(std::make_unique<BreakableFloor>(position));
-			break;
-		case LADDER:
-			m_gameObjects.push_back(std::make_unique<Ladder>(position));
-			break;
-		case RAIL:
-			m_gameObjects.push_back(std::make_unique<Rail>(position));
-			break;
-	}
-}
+
 
 bool Board::loadNextLevel()
 {
@@ -107,24 +81,38 @@ bool Board::loadNextLevel()
 		for (size_t j = 0; j < line.size(); ++j)
 			createGameObject(line[j], sf::Vector2f(j * tileW, i * tileH));
 
-		/*{
-			char symbol = line[j];
-			sf::Vector2f pos(j * tileW, i * tileH);
-
-			if (symbol == EMPTY) continue;
-
-
-			if (symbol == PLAYER)
-				m_player.setPosition(pos);
-			else if (symbol == ENEMY)
-				m_movableObjects.push_back(std::make_unique<Enemy>(pos, m_player));
-			else
-				m_gameObjects.push_back(std::make_unique<GameObject>(symbol, pos));
-		}*/
 	}
 
 	m_boardView.setSize(m_boardSize);
 	m_boardView.setCenter(m_boardSize * 0.5f);
 
 	return true;
+}
+
+void Board::createGameObject(char type, const sf::Vector2f& position)
+{
+	switch (type)
+	{
+	case PLAYER:
+		m_player.setPosition(position);
+		break;
+	case ENEMY:
+		m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
+		break;
+	case COIN:
+		m_gameObjects.push_back(std::make_unique<Coin>(position));
+		break;
+	case FLOOR:
+		m_gameObjects.push_back(std::make_unique<Floor>(position));
+		break;
+	case BREAKABLE_FLOOR:
+		m_gameObjects.push_back(std::make_unique<BreakableFloor>(position));
+		break;
+	case LADDER:
+		m_gameObjects.push_back(std::make_unique<Ladder>(position));
+		break;
+	case RAIL:
+		m_gameObjects.push_back(std::make_unique<Rail>(position));
+		break;
+	}
 }
