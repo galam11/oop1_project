@@ -27,6 +27,11 @@ void Player::setPosition(const sf::Vector2f& position)
 	m_startPosition = position;
 }
 
+sf::Vector2f Player::getPositon() const
+{
+	return MovableGameObject::getPositon();
+}
+
 int Player::getCoins() const
 {
 	return m_coins;

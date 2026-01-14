@@ -1,9 +1,16 @@
 #include "Board.h"
 #include "macros.h"
-#include "Player.h"
-#include "Enemy.h"
+
 #include "AssetsManager.h"
 #include <iostream>
+
+#include "Player.h"
+#include "Enemy.h"
+#include "Coin.h"
+#include "Rail.h"
+#include "Ladder.h"
+#include "BreakableFloor.h"
+#include "Floor.h"
 
 Board::Board()
 {
@@ -38,6 +45,34 @@ void Board::display(sf::RenderWindow& window) const
 	window.setView(window.getDefaultView());
 }
 
+void Board::createGameObject(char type, const sf::Vector2f& position)
+{
+	switch (type)
+	{
+		case PLAYER:
+			m_player.setPosition(position);
+			break;
+		case ENEMY:
+			m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
+			break;
+		case COIN:
+			m_gameObjects.push_back(std::make_unique<Coin>(position));
+			break;
+		case FLOOR:
+			m_gameObjects.push_back(std::make_unique<Floor>(position));
+			break;
+		case BREAKABLE_FLOOR:
+			m_gameObjects.push_back(std::make_unique<BreakableFloor>(position));
+			break;
+		case LADDER:
+			m_gameObjects.push_back(std::make_unique<Ladder>(position));
+			break;
+		case RAIL:
+			m_gameObjects.push_back(std::make_unique<Rail>(position));
+			break;
+	}
+}
+
 bool Board::loadNextLevel()
 {
 	if (!m_file.is_open() || m_file.eof()) return false;
@@ -70,7 +105,9 @@ bool Board::loadNextLevel()
 		}
 
 		for (size_t j = 0; j < line.size(); ++j)
-		{
+			createGameObject(line[j], sf::Vector2f(j * tileW, i * tileH));
+
+		/*{
 			char symbol = line[j];
 			sf::Vector2f pos(j * tileW, i * tileH);
 
@@ -80,10 +117,10 @@ bool Board::loadNextLevel()
 			if (symbol == PLAYER)
 				m_player.setPosition(pos);
 			else if (symbol == ENEMY)
-				m_movableObjects.push_back(std::make_unique<Enemy>(pos));
+				m_movableObjects.push_back(std::make_unique<Enemy>(pos, m_player));
 			else
 				m_gameObjects.push_back(std::make_unique<GameObject>(symbol, pos));
-		}
+		}*/
 	}
 
 	m_boardView.setSize(m_boardSize);

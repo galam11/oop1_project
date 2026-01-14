@@ -27,5 +27,8 @@ private:
 	Player m_player;
 	std::vector<std::unique_ptr<MovableGameObject>> m_movableObjects;
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+
+
+	void createGameObject(char type, const sf::Vector2f& position);
 };
 
