@@ -6,7 +6,7 @@ Player::Player(const sf::Vector2f& position)
 	m_speed = 400.f;
 }
 
-void Player::update()
+void Player::update(const sf::Time& dt)
 {
 	m_moveDirection = { 0.f, 0.f };
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
@@ -17,14 +17,22 @@ void Player::update()
 		m_moveDirection += RIGHT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		m_moveDirection += LEFT;
+
+	updatePositon(dt);
 }
 
-int Player::getCoins()
+void Player::setPosition(const sf::Vector2f& position)
+{
+	MovableGameObject::setPosition(position);
+	m_startPosition = position;
+}
+
+int Player::getCoins() const
 {
 	return m_coins;
 }
 
-int Player::getScore()
+int Player::getScore() const
 {
 	return m_score;
 }

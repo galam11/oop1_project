@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "GameObject.h"
-#include <MovableGameObject.h>
+#include <Board.h>
 #include <vector>
 
 class Scene
@@ -9,13 +8,13 @@ class Scene
 public:
 
 	Scene() = default;
-	virtual ~Scene();
+	virtual ~Scene() = default;
 
 	virtual void update(const sf::Time& dt) = 0;
 	virtual void onKeyPressed(const sf::Event::KeyPressed& event);
 	virtual void onKeyReleased(const sf::Event::KeyReleased& event);
-	virtual void display(sf::RenderWindow& window) const;
-protected:
+	virtual void display(sf::RenderWindow& window) const = 0;
 
-	std::vector<GameObject*> m_gameObjects;
+protected:
+	Board m_board;
 };

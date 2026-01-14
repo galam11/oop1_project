@@ -15,11 +15,35 @@ Board::Board()
 	}
 }
 
-bool Board::loadNextLevel(std::vector<GameObject*>& staticObjects,
-	std::vector<MovableGameObject*>& movableObjects,
-	sf::Vector2f& boardSize)
+void Board::update(const sf::Time& dt)
+{
+	m_player.update(dt);
+
+	for (const auto& movableObject : m_movableObjects)
+		movableObject->update(dt);
+}
+
+void Board::display(sf::RenderWindow& window) const
+{
+	window.setView(m_boardView);
+
+	for (const auto& obj : m_gameObjects)
+		obj->draw(window);
+	
+	for (const auto& mobObj : m_movableObjects)
+		mobObj->draw(window);
+	
+	m_player.draw(window);
+
+	window.setView(window.getDefaultView());
+}
+
+bool Board::loadNextLevel()
 {
 	if (!m_file.is_open() || m_file.eof()) return false;
+
+	m_movableObjects.clear();
+	m_gameObjects.clear();
 
 	int rows = 0;
 	m_file >> rows;
@@ -41,8 +65,8 @@ bool Board::loadNextLevel(std::vector<GameObject*>& staticObjects,
 
 		if (i == 0)
 		{
-			boardSize.x = line.size() * tileW;
-			boardSize.y = rows * tileH;
+			m_boardSize.x = line.size() * tileW;
+			m_boardSize.y = rows * tileH;
 		}
 
 		for (size_t j = 0; j < line.size(); ++j)
@@ -52,13 +76,18 @@ bool Board::loadNextLevel(std::vector<GameObject*>& staticObjects,
 
 			if (symbol == EMPTY) continue;
 
+
 			if (symbol == PLAYER)
-				movableObjects.push_back(new Player(pos));
+				m_player.setPosition(pos);
 			else if (symbol == ENEMY)
-				movableObjects.push_back(new Enemy(pos));
+				m_movableObjects.push_back(std::make_unique<Enemy>(pos));
 			else
-				staticObjects.push_back(new GameObject(symbol, pos));
+				m_gameObjects.push_back(std::make_unique<GameObject>(symbol, pos));
 		}
 	}
+
+	m_boardView.setSize(m_boardSize);
+	m_boardView.setCenter(m_boardSize * 0.5f);
+
 	return true;
 }

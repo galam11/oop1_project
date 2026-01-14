@@ -9,7 +9,6 @@ class LevelScene : public Scene
 {
 public:
     LevelScene();
-    ~LevelScene() override;
 
     void update(const sf::Time& dt) override;
     void display(sf::RenderWindow& window) const override;
@@ -23,5 +22,4 @@ private:
     sf::View m_view;
 
     void loadLevel();
-    void clearLevel();
 };

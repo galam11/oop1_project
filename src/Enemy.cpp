@@ -9,7 +9,7 @@ Enemy::Enemy(const sf::Vector2f& position)
 	m_speed = 50.f;
 }
 
-void Enemy::update()
+void Enemy::update(const sf::Time& dt)
 {
 	// Simple AI: Move towards the target
 	sf::Vector2f direction = m_target - getPositon();
@@ -24,6 +24,8 @@ void Enemy::update()
 	{
 		m_moveDirection = { 0.f, 0.f };
 	}
+
+	updatePositon(dt);
 }
 
 void Enemy::setTarget(const sf::Vector2f& newTarget)
