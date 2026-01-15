@@ -6,4 +6,5 @@ class Rail : public GameObject
 {
 public:
 	Rail(const sf::Vector2f& position);
+	void handleColliton(GameObject& other) override;
 };

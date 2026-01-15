@@ -6,3 +6,8 @@ Rail::Rail(const sf::Vector2f& position)
 	: GameObject(RAIL, position)
 {
 }
+
+void Rail::handleColliton(GameObject& other)
+{
+	other.handleColliton(*this);
+}
