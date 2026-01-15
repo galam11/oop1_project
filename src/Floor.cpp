@@ -5,3 +5,8 @@ Floor::Floor(const sf::Vector2f& position)
 	: GameObject(FLOOR, position)
 {
 }
+
+void Floor::handleColliton(GameObject& other)
+{
+	other.handleColliton(*this);
+}

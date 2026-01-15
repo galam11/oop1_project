@@ -6,3 +6,8 @@ Coin::Coin(const sf::Vector2f& position)
 	: GameObject(COIN, position)
 {
 }
+
+void Coin::handleColliton(GameObject& other)
+{
+	other.handleColliton(*this);
+}

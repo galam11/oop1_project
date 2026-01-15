@@ -34,3 +34,8 @@ void Enemy::setTarget(const sf::Vector2f& newTarget)
 {
 	m_target = newTarget;
 }
+
+void Enemy::handleColliton(GameObject& other)
+{
+	other.handleColliton(*this);
+}

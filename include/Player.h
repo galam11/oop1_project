@@ -13,6 +13,7 @@ public:
 	void increseCoins();
 	void increseScore(int amount);
 
+	void handleColliton(GameObject& other) override;
 
 	void setPosition(const sf::Vector2f& position);
 	sf::Vector2f getPositon() const;

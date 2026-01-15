@@ -14,6 +14,7 @@ public:
 
 	void setTarget(const sf::Vector2f& newTarget);
 
+	void handleColliton(GameObject& other) override;
 private:
 	sf::Vector2f m_target;
 	const Player& m_player;

@@ -51,3 +51,8 @@ void Player::increseScore(int amount)
 {
 	m_score += amount;
 }
+
+void Player::handleColliton(GameObject& other)
+{
+	other.handleColliton(*this);
+}

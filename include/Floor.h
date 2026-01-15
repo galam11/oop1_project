@@ -6,4 +6,6 @@ class Floor : public GameObject
 {
 public:
 	Floor(const sf::Vector2f& position);
+
+	void handleColliton(GameObject& other) override;
 };
