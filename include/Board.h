@@ -30,5 +30,8 @@ private:
 
 
 	void createGameObject(char type, const sf::Vector2f& position);
+
+	void collisions();
+	
 };
 

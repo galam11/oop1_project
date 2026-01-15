@@ -27,10 +27,10 @@ public:
 	virtual void handleColliton(const Coin& other);
 	virtual void handleColliton(const BreakableFloor& other);
 
+	sf::Vector2f getPositon() const;
 protected:
 	GameObject(char type, const sf::Vector2f& position);
 	void setPosition(const sf::Vector2f& position);
-	sf::Vector2f getPositon() const;
 
 private:
 	sf::Sprite m_sprite;

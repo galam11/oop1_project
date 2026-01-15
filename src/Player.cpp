@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "macros.h"
+#include <Floor.h>
+#include <iostream>
 Player::Player(const sf::Vector2f& position)
 	: MovableGameObject(PLAYER, position), m_score(0), m_coins(0)
 {
@@ -30,6 +32,16 @@ void Player::setPosition(const sf::Vector2f& position)
 sf::Vector2f Player::getPositon() const
 {
 	return MovableGameObject::getPositon();
+}
+
+void Player::handleColliton(const Floor& other)
+{
+	std::cout << "Player collided with Floor" << std::endl;
+}
+
+void Player::handleColliton(const Enemy& other)
+{
+	resetPosition();
 }
 
 int Player::getCoins() const

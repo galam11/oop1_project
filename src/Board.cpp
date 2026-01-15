@@ -28,6 +28,8 @@ void Board::update(const sf::Time& dt)
 
 	for (const auto& movableObject : m_movableObjects)
 		movableObject->update(dt);
+
+	collisions();
 }
 
 void Board::display(sf::RenderWindow& window) const
@@ -115,4 +117,31 @@ void Board::createGameObject(char type, const sf::Vector2f& position)
 		m_gameObjects.push_back(std::make_unique<Rail>(position));
 		break;
 	}
+}
+
+void Board::collisions()
+{
+	GameObject& playerRef = m_player;
+
+	for (const auto& other : m_gameObjects)
+		if (m_player.collidedWith(*other))
+		{
+			playerRef.handleColliton(*other);
+			other->handleColliton(playerRef);
+		}
+
+	for (const auto& other : m_movableObjects)
+		if (m_player.collidedWith(*other))
+		{
+			playerRef.handleColliton(*other);
+			other->handleColliton(playerRef);
+		}
+	
+	for (const auto& movableObject : m_movableObjects)
+		for (const auto& gameObject : m_gameObjects)
+			if (movableObject->collidedWith(*gameObject))
+			{
+				movableObject->handleColliton(*gameObject);
+				gameObject->handleColliton(*movableObject);
+			}
 }
