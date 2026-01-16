@@ -123,6 +123,7 @@ void Board::collisions()
 {
 	GameObject& playerRef = m_player;
 
+	// player with game objects
 	for (const auto& other : m_gameObjects)
 		if (m_player.collidedWith(*other))
 		{
@@ -130,6 +131,7 @@ void Board::collisions()
 			other->handleColliton(playerRef);
 		}
 
+	//player with movable objects
 	for (const auto& other : m_movableObjects)
 		if (m_player.collidedWith(*other))
 		{
@@ -137,6 +139,7 @@ void Board::collisions()
 			other->handleColliton(playerRef);
 		}
 	
+	// game objects with movable objects
 	for (const auto& movableObject : m_movableObjects)
 		for (const auto& gameObject : m_gameObjects)
 			if (movableObject->collidedWith(*gameObject))

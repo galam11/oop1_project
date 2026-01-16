@@ -27,14 +27,9 @@ bool GameObject::collidedWith(const GameObject& other)
 		.findIntersection(other.m_sprite.getGlobalBounds()).has_value();
 }
 
-void GameObject::setPosition(const sf::Vector2f& position)
+sf::FloatRect GameObject::getGlobalBounds() const
 {
-	m_sprite.setPosition(position);
-}
-
-sf::Vector2f GameObject::getPositon() const
-{
-	return m_sprite.getPosition();
+	return m_sprite.getGlobalBounds();
 }
 
 void GameObject::handleColliton(const Rail& other)
@@ -64,3 +59,4 @@ void GameObject::handleColliton(const Coin& other)
 void GameObject::handleColliton(const BreakableFloor& other)
 {
 }
+

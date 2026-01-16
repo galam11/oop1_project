@@ -27,11 +27,8 @@ public:
 	virtual void handleColliton(const Coin& other);
 	virtual void handleColliton(const BreakableFloor& other);
 
-	sf::Vector2f getPositon() const;
+	sf::FloatRect getGlobalBounds() const;
 protected:
 	GameObject(char type, const sf::Vector2f& position);
-	void setPosition(const sf::Vector2f& position);
-
-private:
-	sf::Sprite m_sprite;
+	sf::Sprite m_sprite;	
 };

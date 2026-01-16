@@ -10,11 +10,11 @@ Player::Player(const sf::Vector2f& position)
 
 void Player::update(const sf::Time& dt)
 {
-	m_moveDirection = { 0.f, 0.f };
+	m_moveDirection = { 0.f, 1.f };
+
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		m_moveDirection += UP;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-		m_moveDirection += DOWN;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		m_moveDirection += RIGHT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
@@ -25,18 +25,26 @@ void Player::update(const sf::Time& dt)
 
 void Player::setPosition(const sf::Vector2f& position)
 {
-	MovableGameObject::setPosition(position);
+	m_sprite.setPosition(position);
 	m_startPosition = position;
 }
 
 sf::Vector2f Player::getPositon() const
 {
-	return MovableGameObject::getPositon();
+	return m_sprite.getPosition();
 }
 
 void Player::handleColliton(const Floor& other)
 {
-	std::cout << "Player collided with Floor" << std::endl;
+	auto diff = getGlobalBounds().findIntersection(other.getGlobalBounds()).value().size.y;
+
+	auto dir = (getGlobalBounds().position - other.getGlobalBounds().position);
+
+	dir.x = 0;
+	if (dir.y == 0) return;
+
+	dir = dir.normalized();
+	m_sprite.move(dir * diff);
 }
 
 void Player::handleColliton(const Enemy& other)

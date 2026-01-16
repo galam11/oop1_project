@@ -13,10 +13,10 @@ sf::Vector2f MovableGameObject::getMoveDirection() const
 
 void MovableGameObject::updatePositon(const sf::Time& dt)
 {
-	setPosition(getPositon() + m_moveDirection * m_speed * dt.asSeconds());
+	m_sprite.move(m_moveDirection * m_speed * dt.asSeconds());
 }
 
 void MovableGameObject::resetPosition()
 {
-	setPosition(m_startPosition);
+	m_sprite.setPosition(m_startPosition);
 }
