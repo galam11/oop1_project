@@ -1,8 +1,6 @@
 #pragma once
 #include "MovableGameObject.h"
 
-class Floor;
-
 class Player : public MovableGameObject
 {
 public:
@@ -20,10 +18,10 @@ public:
 	void setPosition(const sf::Vector2f& position);
 	sf::Vector2f getPositon() const;
 
-	void handleColliton(const Floor& other) override;
 	void handleColliton(const Enemy& other) override;
 	
 private:
 	int m_score;
 	int m_coins;
+
 };
