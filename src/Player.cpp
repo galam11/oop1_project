@@ -5,7 +5,7 @@
 Player::Player(const sf::Vector2f& position)
 	: MovableGameObject(PLAYER, position), m_score(0), m_coins(0)
 {
-	m_speed = 1000.f;
+	m_speed = 400.f;
 }
 
 void Player::update(const sf::Time& dt)
