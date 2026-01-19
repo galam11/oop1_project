@@ -33,4 +33,5 @@ private:
 	void handleSolidCollision(const GameObject& other);
 	bool m_onLadder = false;
 	bool m_onRail = false;
+	bool m_onGround = false;
 };

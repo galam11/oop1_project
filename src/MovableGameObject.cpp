@@ -20,11 +20,13 @@ sf::Vector2f MovableGameObject::getMoveDirection() const
 void MovableGameObject::handleColliton(const Floor& other)
 {
 	handleSolidCollision(other);
+	m_onGround = true;
 }
 
 void MovableGameObject::handleColliton(const BreakableFloor& other)
 {
 	handleSolidCollision(other);
+	m_onGround = true;
 }
 
 void MovableGameObject::handleColliton(const Ladder& other)
@@ -48,10 +50,10 @@ void MovableGameObject::handleColliton(const Rail& other)
 void MovableGameObject::updatePositon(const sf::Time& dt)
 {
 	if (!m_onLadder && !m_onRail)
-		m_moveDirection += DOWN;
+		m_moveDirection += DOWN  * (m_onGround ? 1.f : 9.f);
 
 	m_sprite.move(m_moveDirection * m_speed * dt.asSeconds());
-	m_onLadder = m_onRail = false;
+	m_onLadder = m_onRail = m_onGround = false;
 }
 
 bool MovableGameObject::isOnLadder() const
