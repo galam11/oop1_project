@@ -25,7 +25,7 @@ AssetsManager::AssetsManager()
 	m_errTexture = loadTexture("error.png");
 }
 
-const sf::Texture& AssetsManager::getTexture(const char id) const
+const sf::Texture& AssetsManager::getTexture(const Types id) const
 {
     auto it = m_textures.find(id);
     if (it != m_textures.end())

@@ -1,5 +1,7 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
+
+#include "macros.h"
 #include "AssetsManager.h"
 
 #include "Rail.h"
@@ -10,7 +12,7 @@
 #include "Coin.h"
 #include "BreakableFloor.h"
 
-GameObject::GameObject(char type, const sf::Vector2f& positon)
+GameObject::GameObject(Types type, const sf::Vector2f& positon)
 	 : m_sprite(AssetsManager::instance().getTexture(type)) 
 { 
 	m_sprite.setPosition(positon);

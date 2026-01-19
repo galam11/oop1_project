@@ -81,7 +81,7 @@ bool Board::loadNextLevel()
 		}
 
 		for (size_t j = 0; j < line.size(); ++j)
-			createGameObject(line[j], sf::Vector2f(j * tileW, i * tileH));
+			createGameObject((Types)line[j], sf::Vector2f(j * tileW, i * tileH));
 
 	}
 
@@ -91,7 +91,7 @@ bool Board::loadNextLevel()
 	return true;
 }
 
-void Board::createGameObject(char type, const sf::Vector2f& position)
+void Board::createGameObject(Types type, const sf::Vector2f& position)
 {
 	switch (type)
 	{

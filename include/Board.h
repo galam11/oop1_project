@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <SFML/Graphics.hpp>
+#include "macros.h"
 
 class Board
 {
@@ -29,7 +30,7 @@ private:
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
 
-	void createGameObject(char type, const sf::Vector2f& position);
+	void createGameObject(Types type, const sf::Vector2f& position);
 
 	void collisions();
 	

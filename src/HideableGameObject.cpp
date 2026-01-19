@@ -1,4 +1,5 @@
 #include "HideableGameObject.h"
+#include "macros.h"
 
 bool HideableGameObject::isHidden() const
 {
@@ -11,6 +12,6 @@ void HideableGameObject::draw(sf::RenderWindow& window) const
 		window.draw(m_sprite);
 }
 
-HideableGameObject::HideableGameObject(char type, const sf::Vector2f& position)
+HideableGameObject::HideableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position) { }
 

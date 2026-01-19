@@ -3,11 +3,12 @@
 #include <SFML/Graphics.hpp>
 
 
+enum Types;
 
 class MovableGameObject : public GameObject
 {
 public:
-	MovableGameObject(char type, const sf::Vector2f& position);
+	MovableGameObject(Types type, const sf::Vector2f& position);
 
 	virtual void update(const sf::Time& dt) = 0;
 

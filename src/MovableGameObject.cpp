@@ -7,7 +7,7 @@
 
 #include "macros.h"
 
-MovableGameObject::MovableGameObject(char type, const sf::Vector2f& position)
+MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position), m_startPosition(position)
 {
 }
@@ -50,7 +50,7 @@ void MovableGameObject::handleColliton(const Rail& other)
 void MovableGameObject::updatePositon(const sf::Time& dt)
 {
 	if (!m_onLadder && !m_onRail)
-		m_moveDirection += DOWN  * (m_onGround ? 1.f : 9.f);
+		m_moveDirection += DOWN  * (m_onGround ? 1.f : GRAVITY);
 
 	m_sprite.move(m_moveDirection * m_speed * dt.asSeconds());
 	m_onLadder = m_onRail = m_onGround = false;

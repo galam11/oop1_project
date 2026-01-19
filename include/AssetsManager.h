@@ -5,13 +5,16 @@
 #include <map>
 #include <string>
 
+#include "macros.h"
+
+
 class AssetsManager
 {
 public:
     ~AssetsManager() = default;
 
     static AssetsManager& instance();
-    const sf::Texture& getTexture(const char id) const;
+    const sf::Texture& getTexture(const Types id) const;
     const sf::SoundBuffer* getSoundBuffer(const char id) const;
 
 private:
@@ -25,7 +28,7 @@ private:
     sf::SoundBuffer loadSoundBuffer(const std::string& filename);
 
 
-    std::map<char, sf::Texture> m_textures;
+    std::map<Types, sf::Texture> m_textures;
     std::map<char, sf::SoundBuffer> m_soundBuffers;
 
 	sf::Texture m_errTexture;

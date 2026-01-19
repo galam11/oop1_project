@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "macros.h"
 
 class Rail;
 class Player;
@@ -29,6 +30,6 @@ public:
 
 	sf::FloatRect getGlobalBounds() const;
 protected:
-	GameObject(char type, const sf::Vector2f& position);
+	GameObject(Types type, const sf::Vector2f& position);
 	sf::Sprite m_sprite;	
 };
