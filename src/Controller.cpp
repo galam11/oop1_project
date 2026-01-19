@@ -6,7 +6,7 @@
 #include <iostream>
 
 Controller::Controller()
-	: m_window(sf::VideoMode({ 1600, 900 }), "Game Window")
+	: m_window(sf::VideoMode(WINDOW_SIZE), "Game Window")
 {
 	m_currentScene = std::make_unique<LevelScene>();
 }

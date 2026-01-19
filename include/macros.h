@@ -12,7 +12,7 @@ enum Types
 	EMPTY			= ' '
 };
 
-const sf::Vector2f WINDOW_SIZE = { 800.f, 600.f };
+const sf::Vector2u WINDOW_SIZE = { 1600, 900 };
 
 const sf::Vector2 UP = { 0.f, -1.f };
 const sf::Vector2 DOWN = { 0.f, 1.f };
