@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "macros.h"
 #include <iostream>
-
+#include "Enemy.h"
 Player::Player(const sf::Vector2f& position)
 	: MovableGameObject(PLAYER, position), m_score(0), m_coins(0)
 {
@@ -24,6 +24,24 @@ void Player::update(const sf::Time& dt)
 	updatePositon(dt);
 }
 
+void Player::resetGameObject()
+{
+	m_sprite.setPosition(m_startPosition);
+	m_gotHit = false;
+}
+
+void Player::resetPlayer()
+{
+	m_lives = 3;
+}
+
+void Player::draw(sf::RenderWindow& window) const
+{
+	window.draw(m_sprite);
+
+	//sf::Text info();
+}
+
 void Player::setPosition(const sf::Vector2f& position)
 {
 	m_sprite.setPosition(position);
@@ -32,12 +50,16 @@ void Player::setPosition(const sf::Vector2f& position)
 
 sf::Vector2f Player::getPositon() const
 {
-	return m_sprite.getPosition();
+	return m_sprite.getGlobalBounds().getCenter();
 }
 
 void Player::handleColliton(const Enemy& other)
 {
-	resetPosition();
+	std::cout << "Player hit by Enemy!" << std::endl;
+
+	std::cout << other.getGlobalBounds().getCenter().x << ", " << other.getGlobalBounds().getCenter().y << std::endl;
+	m_lives--;
+	m_gotHit = true;
 }
 
 int Player::getCoins() const
@@ -50,14 +72,14 @@ int Player::getScore() const
 	return m_score;
 }
 
-void Player::increseCoins()
+int Player::getLives() const
 {
-	++m_coins;
+	return m_lives;
 }
 
-void Player::increseScore(int amount)
+bool Player::gotHit() const
 {
-	m_score += amount;
+	return m_gotHit;
 }
 
 void Player::handleColliton(GameObject& other)

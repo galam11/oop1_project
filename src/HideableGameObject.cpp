@@ -12,6 +12,11 @@ void HideableGameObject::draw(sf::RenderWindow& window) const
 		window.draw(m_sprite);
 }
 
+void HideableGameObject::resetGameObject()
+{
+	m_hidden = false;
+}
+
 HideableGameObject::HideableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position) { }
 

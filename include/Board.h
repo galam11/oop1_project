@@ -15,23 +15,28 @@ public:
 
 	bool loadNextLevel();
 
+	void softReset();
+	void reset();
+
 	void update(const sf::Time& dt);
 	void display(sf::RenderWindow& window) const;
+	void handleCollisions();
 
+	const Player& getPlayer() const;
+	bool isInBounds(const sf::Vector2f vec) const;
 private:
 	std::ifstream m_file;
 	int m_currentLevel = 0;
 
+	Player* m_player = nullptr;
 	sf::View m_boardView;
 	sf::Vector2f m_boardSize;
 
 	std::vector<std::unique_ptr<MovableGameObject>> m_movableObjects;
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 
+	void createGameObject(Types type, const sf::Vector2f& position);
 
-	void createGameObject(Types type, const sf::Vector2f& position, Player* player);
 
-	void collisions();
-	
 };
 

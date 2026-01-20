@@ -12,6 +12,11 @@ MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
 {
 }
 
+void MovableGameObject::resetGameObject()
+{
+	m_sprite.setPosition(m_startPosition);
+}
+
 sf::Vector2f MovableGameObject::getMoveDirection() const
 {
 	return m_moveDirection;
@@ -81,7 +86,3 @@ void MovableGameObject::handleSolidCollision(const GameObject& other)
 		m_sprite.move({ 0.f, bounds.size.y * dir.y });
 }
 
-void MovableGameObject::resetPosition()
-{
-	m_sprite.setPosition(m_startPosition);
-}

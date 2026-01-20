@@ -12,7 +12,7 @@ public:
 
 	virtual void update(const sf::Time& dt) = 0;
 
-	void resetPosition();
+	void resetGameObject() override;
 
 	sf::Vector2f getMoveDirection() const;
 	virtual void handleColliton(GameObject& other) override = 0;

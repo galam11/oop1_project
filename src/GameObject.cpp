@@ -23,6 +23,8 @@ void GameObject::draw(sf::RenderWindow& window) const
 	window.draw(m_sprite);
 }
 
+void GameObject::resetGameObject() { }
+
 bool GameObject::collidedWith(const GameObject& other)
 {
 	return m_sprite.getGlobalBounds()

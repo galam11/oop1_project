@@ -17,6 +17,8 @@ public:
 	virtual ~GameObject() = default;
 	virtual void draw(sf::RenderWindow& window) const;
 
+	virtual void resetGameObject();
+
 	bool collidedWith(const GameObject& other);
 	virtual void handleColliton(GameObject& other) = 0;
 

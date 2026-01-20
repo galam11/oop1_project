@@ -8,11 +8,15 @@ public:
 
 	void update(const sf::Time& dt) override;
 
+	void draw(sf::RenderWindow& window) const override;
+
+	void resetGameObject() override;
+	void resetPlayer();
+
 	int getCoins() const;
 	int getScore() const;
-	void increseCoins();
-	void increseScore(int amount);
-
+	int getLives() const;
+	bool gotHit() const;
 	void handleColliton(GameObject& other) override;
 
 	void setPosition(const sf::Vector2f& position);
@@ -21,7 +25,9 @@ public:
 	void handleColliton(const Enemy& other) override;
 	
 private:
-	int m_score;
-	int m_coins;
+	int m_score = 0;
+	int m_coins = 0;
+	int m_lives = 3;
 
+	bool m_gotHit = false;
 };
