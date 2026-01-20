@@ -24,8 +24,6 @@ Board::Board()
 
 void Board::update(const sf::Time& dt)
 {
-	m_player.update(dt);
-
 	for (const auto& movableObject : m_movableObjects)
 		movableObject->update(dt);
 
@@ -41,8 +39,6 @@ void Board::display(sf::RenderWindow& window) const
 	
 	for (const auto& mobObj : m_movableObjects)
 		mobObj->draw(window);
-	
-	m_player.draw(window);
 
 	window.setView(window.getDefaultView());
 }
@@ -55,6 +51,10 @@ bool Board::loadNextLevel()
 
 	m_movableObjects.clear();
 	m_gameObjects.clear();
+
+
+	m_movableObjects.push_back(std::make_unique<Player>());
+	Player* player = (Player*) m_movableObjects.back().get();
 
 	int rows = 0;
 	m_file >> rows;
@@ -81,7 +81,7 @@ bool Board::loadNextLevel()
 		}
 
 		for (size_t j = 0; j < line.size(); ++j)
-			createGameObject((Types)line[j], sf::Vector2f(j * tileW, i * tileH));
+			createGameObject((Types)line[j], sf::Vector2f(j * tileW, i * tileH), player);
 
 	}
 
@@ -91,15 +91,15 @@ bool Board::loadNextLevel()
 	return true;
 }
 
-void Board::createGameObject(Types type, const sf::Vector2f& position)
+void Board::createGameObject(Types type, const sf::Vector2f& position, Player* player)
 {
 	switch (type)
 	{
 	case PLAYER:
-		m_player.setPosition(position);
+		player->setPosition(position);
 		break;
 	case ENEMY:
-		m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
+		m_movableObjects.push_back(std::make_unique<Enemy>(position, *player));
 		break;
 	case COIN:
 		m_gameObjects.push_back(std::make_unique<Coin>(position));
@@ -121,24 +121,6 @@ void Board::createGameObject(Types type, const sf::Vector2f& position)
 
 void Board::collisions()
 {
-	GameObject& playerRef = m_player;
-
-	// player with game objects
-	for (const auto& other : m_gameObjects)
-		if (m_player.collidedWith(*other))
-		{
-			playerRef.handleColliton(*other);
-			other->handleColliton(playerRef);
-		}
-
-	//player with movable objects
-	for (const auto& other : m_movableObjects)
-		if (m_player.collidedWith(*other))
-		{
-			playerRef.handleColliton(*other);
-			other->handleColliton(playerRef);
-		}
-	
 	// game objects with movable objects
 	for (const auto& movableObject : m_movableObjects)
 		for (const auto& gameObject : m_gameObjects)
