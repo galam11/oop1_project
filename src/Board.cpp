@@ -121,6 +121,14 @@ void Board::createGameObject(Types type, const sf::Vector2f& position, Player* p
 
 void Board::collisions()
 {
+	for (const auto& movableObjectA : m_movableObjects)
+		for (const auto& movableObjectB : m_movableObjects)
+			if (movableObjectA->collidedWith(*movableObjectB))
+			{
+				movableObjectA->handleColliton(*movableObjectB);
+				movableObjectB->handleColliton(*movableObjectA);
+			}
+
 	// game objects with movable objects
 	for (const auto& movableObject : m_movableObjects)
 		for (const auto& gameObject : m_gameObjects)
