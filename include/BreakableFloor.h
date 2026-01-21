@@ -3,7 +3,7 @@
 #include <sfml/Graphics.hpp>
 #include "HideableGameObject.h"
 
-class BreakableFloor : public HideableGameObject
+class BreakableFloor : public RemovableGameObject
 {
 public:
 	BreakableFloor(const sf::Vector2f& position);

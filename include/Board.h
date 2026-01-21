@@ -15,8 +15,8 @@ public:
 
 	bool loadNextLevel();
 
-	void softReset();
-	void reset();
+	void Reset();
+	void loadFromRawBoard();
 
 	void update(const sf::Time& dt);
 	void display(sf::RenderWindow& window) const;
@@ -34,9 +34,9 @@ private:
 
 	std::vector<std::unique_ptr<MovableGameObject>> m_movableObjects;
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+	std::vector<std::string> m_rawBoard;
 
+	bool loadRawBoard();
 	void createGameObject(Types type, const sf::Vector2f& position);
-
-
 };
 

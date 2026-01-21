@@ -24,17 +24,6 @@ void Player::update(const sf::Time& dt)
 	updatePositon(moveDirection, dt);
 }
 
-void Player::resetGameObject()
-{
-	setMyPosition(m_startPosition);
-	m_gotHit = false;
-}
-
-void Player::resetPlayer()
-{
-	m_lives = 3;
-}
-
 void Player::setPosition(const sf::Vector2f& position)
 {
 	setMyPosition(position);
@@ -48,9 +37,6 @@ sf::Vector2f Player::getPositon() const
 
 void Player::handleColliton(const Enemy& other)
 {
-	std::cout << "Player hit by Enemy!" << std::endl;
-
-	std::cout << other.getGlobalBounds().getCenter().x << ", " << other.getGlobalBounds().getCenter().y << std::endl;
 	m_lives--;
 	m_gotHit = true;
 }

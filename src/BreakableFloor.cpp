@@ -2,7 +2,7 @@
 #include "macros.h"
 
 BreakableFloor::BreakableFloor(const sf::Vector2f& position)
-	: HideableGameObject(BREAKABLE_FLOOR, position)
+	: RemovableGameObject(BREAKABLE_FLOOR, position)
 {
 }
 

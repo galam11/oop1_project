@@ -54,61 +54,77 @@ bool Board::isInBounds(const sf::Vector2f vec) const
 
 bool Board::loadNextLevel()
 {
-	if (!m_file.is_open() || m_file.eof()) return false;
+	if (!loadRawBoard())
+	
+		return false;
+	
+	loadFromRawBoard();
+	return true;
+}
 
+void Board::Reset()
+{
+	for (const auto& mobObj : m_movableObjects)
+		mobObj->resetGameObject();
+}
+ 
+void Board::loadFromRawBoard()
+{
 	m_movableObjects.clear();
 	m_gameObjects.clear();
 
 	m_movableObjects.push_back(std::make_unique<Player>());
 	m_player = (Player*)m_movableObjects.back().get();
 
-	int rows = 0;
-	m_file >> rows;
-	if (m_file.fail()) return false;
 
-	std::string line;
-	std::getline(m_file, line);
 
-	// Get tile dimensions (default to 50 if texture fails)
 	sf::Vector2u textureSize = AssetsManager::instance().getTexture(FLOOR).getSize();
 	float tileH = static_cast<float>(textureSize.y);
 	float tileW = static_cast<float>(textureSize.x);
 	if (tileH == 0) tileH = 50.0f;
 	if (tileW == 0) tileW = 50.0f;
 
-	for (int i = 0; i < rows; ++i)
-	{
-		std::getline(m_file, line);
+	m_boardSize.x = m_rawBoard[0].size() * tileW;
+	m_boardSize.y = m_rawBoard.size() * tileH;
 
-		if (i == 0)
-		{
-			m_boardSize.x = line.size() * tileW;
-			m_boardSize.y = rows * tileH;
-		}
-
-		for (size_t j = 0; j < line.size(); ++j)
-			createGameObject((Types)line[j], sf::Vector2f(j * tileW, i * tileH));
-
-	}
+	for (int i = 0; i < m_rawBoard.size(); ++i)
+		for (int j = 0; j < m_rawBoard[0].size(); ++j)
+			createGameObject((Types)m_rawBoard[i][j], sf::Vector2f(j * tileW, i * tileH));
 
 	m_boardView.setSize(m_boardSize);
 	m_boardView.setCenter(m_boardSize * 0.5f);
+}
+
+bool Board::loadRawBoard()
+{
+
+	m_rawBoard.clear();
+	if (!m_file.is_open() || m_file.eof()) 
+	{
+		std::cout << "file not open or eof" << std::endl;
+		return false;
+	}
+
+	int rows = 0;
+	m_file >> rows;
+	if (m_file.fail())
+	{
+		std::cout << "Fail at reading first int" << std::endl;
+		return false;
+	}
+
+	std::string line;
+	std::getline(m_file, line);
+
+
+	for (int i = 0; i < rows; ++i)
+	{
+		std::getline(m_file, line);
+		std::cout << line << std::endl;
+		m_rawBoard.push_back(line);
+	}
 
 	return true;
-}
-
-void Board::softReset()
-{
-	for (const auto& mobObj : m_movableObjects)
-		mobObj->resetGameObject();
-}
- 
-void Board::reset()
-{
-	softReset();
-	m_player->resetPlayer();
-	for (const auto& obj : m_gameObjects)
-		obj->resetGameObject();
 }
 
 void Board::createGameObject(Types type, const sf::Vector2f& position)
@@ -163,4 +179,12 @@ void Board::handleCollisions()
 				movableObject->handleColliton(*gameObject);
 				gameObject->handleColliton(*movableObject);
 			}
+
+
+	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item) 
+	{
+		if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
+			return ptr->isToBeRemoved();
+		return false;
+	});
 }

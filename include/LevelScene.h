@@ -20,6 +20,4 @@ private:
     std::vector<MovableGameObject*> m_movableGameObjects;
 
     sf::View m_view;
-
-    void loadLevel();
 };

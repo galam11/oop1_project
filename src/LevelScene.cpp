@@ -1,18 +1,10 @@
 #include "LevelScene.h"
+#include "Coin.h"
 #include <iostream>
 
 LevelScene::LevelScene()
 {
-    loadLevel();
-}
-
-void LevelScene::loadLevel()
-{
-    if (!m_board.loadNextLevel())
-    {
-        std::cout << "Game Over or No More Levels!" << std::endl;
-        return;
-    }
+    m_board.loadNextLevel();
 }
 
 void LevelScene::update(const sf::Time& dt)
@@ -23,14 +15,17 @@ void LevelScene::update(const sf::Time& dt)
 
     if (m_board.getPlayer().gotHit())
     {
-        m_board.softReset();
+        m_board.Reset();
 		std::cout << "Player got hit! Lives left: " << m_board.getPlayer().getLives() << std::endl;
     }
     else if (!m_board.isInBounds(m_board.getPlayer().getPositon()) || m_board.getPlayer().getLives() == 0)
     {
-        m_board.reset();
+        m_board.loadFromRawBoard();
 		std::cout << "Player lost! Try again ! Lives left: " << m_board.getPlayer().getLives() << std::endl;
     }
+
+    if (Coin::getCoinCount() == 0)
+        m_board.loadNextLevel();
 }
 
 void LevelScene::display(sf::RenderWindow& window) const
@@ -43,5 +38,8 @@ void LevelScene::display(sf::RenderWindow& window) const
 void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
 {
     if (event.code == sf::Keyboard::Key::Space)
-        loadLevel();
+        m_board.loadNextLevel();
+
+    else if (event.code == sf::Keyboard::Key::R)
+        m_board.loadFromRawBoard();
 }

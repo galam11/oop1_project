@@ -8,9 +8,6 @@ public:
 
 	void update(const sf::Time& dt) override;
 
-	void resetGameObject() override;
-	void resetPlayer();
-
 	int getCoins() const;
 	int getScore() const;
 	int getLives() const;
