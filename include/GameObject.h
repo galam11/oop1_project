@@ -13,7 +13,7 @@ class BreakableFloor;
 class GameObject
 {
 public:
-	
+	GameObject(Types type, const sf::Vector2f& position);
 	virtual ~GameObject() = default;
 	virtual void draw(sf::RenderWindow& window) const;
 
@@ -31,7 +31,11 @@ public:
 	virtual void handleColliton(const BreakableFloor& other);
 
 	sf::FloatRect getGlobalBounds() const;
+
 protected:
-	GameObject(Types type, const sf::Vector2f& position);
+	void moveMe(const sf::Vector2f& pos);
+	void setMyPosition(const sf::Vector2f& position);
+
+private:
 	sf::Sprite m_sprite;	
 };

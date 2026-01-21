@@ -9,7 +9,7 @@ bool HideableGameObject::isHidden() const
 void HideableGameObject::draw(sf::RenderWindow& window) const
 {
 	if (!m_hidden)
-		window.draw(m_sprite);
+		GameObject::draw(window);
 }
 
 void HideableGameObject::resetGameObject()

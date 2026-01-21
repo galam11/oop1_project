@@ -8,8 +8,6 @@ public:
 
 	void update(const sf::Time& dt) override;
 
-	void draw(sf::RenderWindow& window) const override;
-
 	void resetGameObject() override;
 	void resetPlayer();
 

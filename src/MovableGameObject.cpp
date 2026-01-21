@@ -8,18 +8,11 @@
 #include "macros.h"
 
 MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
-	: GameObject(type, position), m_startPosition(position)
-{
-}
+	: GameObject(type, position), m_startPosition(position) { }
 
 void MovableGameObject::resetGameObject()
 {
-	m_sprite.setPosition(m_startPosition);
-}
-
-sf::Vector2f MovableGameObject::getMoveDirection() const
-{
-	return m_moveDirection;
+	setMyPosition(m_startPosition);
 }
 
 void MovableGameObject::handleColliton(const Floor& other)
@@ -48,16 +41,16 @@ void MovableGameObject::handleColliton(const Rail& other)
 		diff.x = 0.f;
 
 		if (diff.y != 0)
-			m_sprite.move(diff.normalized() * 2.f);
+			moveMe(diff.normalized() * 2.f);
 	}
 }
 
-void MovableGameObject::updatePositon(const sf::Time& dt)
+void MovableGameObject::updatePositon(sf::Vector2f moveVec, const sf::Time& dt)
 {
 	if (!m_onLadder && !m_onRail)
-		m_moveDirection += DOWN  * (m_onGround ? 1.f : GRAVITY);
+		moveVec += DOWN  * (m_onGround ? 1.f : GRAVITY);
 
-	m_sprite.move(m_moveDirection * m_speed * dt.asSeconds());
+	moveMe(moveVec * m_speed * dt.asSeconds());
 	m_onLadder = m_onRail = m_onGround = false;
 }
 
@@ -81,8 +74,8 @@ void MovableGameObject::handleSolidCollision(const GameObject& other)
 	dir.y = (dir.y == 0) ? 0 : ((dir.y > 0) ? -1 : 1);
 
 	if (bounds.size.x < bounds.size.y)
-		m_sprite.move({ bounds.size.x * dir.x, 0.f });
+		moveMe({ bounds.size.x * dir.x, 0.f });
 	else
-		m_sprite.move({ 0.f, bounds.size.y * dir.y });
+		moveMe({ 0.f, bounds.size.y * dir.y });
 }
 

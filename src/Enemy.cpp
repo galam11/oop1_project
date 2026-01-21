@@ -13,20 +13,20 @@ void Enemy::update(const sf::Time& dt)
 	// Simple AI: Move towards the target
 	m_target = m_player.getPositon();
 
-	sf::Vector2f direction = m_target - m_sprite.getPosition();
+	sf::Vector2f direction = m_target - getGlobalBounds().getCenter();
 	float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-	// Only move if we are not already at the target
+	
+
 	if (distance > 1.0f)
 	{
-		// Normalize direction
-		m_moveDirection = direction / distance;
+		direction = direction / distance;
 	}
 	else
 	{
-		m_moveDirection = { 0.f, 0.f };
+		direction = { 0.f, 0.f };
 	}
 
-	updatePositon(dt);
+	updatePositon(direction, dt);
 }
 
 void Enemy::setTarget(const sf::Vector2f& newTarget)

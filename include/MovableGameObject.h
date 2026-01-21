@@ -14,19 +14,16 @@ public:
 
 	void resetGameObject() override;
 
-	sf::Vector2f getMoveDirection() const;
 	virtual void handleColliton(GameObject& other) override = 0;
 	void handleColliton(const Floor& other) override;
 	void handleColliton(const BreakableFloor& other) override;
 	void handleColliton(const Ladder& other) override;
 	void handleColliton(const Rail& other) override;
 protected:
-	sf::Vector2f m_moveDirection = { 0, 0 };
 	float m_speed = 1.0f;
-
 	sf::Vector2f m_startPosition;
 
-	void updatePositon(const sf::Time& dt);
+	void updatePositon(sf::Vector2f moveVec,const sf::Time& dt);
 
 	bool isOnLadder() const;
 	bool isOnRail() const;

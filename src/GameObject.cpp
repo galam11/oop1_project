@@ -31,36 +31,23 @@ bool GameObject::collidedWith(const GameObject& other)
 		.findIntersection(other.m_sprite.getGlobalBounds()).has_value();
 }
 
-sf::FloatRect GameObject::getGlobalBounds() const
-{
-	return m_sprite.getGlobalBounds();
-}
+sf::FloatRect GameObject::getGlobalBounds() const { return m_sprite.getGlobalBounds(); }
 
-void GameObject::handleColliton(const Rail& other)
-{
-}
+void GameObject::moveMe(const sf::Vector2f& pos) { m_sprite.move(pos); }
 
-void GameObject::handleColliton(const Player& other)
-{
-}
+void GameObject::setMyPosition(const sf::Vector2f& position) { m_sprite.setPosition(position); }
 
-void GameObject::handleColliton(const Ladder& other)
-{
-}
+void GameObject::handleColliton(const Rail& other){ }
 
-void GameObject::handleColliton(const Floor& other)
-{
-}
+void GameObject::handleColliton(const Player& other) { }
 
-void GameObject::handleColliton(const Enemy& other)
-{
-}
+void GameObject::handleColliton(const Ladder& other) { }
 
-void GameObject::handleColliton(const Coin& other)
-{
-}
+void GameObject::handleColliton(const Floor& other) { }
 
-void GameObject::handleColliton(const BreakableFloor& other)
-{
-}
+void GameObject::handleColliton(const Enemy& other) { }
+
+void GameObject::handleColliton(const Coin& other) { }
+
+void GameObject::handleColliton(const BreakableFloor& other) { }
 

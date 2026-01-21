@@ -10,23 +10,23 @@ Player::Player(const sf::Vector2f& position)
 
 void Player::update(const sf::Time& dt)
 {
-	m_moveDirection = { 0.f, 0.f };
+	sf::Vector2f moveDirection = { 0.f, 0.f };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && isOnLadder())
-		m_moveDirection += UP;
+		moveDirection += UP;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-		m_moveDirection += DOWN;
+		moveDirection += DOWN;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-		m_moveDirection += RIGHT;
+		moveDirection += RIGHT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-		m_moveDirection += LEFT;
+		moveDirection += LEFT;
 
-	updatePositon(dt);
+	updatePositon(moveDirection, dt);
 }
 
 void Player::resetGameObject()
 {
-	m_sprite.setPosition(m_startPosition);
+	setMyPosition(m_startPosition);
 	m_gotHit = false;
 }
 
@@ -35,22 +35,15 @@ void Player::resetPlayer()
 	m_lives = 3;
 }
 
-void Player::draw(sf::RenderWindow& window) const
-{
-	window.draw(m_sprite);
-
-	//sf::Text info();
-}
-
 void Player::setPosition(const sf::Vector2f& position)
 {
-	m_sprite.setPosition(position);
+	setMyPosition(position);
 	m_startPosition = position;
 }
 
 sf::Vector2f Player::getPositon() const
 {
-	return m_sprite.getGlobalBounds().getCenter();
+	return getGlobalBounds().getCenter();
 }
 
 void Player::handleColliton(const Enemy& other)
