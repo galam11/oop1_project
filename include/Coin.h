@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "HideableGameObject.h"
+#include "RemovableGameObject.h"
 #include <SFML/Graphics.hpp>
 
 class Player;

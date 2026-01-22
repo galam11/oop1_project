@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sfml/Graphics.hpp>
-#include "HideableGameObject.h"
+#include "RemovableGameObject.h"
 
 class BreakableFloor : public RemovableGameObject
 {

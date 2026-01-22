@@ -129,7 +129,6 @@ bool Board::loadRawBoard()
 	for (int i = 0; i < rows; ++i)
 	{
 		std::getline(m_file, line);
-		std::cout << line << std::endl;
 		m_rawBoard.push_back(line);
 	}
 

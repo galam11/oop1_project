@@ -7,7 +7,6 @@
 
 #include "macros.h"
 
-#include <iostream>
 
 MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position), m_startPosition(position) { }
@@ -37,7 +36,7 @@ void MovableGameObject::handleColliton(const Ladder& other)
 void MovableGameObject::handleColliton(const Rail& other)
 {
 	m_onRail = true;
-	if (!m_onLadder && !sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	if (!m_onLadder)
 	{
 		auto diff = other.getGlobalBounds().getCenter() - getGlobalBounds().getCenter();
 		diff.x = 0.f;
@@ -49,10 +48,13 @@ void MovableGameObject::handleColliton(const Rail& other)
 
 void MovableGameObject::updatePositon(sf::Vector2f moveVec, const sf::Time& dt)
 {
-	if (!m_onLadder && !m_onRail)
-		moveVec += DOWN  * (m_onGround ? 1.f : GRAVITY);
+	if (moveVec != VEC2_ZERO)
+	{
+		if (!m_onLadder && !m_onRail)
+			moveVec += DOWN * (m_onGround ? 1.f : GRAVITY);
 
-	moveMe(moveVec * m_speed * dt.asSeconds());
+		moveMe(moveVec.normalized() * m_speed * dt.asSeconds());
+	}
 	m_onLadder = m_onRail = m_onGround = false;
 }
 

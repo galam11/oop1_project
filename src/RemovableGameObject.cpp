@@ -1,4 +1,4 @@
-#include "HideableGameObject.h"
+#include "RemovableGameObject.h"
 #include "macros.h"
 
 
