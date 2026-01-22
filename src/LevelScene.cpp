@@ -5,7 +5,7 @@
 
 LevelScene::LevelScene()
 {
-    m_board.loadFromRawBoard();
+    m_board.loadNextLevel();
 
     if (m_board.getTimeOut().asSeconds() != 0)
         m_timer.restart();
