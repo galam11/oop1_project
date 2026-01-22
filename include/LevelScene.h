@@ -18,6 +18,9 @@ public:
 private:
     Board m_board;
     std::vector<MovableGameObject*> m_movableGameObjects;
-
     sf::View m_view;
+    sf::Clock m_timer;
+
+    void nextLevel();
+    void resetLevel();
 };

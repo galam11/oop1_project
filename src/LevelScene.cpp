@@ -1,10 +1,16 @@
 #include "LevelScene.h"
 #include "Coin.h"
+#include "AssetsManager.h"
 #include <iostream>
 
 LevelScene::LevelScene()
 {
-    m_board.loadNextLevel();
+    m_board.loadFromRawBoard();
+
+    if (m_board.getTimeOut().asSeconds() != 0)
+        m_timer.restart();
+    else
+        m_timer.reset();
 }
 
 void LevelScene::update(const sf::Time& dt)
@@ -16,12 +22,15 @@ void LevelScene::update(const sf::Time& dt)
     if (m_board.getPlayer().gotHit())
     {
         m_board.Reset();
-		//std::cout << "Player got hit! Lives left: " << m_board.getPlayer().getLives() << std::endl;
     }
-    else if (!m_board.isInBounds(m_board.getPlayer().getPositon()) || m_board.getPlayer().getLives() == 0)
+    else if (m_timer.getElapsedTime() > m_board.getTimeOut() || !m_board.isInBounds(m_board.getPlayer().getPositon()) || m_board.getPlayer().getLives() == 0)
     {
         m_board.loadFromRawBoard();
-		//std::cout << "Player lost! Try again ! Lives left: " << m_board.getPlayer().getLives() << std::endl;
+
+        if (m_board.getTimeOut().asSeconds() != 0)
+            m_timer.restart();
+        else
+            m_timer.reset();
     }
 
     if (Coin::getCoinCount() == 0)
@@ -42,4 +51,19 @@ void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
 
     else if (event.code == sf::Keyboard::Key::R)
         m_board.loadFromRawBoard();
+}
+
+void LevelScene::nextLevel()
+{
+    m_board.loadNextLevel();
+
+    if (m_board.getTimeOut().asSeconds() != 0)
+        m_timer.restart();
+    else
+        m_timer.reset();
+}
+
+void LevelScene::resetLevel()
+{
+    m_board.Reset();
 }

@@ -55,6 +55,11 @@ bool Board::isInBounds(const sf::Vector2f vec) const
 	return !(vec.x > m_boardSize.x || vec.x < 0 || vec.y > m_boardSize.y || vec.y < 0);
 }
 
+sf::Time Board::getTimeOut()
+{
+	return m_levelTime;
+}
+
 bool Board::loadNextLevel()
 {
 	if (!loadRawBoard())
@@ -111,6 +116,11 @@ bool Board::loadRawBoard()
 		std::cout << "Fail at reading first int" << std::endl;
 		return false;
 	}
+
+	int minits, sec;
+	m_file >> minits >> sec;
+	m_levelTime = sf::seconds(minits * 60 + sec);
+
 
 	std::string line;
 	std::getline(m_file, line);
