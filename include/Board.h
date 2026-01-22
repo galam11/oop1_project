@@ -25,7 +25,7 @@ public:
 	const Player& getPlayer() const;
 	bool isInBounds(const sf::Vector2f vec) const;
 
-	sf::Time getTimeOut();
+	sf::Time getTimeOut() const;
 private:
 	std::ifstream m_file;
 	int m_currentLevel = 0;

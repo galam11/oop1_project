@@ -55,7 +55,7 @@ bool Board::isInBounds(const sf::Vector2f vec) const
 	return !(vec.x > m_boardSize.x || vec.x < 0 || vec.y > m_boardSize.y || vec.y < 0);
 }
 
-sf::Time Board::getTimeOut()
+sf::Time Board::getTimeOut() const
 {
 	return m_levelTime;
 }
@@ -72,6 +72,7 @@ bool Board::loadNextLevel()
 
 void Board::Reset()
 {
+	m_player.resetGameObject();
 	for (const auto& mobObj : m_movableObjects)
 		mobObj->resetGameObject();
 }
@@ -81,7 +82,6 @@ void Board::loadFromRawBoard()
 	m_movableObjects.clear();
 	m_gameObjects.clear();
 	m_player.resetPlayerHealth();
-
 
 	sf::Vector2u textureSize = AssetsManager::instance().getTexture(FLOOR).getSize();
 	float tileH = static_cast<float>(textureSize.y);

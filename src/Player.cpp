@@ -12,6 +12,7 @@ Player::Player(const sf::Vector2f& position)
 
 void Player::update(const sf::Time& dt)
 {
+	m_gotHit = false;
 	sf::Vector2f moveDirection = { 0.f, 0.f };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && isOnLadder())
@@ -71,6 +72,11 @@ int Player::getScore() const
 int Player::getLives() const
 {
 	return m_lives;
+}
+
+int Player::getCurrentLevel() const
+{
+	return m_currentLevel;
 }
 
 bool Player::gotHit() const

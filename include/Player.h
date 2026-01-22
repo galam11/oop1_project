@@ -1,7 +1,9 @@
 #pragma once
 #include "MovableGameObject.h"
+
 class Enemy;
 class Coin;
+
 class Player : public MovableGameObject
 {
 public:
@@ -11,6 +13,7 @@ public:
 
 	int getScore() const;
 	int getLives() const;
+	int getCurrentLevel() const;
 	bool gotHit() const;
 	void handleColliton(GameObject& other) override;
 

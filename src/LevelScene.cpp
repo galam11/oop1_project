@@ -4,7 +4,7 @@
 #include <iostream>
 
 LevelScene::LevelScene()
-    : m_hud(m_board.getPlayer(), m_timer, sf::Time())
+    : m_hud(m_board.getPlayer(), m_timer, m_board)
 {
     m_board.loadNextLevel();
 
@@ -16,6 +16,8 @@ LevelScene::LevelScene()
 
 void LevelScene::update(const sf::Time& dt)
 {
+    m_hud.update();
+
 	m_board.update(dt);
    
 	m_board.handleCollisions();
