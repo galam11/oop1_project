@@ -1,9 +1,11 @@
 #include "Player.h"
 #include "macros.h"
-#include <iostream>
 #include "Enemy.h"
+#include "Board.h"
+
+#include <iostream>
 Player::Player(const sf::Vector2f& position)
-	: MovableGameObject(PLAYER, position), m_score(0), m_coins(0)
+	: MovableGameObject(PLAYER, position)
 {
 	m_speed = 400.f;
 }
@@ -41,9 +43,24 @@ void Player::handleColliton(const Enemy& other)
 	m_gotHit = true;
 }
 
-int Player::getCoins() const
+void Player::handleColliton(const Coin& other)
 {
-	return m_coins;
+	m_score += 2 * m_currentLevel;
+
+	std::cout << m_score << std::endl;
+}
+
+void Player::resetPlayerHealth()
+{
+	m_lives = 3;
+}
+
+void Player::nextLevel()
+{
+
+	std::cout << "level up " << m_currentLevel << " -> " << (m_currentLevel + 1) << std::endl;
+	m_score += 50 * m_currentLevel;
+	m_currentLevel++;
 }
 
 int Player::getScore() const

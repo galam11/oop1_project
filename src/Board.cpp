@@ -24,9 +24,10 @@ Board::Board()
 
 void Board::update(const sf::Time& dt)
 {
+	m_player.update(dt);
+
 	for (const auto& movableObject : m_movableObjects)
 		movableObject->update(dt);
-
 }
 
 void Board::display(sf::RenderWindow& window) const
@@ -39,12 +40,14 @@ void Board::display(sf::RenderWindow& window) const
 	for (const auto& mobObj : m_movableObjects)
 		mobObj->draw(window);
 
+	m_player.draw(window);
+	
 	window.setView(window.getDefaultView());
 }
 
 const Player& Board::getPlayer() const
 {
-	return *m_player;
+	return m_player;
 }
 
 bool Board::isInBounds(const sf::Vector2f vec) const
@@ -55,9 +58,9 @@ bool Board::isInBounds(const sf::Vector2f vec) const
 bool Board::loadNextLevel()
 {
 	if (!loadRawBoard())
-	
 		return false;
 	
+	m_player.nextLevel();
 	loadFromRawBoard();
 	return true;
 }
@@ -72,10 +75,7 @@ void Board::loadFromRawBoard()
 {
 	m_movableObjects.clear();
 	m_gameObjects.clear();
-
-	m_movableObjects.push_back(std::make_unique<Player>());
-	m_player = (Player*)m_movableObjects.back().get();
-
+	m_player.resetPlayerHealth();
 
 
 	sf::Vector2u textureSize = AssetsManager::instance().getTexture(FLOOR).getSize();
@@ -97,7 +97,6 @@ void Board::loadFromRawBoard()
 
 bool Board::loadRawBoard()
 {
-
 	m_rawBoard.clear();
 	if (!m_file.is_open() || m_file.eof()) 
 	{
@@ -132,10 +131,10 @@ void Board::createGameObject(Types type, const sf::Vector2f& position)
 	switch (type)
 	{
 	case PLAYER:
-		m_player->setPosition(position);
+		m_player.setPosition(position);
 		break;
 	case ENEMY:
-		m_movableObjects.push_back(std::make_unique<Enemy>(position, *m_player));
+		m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
 		break;
 	case COIN:
 		m_gameObjects.push_back(std::make_unique<Coin>(position));
@@ -157,19 +156,20 @@ void Board::createGameObject(Types type, const sf::Vector2f& position)
 
 void Board::handleCollisions()
 {
-	for (int i = 0; i < m_movableObjects.size(); i++)
-		for (int j = i + 1; j < m_movableObjects.size(); j++)
+	GameObject& playerRef = m_player;
+	for (const auto& gameObject : m_gameObjects)
+		if (gameObject->collidedWith(playerRef))
 		{
-			const auto& movableObjectA = m_movableObjects[i];
-			const auto& movableObjectB = m_movableObjects[j];
-
-			if (movableObjectA->collidedWith(*movableObjectB))
-			{
-				movableObjectA->handleColliton(*movableObjectB);
-				movableObjectB->handleColliton(*movableObjectA);
-			}
+			gameObject->handleColliton(playerRef);
+			playerRef.handleColliton(*gameObject);
 		}
-	
+
+	for (const auto& movableObject : m_movableObjects)
+		if (movableObject->collidedWith(playerRef))
+		{
+			movableObject->handleColliton(playerRef);
+			playerRef.handleColliton(*movableObject);
+		}
 
 	// game objects with movable objects
 	for (const auto& movableObject : m_movableObjects)

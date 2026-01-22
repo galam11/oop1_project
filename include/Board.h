@@ -21,14 +21,14 @@ public:
 	void update(const sf::Time& dt);
 	void display(sf::RenderWindow& window) const;
 	void handleCollisions();
-
+	
 	const Player& getPlayer() const;
 	bool isInBounds(const sf::Vector2f vec) const;
 private:
 	std::ifstream m_file;
 	int m_currentLevel = 0;
 
-	Player* m_player = nullptr;
+	Player m_player;
 	sf::View m_boardView;
 	sf::Vector2f m_boardSize;
 

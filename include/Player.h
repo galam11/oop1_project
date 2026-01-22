@@ -1,6 +1,7 @@
 #pragma once
 #include "MovableGameObject.h"
-
+class Enemy;
+class Coin;
 class Player : public MovableGameObject
 {
 public:
@@ -8,7 +9,6 @@ public:
 
 	void update(const sf::Time& dt) override;
 
-	int getCoins() const;
 	int getScore() const;
 	int getLives() const;
 	bool gotHit() const;
@@ -18,11 +18,14 @@ public:
 	sf::Vector2f getPositon() const;
 
 	void handleColliton(const Enemy& other) override;
+	void handleColliton(const Coin& other) override;
 	
+	void resetPlayerHealth();
+
+	void nextLevel();
 private:
 	int m_score = 0;
-	int m_coins = 0;
+	int m_currentLevel = 0;
 	int m_lives = 3;
-
 	bool m_gotHit = false;
 };

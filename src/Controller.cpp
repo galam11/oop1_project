@@ -19,13 +19,12 @@ void Controller::run()
 		while (auto event = m_window.pollEvent())
 			event->visit([this](const auto& ev) { handleEvent(ev); });
 
-		//m_window.handleEvents([this](const auto& ev) { handleEvent(ev); }); // idk why dosen't work
-
 		m_currentScene->update(gameClock.restart());
 
 		m_window.clear();
 
 		m_currentScene->display(m_window);
+
 		m_window.display();
 	}
 }

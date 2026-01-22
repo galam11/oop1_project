@@ -7,6 +7,8 @@
 
 #include "macros.h"
 
+#include <iostream>
+
 MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position), m_startPosition(position) { }
 
