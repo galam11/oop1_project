@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Board.h"
 #include "Player.h"
+#include "Hud.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 
@@ -17,6 +18,7 @@ public:
 
 private:
     Board m_board;
+    Hud m_hud;
     std::vector<MovableGameObject*> m_movableGameObjects;
     sf::View m_view;
     sf::Clock m_timer;

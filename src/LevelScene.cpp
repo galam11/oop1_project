@@ -4,6 +4,7 @@
 #include <iostream>
 
 LevelScene::LevelScene()
+    : m_hud(m_board.getPlayer(), m_timer, sf::Time())
 {
     m_board.loadNextLevel();
 
@@ -40,6 +41,7 @@ void LevelScene::update(const sf::Time& dt)
 void LevelScene::display(sf::RenderWindow& window) const
 {
 	m_board.display(window);
+    m_hud.dispaly(window);
 }
 
 
