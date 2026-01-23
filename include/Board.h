@@ -14,13 +14,11 @@ public:
 	Board();
 
 	bool loadNextLevel();
-
 	void Reset();
 	void loadFromRawBoard();
 
 	void update(const sf::Time& dt);
 	void display(sf::RenderWindow& window) const;
-	void handleCollisions();
 	
 	const Player& getPlayer() const;
 	bool isInBounds(const sf::Vector2f vec) const;
@@ -41,5 +39,6 @@ private:
 	
 	bool loadRawBoard();
 	void createGameObject(Types type, const sf::Vector2f& position);
+	void handleCollisions();
 };
 

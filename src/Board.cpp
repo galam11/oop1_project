@@ -29,8 +29,6 @@ void Board::update(const sf::Time& dt)
 	for (const auto& movableObject : m_movableObjects)
 		movableObject->update();
 
-	
-
 	m_player.updatePositon(dt);
 
 	for (const auto& movableObject : m_movableObjects)

@@ -2,6 +2,8 @@
 #include <sfml/Graphics.hpp>
 #include "Player.h"
 #include "Board.h"
+
+
 class Hud
 {
 public:
@@ -15,8 +17,8 @@ private:
 	const sf::Clock& m_timer;
 	const Board& m_board;
 
-
 	sf::Text m_LevelText;
 	sf::Text m_LivesText;
 	sf::Text m_TimerText;
+	sf::Sprite m_playerSpright;
 };

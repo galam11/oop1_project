@@ -38,8 +38,13 @@ sf::Vector2f Player::getPositon() const
 
 void Player::handleColliton(const Enemy& other)
 {
-	m_lives--;
-	m_gotHit = true;
+	std::cout << "HIT" << std::endl;
+
+	if (!m_gotHit)
+	{
+		m_lives--;
+		m_gotHit = true;
+	}
 }
 
 void Player::handleColliton(const Coin& other)

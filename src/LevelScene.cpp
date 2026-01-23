@@ -6,12 +6,7 @@
 LevelScene::LevelScene()
     : m_hud(m_board.getPlayer(), m_timer, m_board)
 {
-    m_board.loadNextLevel();
-
-    if (m_board.getTimeOut().asSeconds() != 0)
-        m_timer.restart();
-    else
-        m_timer.reset();
+    nextLevel();
 }
 
 void LevelScene::update(const sf::Time& dt)
@@ -20,24 +15,20 @@ void LevelScene::update(const sf::Time& dt)
 
 	m_board.update(dt);
    
-	m_board.handleCollisions();
-
-    if (m_board.getPlayer().gotHit())
-    {
-        m_board.Reset();
-    }
-    else if (m_timer.getElapsedTime() > m_board.getTimeOut() || !m_board.isInBounds(m_board.getPlayer().getPositon()) || m_board.getPlayer().getLives() == 0)
-    {
-        m_board.loadFromRawBoard();
-
-        if (m_board.getTimeOut().asSeconds() != 0)
-            m_timer.restart();
-        else
-            m_timer.reset();
-    }
 
     if (Coin::getCoinCount() == 0)
-        m_board.loadNextLevel();
+    {
+        nextLevel();
+    }
+    else if (m_board.getPlayer().gotHit() || !m_board.isInBounds(m_board.getPlayer().getPositon()))
+    {
+        softResetLevel();
+    }
+    else if (m_timer.getElapsedTime() > m_board.getTimeOut() || m_board.getPlayer().getLives() == 0)
+    {
+        hardResetLevel();
+    }
+    
 }
 
 void LevelScene::display(sf::RenderWindow& window) const
@@ -60,14 +51,21 @@ void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
 void LevelScene::nextLevel()
 {
     m_board.loadNextLevel();
+    m_timer.reset();
 
     if (m_board.getTimeOut().asSeconds() != 0)
-        m_timer.restart();
-    else
-        m_timer.reset();
+        m_timer.start();
 }
 
-void LevelScene::resetLevel()
+void LevelScene::hardResetLevel()
+{
+    m_board.loadFromRawBoard();
+    
+    if (m_board.getTimeOut().asSeconds() != 0)
+        m_timer.restart();
+}
+
+void LevelScene::softResetLevel()
 {
     m_board.Reset();
 }
