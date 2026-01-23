@@ -8,12 +8,10 @@ Hud::Hud(const Player& player, const sf::Clock& timer, const Board& board) :
 	m_board(board),
 	m_LevelText(AssetsManager::instance().getFont()),
 	m_LivesText(AssetsManager::instance().getFont()),
-	m_TimerText(AssetsManager::instance().getFont()),
-	m_backround({ (float)WINDOW_SIZE.x , 60.f })
+	m_TimerText(AssetsManager::instance().getFont())
 { 
-	m_backround.setFillColor(sf::Color::Blue);
 	
-	float width = ((float)WINDOW_SIZE.x) * 0.88f;
+	float width = ((float)WINDOW_SIZE.x) * 0.90f;
 
 	m_LivesText.setPosition({ width * 0.1f , 15.f });
 	m_TimerText.setPosition({ width * 0.5f , 15.f });
@@ -23,8 +21,7 @@ Hud::Hud(const Player& player, const sf::Clock& timer, const Board& board) :
 
 void Hud::dispaly(sf::RenderWindow& window) const
 {
-	window.draw(m_backround);
-	
+
 	window.draw(m_LevelText);
 	window.draw(m_TimerText);
 	window.draw(m_LivesText);

@@ -18,6 +18,10 @@ const sf::Vector2f UP = { 0.f, -1.f };
 const sf::Vector2f DOWN = { 0.f, 1.f };
 const sf::Vector2f LEFT = { -1.f, 0.f };
 const sf::Vector2f RIGHT = { 1.f, 0.f };
-const sf::Vector2f VEC2_ZERO = { 1.f, 0.f };
+const sf::Vector2f VEC2_ZERO = { 0.f, 0.f };
 
-const float GRAVITY = 3.5f;
+const float GRAVITY = 900.f;
+
+//  debug stuff
+
+#define Debug(x) " | "<< #x << ": "<< (x)

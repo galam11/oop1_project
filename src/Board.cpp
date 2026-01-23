@@ -24,10 +24,19 @@ Board::Board()
 
 void Board::update(const sf::Time& dt)
 {
-	m_player.update(dt);
+	m_player.update();
 
 	for (const auto& movableObject : m_movableObjects)
-		movableObject->update(dt);
+		movableObject->update();
+
+	
+
+	m_player.updatePositon(dt);
+
+	for (const auto& movableObject : m_movableObjects)
+		movableObject->updatePositon(dt);
+
+	handleCollisions();
 }
 
 void Board::display(sf::RenderWindow& window) const

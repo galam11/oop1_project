@@ -16,7 +16,6 @@ private:
 	const Board& m_board;
 
 
-	sf::RectangleShape m_backround;
 	sf::Text m_LevelText;
 	sf::Text m_LivesText;
 	sf::Text m_TimerText;

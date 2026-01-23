@@ -10,21 +10,19 @@ Player::Player(const sf::Vector2f& position)
 	m_speed = 400.f;
 }
 
-void Player::update(const sf::Time& dt)
+void Player::update()
 {
 	m_gotHit = false;
-	sf::Vector2f moveDirection = { 0.f, 0.f };
+	m_moveDirctaion = { 0.f, 0.f };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && isOnLadder())
-		moveDirection += UP;
+		m_moveDirctaion += UP;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-		moveDirection += DOWN;
+		m_moveDirctaion += DOWN;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-		moveDirection += RIGHT;
+		m_moveDirctaion += RIGHT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-		moveDirection += LEFT;
-
-	updatePositon(moveDirection, dt);
+		m_moveDirctaion += LEFT;
 }
 
 void Player::setPosition(const sf::Vector2f& position)

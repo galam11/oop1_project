@@ -7,9 +7,30 @@
 
 #include "macros.h"
 
+#include "Player.h"
+#include <iostream>
+
+
 
 MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position), m_startPosition(position) { }
+
+void MovableGameObject::updatePositon(const sf::Time& dt)
+{
+	auto moveVec = m_moveDirctaion;
+	auto gravityVec = VEC2_ZERO;
+
+	if (moveVec != VEC2_ZERO)
+		moveVec = moveVec.normalized();
+
+	if (!m_onLadder && !m_onRail)
+		gravityVec = DOWN * (m_onGround ? 50.f : GRAVITY);
+
+
+	moveMe((moveVec * m_speed + gravityVec) * dt.asSeconds());
+
+	m_onLadder = m_onRail = m_onGround = false;
+}
 
 void MovableGameObject::resetGameObject()
 {
@@ -19,43 +40,38 @@ void MovableGameObject::resetGameObject()
 void MovableGameObject::handleColliton(const Floor& other)
 {
 	handleSolidCollision(other);
-	m_onGround = true;
 }
 
 void MovableGameObject::handleColliton(const BreakableFloor& other)
 {
 	handleSolidCollision(other);
-	m_onGround = true;
 }
 
 void MovableGameObject::handleColliton(const Ladder& other)
 {
 	m_onLadder = true;
+	if (!m_moveDirctaion.x != 0 && !m_onGround)
+	{
+		auto diff = other.getGlobalBounds().getCenter() - getGlobalBounds().getCenter();
+		diff.y = 0.f;
+
+		if (diff.x != 0)
+			moveMe(diff.normalized());
+	}
 }
+
 
 void MovableGameObject::handleColliton(const Rail& other)
 {
-	m_onRail = true;
-	if (!m_onLadder)
+	if (!m_onLadder && !m_moveDirctaion.y > 0)
 	{
+		m_onRail = true;
 		auto diff = other.getGlobalBounds().getCenter() - getGlobalBounds().getCenter();
 		diff.x = 0.f;
 
 		if (diff.y != 0)
-			moveMe(diff.normalized() * 2.f);
+			moveMe(diff.normalized());
 	}
-}
-
-void MovableGameObject::updatePositon(sf::Vector2f moveVec, const sf::Time& dt)
-{
-	if (moveVec != VEC2_ZERO)
-	{
-		if (!m_onLadder && !m_onRail)
-			moveVec += DOWN * (m_onGround ? 1.f : GRAVITY);
-
-		moveMe(moveVec.normalized() * m_speed * dt.asSeconds());
-	}
-	m_onLadder = m_onRail = m_onGround = false;
 }
 
 bool MovableGameObject::isOnLadder() const
@@ -80,6 +96,11 @@ void MovableGameObject::handleSolidCollision(const GameObject& other)
 	if (bounds.size.x < bounds.size.y)
 		moveMe({ bounds.size.x * dir.x, 0.f });
 	else
+	{
 		moveMe({ 0.f, bounds.size.y * dir.y });
+
+		if (dir.y < 0) 
+			m_onGround = true;
+	}
 }
 

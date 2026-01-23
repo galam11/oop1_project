@@ -8,9 +8,9 @@ Enemy::Enemy(const sf::Vector2f& position, const Player& player) :
 	m_speed = 100.f;
 }
 
-void Enemy::update(const sf::Time& dt)
+void Enemy::update()
 {
-	updatePositon(m_player.getPositon() - getGlobalBounds().getCenter(), dt);
+	m_moveDirctaion = m_player.getPositon() - getGlobalBounds().getCenter();
 }
 
 void Enemy::setTarget(const sf::Vector2f& newTarget)
