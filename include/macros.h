@@ -1,10 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-enum Types
+enum ID
 {
 	PLAYER			= '@',
+	PLAYER_SINGLE,
 	ENEMY			= '%',
+	ENEMY_SINGLE,
 	COIN			= '*',
+	COIN_SINGLE,
 	FLOOR			= '#',
 	BREAKABLE_FLOOR	= '^',
 	LADDER			= 'H',
@@ -22,6 +25,7 @@ const sf::Vector2f VEC2_ZERO = { 0.f, 0.f };
 
 const float GRAVITY = 900.f;
 
+const int GO_TEXTURE_DIMANTION = 128;
 //  debug stuff
 
 #define Debug(x) " | "<< #x << ": "<< (x)

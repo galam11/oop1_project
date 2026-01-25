@@ -38,7 +38,7 @@ private:
 	std::vector<std::string> m_rawBoard;
 	
 	bool loadRawBoard();
-	void createGameObject(Types type, const sf::Vector2f& position);
+	void createGameObject(ID type, const sf::Vector2f& position);
 	void handleCollisions();
 };
 

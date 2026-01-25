@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
-enum Types;
+enum ID;
 class RemovableGameObject : public GameObject
 {
 public:
-	RemovableGameObject(Types type, const sf::Vector2f& position);
+	RemovableGameObject(ID type, const sf::Vector2f& position);
 	bool isToBeRemoved() const;
 
 protected:

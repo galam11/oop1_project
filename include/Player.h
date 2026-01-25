@@ -1,6 +1,6 @@
 #pragma once
 #include "MovableGameObject.h"
-
+#include "Animator.h"
 class Enemy;
 class Coin;
 
@@ -9,7 +9,7 @@ class Player : public MovableGameObject
 public:
 	Player(const sf::Vector2f& position = sf::Vector2f());
 
-	void update(const sf::Time& dt) override;
+	sf::Vector2f updateMovingGameobject(const sf::Time& dt) override;
 
 	int getScore() const;
 	int getLives() const;

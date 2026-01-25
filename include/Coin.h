@@ -17,6 +17,7 @@ public:
 
 	void handleColliton(const Player& other);
 
+	void update(const sf::Time& dt) override;
 	
 private:
 	static int s_CoinCount;

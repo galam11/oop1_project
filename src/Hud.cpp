@@ -9,7 +9,7 @@ Hud::Hud(const Player& player, const sf::Clock& timer, const Board& board) :
 	m_LevelText(AssetsManager::instance().getFont()),
 	m_LivesText(AssetsManager::instance().getFont()),
 	m_TimerText(AssetsManager::instance().getFont()),
-	m_playerSpright(AssetsManager::instance().getTexture(PLAYER))
+	m_playerSpright(AssetsManager::instance().getTexture(PLAYER_SINGLE))
 { 
 	
 	float width = ((float)WINDOW_SIZE.x);

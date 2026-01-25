@@ -2,28 +2,34 @@
 #include "macros.h"
 #include "Enemy.h"
 #include "Board.h"
-
-Player::Player(const sf::Vector2f& position)
-	: MovableGameObject(PLAYER, position)
+#include <iostream>
+Player::Player(const sf::Vector2f& position) : 
+	MovableGameObject(PLAYER, position)
 {
+	std::cout << "Player!" << std::endl;
+
 	m_speed = 400.f;
 }
 
-void Player::update(const sf::Time& dt)
+sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 {
 	m_gotHit = false;
 	sf::Vector2f dir = { 0.f, 0.f };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && isOnLadder())
 		dir += UP;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		dir += DOWN;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		dir += RIGHT;
+	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		dir += LEFT;
+	
 
-	updatePositon(dir, dt);
+	return dir;
 }
 
 void Player::setPosition(const sf::Vector2f& position)
