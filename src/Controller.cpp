@@ -2,12 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include "Scene.h"
 #include "LevelScene.h"
-
+#include "MainMenueScene.h"
 
 Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_SIZE), "Game Window")
 {
-	m_currentScene = std::make_unique<LevelScene>();
+	m_currentScene = std::make_unique<MainMenuScene>();
 }
 
 void Controller::run()
@@ -15,6 +15,9 @@ void Controller::run()
 	sf::Clock gameClock;
 	while (m_window.isOpen())
 	{
+		if (m_currentScene->isSceneFinished())
+			m_currentScene = std::move(m_currentScene->getNextSeane());
+
 		while (auto event = m_window.pollEvent())
 			event->visit([this](const auto& ev) { handleEvent(ev); });
 
@@ -28,10 +31,6 @@ void Controller::run()
 	}
 }
 
-void Controller::setScene(std::unique_ptr<Scene>& scene)
-{
-	m_nextScene = std::move(scene);
-}
 
 void Controller::handleEvent(const auto& event) { }
 

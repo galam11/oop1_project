@@ -10,9 +10,8 @@ public:
 	Controller();
 
 	void run();
-	void setScene(std::unique_ptr<Scene>& scene);
 private:
-	std::unique_ptr<Scene> m_nextScene;
+	std::unique_ptr<Scene> m_nextScene = nullptr;
 	std::unique_ptr<Scene> m_currentScene;
 	sf::RenderWindow m_window;
 

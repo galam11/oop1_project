@@ -20,7 +20,6 @@ Hud::Hud(const Player& player, const sf::Clock& timer, const Board& board) :
 
 
 	m_playerSpright.scale({ 0.4f, 0.5f });
-	//m_playerSpright.setOrigin(m_playerSpright.getLocalBounds().size * 0.5f);
 	m_playerSpright.setPosition(m_LivesText.getPosition() - sf::Vector2f(60.f, 10.f));
 }
 
