@@ -12,8 +12,8 @@
 #include "Coin.h"
 #include "BreakableFloor.h"
 
-GameObject::GameObject(Types type, const sf::Vector2f& positon)
-	 : m_sprite(AssetsManager::instance().getTexture(type)) 
+GameObject::GameObject(Types type, const sf::Vector2f& positon) : 
+	m_sprite(AssetsManager::instance().getTexture(type))
 { 
 	m_sprite.setPosition(positon);
 }

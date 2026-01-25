@@ -9,8 +9,9 @@ AssetsManager AssetsManager::m_instance = AssetsManager();
 
 AssetsManager &AssetsManager::instance() { return m_instance; }
 
-AssetsManager::AssetsManager() {
-	m_textures[PLAYER] = loadTexture("player.png");
+AssetsManager::AssetsManager() 
+{
+	m_textures[PLAYER] = loadTexture("player_spright_sheet.png");
 	m_textures[ENEMY] = loadTexture("enemy.png");
 	m_textures[COIN] = loadTexture("coin.png");
 	m_textures[FLOOR] = loadTexture("floor.png");

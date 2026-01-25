@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Animator.h"
 #include "macros.h"
 
 class Rail;
@@ -34,6 +35,5 @@ protected:
 	void moveMe(const sf::Vector2f& pos);
 	void setMyPosition(const sf::Vector2f& position);
 
-private:
-	sf::Sprite m_sprite;	
+	sf::Sprite m_sprite;
 };

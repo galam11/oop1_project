@@ -1,6 +1,6 @@
 #pragma once
 #include "MovableGameObject.h"
-
+#include "Animator.h"
 class Enemy;
 class Coin;
 
@@ -31,4 +31,6 @@ private:
 	int m_currentLevel = 0;
 	int m_lives = 3;
 	bool m_gotHit = false;
+
+	Animator m_animator;
 };
