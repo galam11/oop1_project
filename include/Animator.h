@@ -7,8 +7,9 @@ public:
 	Animator(sf::Sprite& spright, int fps = 10);
 	void animate(const sf::Time& dt);
 	void setAnimation(int anim);
-	void setTimePerFrame(float timePerFrame);
+	void setFramePerSecend(float timePerFrame);
 	void resetAnimation();
+	bool animationOnLastFrame();
 private:
 	sf::Sprite& m_sprite;
 	int m_frame = 0;

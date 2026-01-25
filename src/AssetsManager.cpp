@@ -17,7 +17,9 @@ AssetsManager::AssetsManager()
 	m_textures[ENEMY] = loadTexture("enemy_sheet.png");
 	m_textures[ENEMY_SINGLE] = loadTexture("enemy.png");
 
-	m_textures[COIN] = loadTexture("coin.png");
+	m_textures[COIN] = loadTexture("coin_sheet.png");
+	m_textures[COIN_SINGLE] = loadTexture("coin.png");
+
 	m_textures[FLOOR] = loadTexture("floor.png");
 	m_textures[BREAKABLE_FLOOR] = loadTexture("breakable_floor.png");
 	m_textures[LADDER] = loadTexture("ladder.png");

@@ -7,6 +7,7 @@ enum ID
 	ENEMY			= '%',
 	ENEMY_SINGLE,
 	COIN			= '*',
+	COIN_SINGLE,
 	FLOOR			= '#',
 	BREAKABLE_FLOOR	= '^',
 	LADDER			= 'H',

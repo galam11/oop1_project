@@ -4,9 +4,10 @@
 
 Animator::Animator(sf::Sprite& spirit, int fps) :
 	m_sprite(spirit),
-	m_totalFrames(spirit.getTexture().getSize().x / GO_TEXTURE_DIMANTION),
-	m_timePerFrame(1.f / fps)
+	m_totalFrames(spirit.getTexture().getSize().x / GO_TEXTURE_DIMANTION)
 {
+	setFramePerSecend(fps);
+
 	m_sprite.setTextureRect(
 		sf::IntRect(
 			{0, 0} ,
@@ -33,14 +34,14 @@ void Animator::animate(const sf::Time& dt)
 	}
 }
 
-void Animator::setAnimation(int anim) { m_animation = anim; }
+void Animator::setAnimation(int anim)
+{ 
+	m_animation = anim; 
+}
 
-void Animator::setTimePerFrame(float timePerFrame)
+void Animator::setFramePerSecend(float framePerSecend)
 {
-	if (timePerFrame > 0.f)
-		m_timePerFrame = timePerFrame;
-	else
-		m_timePerFrame = 1.0f;
+	m_timePerFrame = 1 / framePerSecend;
 }
 
 void Animator::resetAnimation()
@@ -53,4 +54,9 @@ void Animator::resetAnimation()
 			{ GO_TEXTURE_DIMANTION, GO_TEXTURE_DIMANTION }
 		}
 	);
+}
+
+bool Animator::animationOnLastFrame()
+{
+	return m_frame == m_totalFrames - 1;
 }
