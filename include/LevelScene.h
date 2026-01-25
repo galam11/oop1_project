@@ -15,7 +15,6 @@ public:
     void onKeyReleased(const sf::Event::KeyReleased& event);
 
 private:
-    Board m_board;
     Hud m_hud;
  
     sf::Clock m_timer;
