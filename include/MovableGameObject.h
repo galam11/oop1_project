@@ -10,8 +10,8 @@ class MovableGameObject : public GameObject
 public:
 	MovableGameObject(Types type, const sf::Vector2f& position);
 
-	virtual void update() = 0;
-	void updatePositon(const sf::Time& dt);
+	virtual void update(const sf::Time& dt) = 0;
+	
 
 	void resetGameObject();
 
@@ -23,12 +23,14 @@ public:
 protected:
 	float m_speed = 1.0f;
 	sf::Vector2f m_startPosition;
-	sf::Vector2f m_moveDirctaion = VEC2_ZERO;
+	
+	void updatePositon(sf::Vector2f moveDirctaion,const sf::Time& dt);
 
 	bool isOnLadder() const;
 	bool isOnRail() const;
 private:
 	void handleSolidCollision(const GameObject& other);
+	sf::Vector2f m_moveDirctaion = VEC2_ZERO;
 
 	bool m_onLadder = false;
 	bool m_onRail = false;

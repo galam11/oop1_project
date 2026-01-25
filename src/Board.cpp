@@ -24,17 +24,19 @@ Board::Board()
 
 void Board::update(const sf::Time& dt)
 {
-	m_player.update();
+	m_player.update(dt);
 
 	for (const auto& movableObject : m_movableObjects)
-		movableObject->update();
-
-	m_player.updatePositon(dt);
-
-	for (const auto& movableObject : m_movableObjects)
-		movableObject->updatePositon(dt);
+		movableObject->update(dt);
 
 	handleCollisions();
+
+	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item)
+		{
+			if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
+				return ptr->isToBeRemoved();
+			return false;
+		});
 }
 
 void Board::display(sf::RenderWindow& window) const
@@ -196,11 +198,4 @@ void Board::handleCollisions()
 				gameObject->handleColliton(*movableObject);
 			}
 
-
-	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item) 
-	{
-		if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
-			return ptr->isToBeRemoved();
-		return false;
-	});
 }

@@ -1,7 +1,7 @@
 #include "LevelScene.h"
 #include "Coin.h"
 #include "AssetsManager.h"
-#include <iostream>
+
 
 LevelScene::LevelScene()
     : m_hud(m_board.getPlayer(), m_timer, m_board)
@@ -42,10 +42,10 @@ void LevelScene::display(sf::RenderWindow& window) const
 void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
 {
     if (event.code == sf::Keyboard::Key::Space)
-        m_board.loadNextLevel();
+        nextLevel();
 
     else if (event.code == sf::Keyboard::Key::R)
-        m_board.loadFromRawBoard();
+        hardResetLevel();
 }
 
 void LevelScene::nextLevel()

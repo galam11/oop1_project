@@ -10,7 +10,7 @@ class Enemy : public MovableGameObject
 public:
 	Enemy(const sf::Vector2f& position, const Player& player);
 
-	void update() override;
+	void update(const sf::Time& dt) override;
 
 	void setTarget(const sf::Vector2f& newTarget);
 

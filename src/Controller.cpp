@@ -3,7 +3,6 @@
 #include "Scene.h"
 #include "LevelScene.h"
 
-#include <iostream>
 
 Controller::Controller()
 	: m_window(sf::VideoMode(WINDOW_SIZE), "Game Window")

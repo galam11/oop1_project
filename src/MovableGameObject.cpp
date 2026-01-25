@@ -8,26 +8,22 @@
 #include "macros.h"
 
 #include "Player.h"
-#include <iostream>
-
-
 
 MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
 	: GameObject(type, position), m_startPosition(position) { }
 
-void MovableGameObject::updatePositon(const sf::Time& dt)
+void MovableGameObject::updatePositon(sf::Vector2f moveDirctaion, const sf::Time& dt)
 {
-	auto moveVec = m_moveDirctaion;
+	m_moveDirctaion = moveDirctaion;
 	auto gravityVec = VEC2_ZERO;
 
-	if (moveVec != VEC2_ZERO)
-		moveVec = moveVec.normalized();
+	if (m_moveDirctaion != VEC2_ZERO)
+		m_moveDirctaion = m_moveDirctaion.normalized();
 
 	if (!m_onLadder && !m_onRail)
 		gravityVec = DOWN * (m_onGround ? 50.f : GRAVITY);
 
-
-	moveMe((moveVec * m_speed + gravityVec) * dt.asSeconds());
+	moveMe((m_moveDirctaion * m_speed + gravityVec) * dt.asSeconds());
 
 	m_onLadder = m_onRail = m_onGround = false;
 }

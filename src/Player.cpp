@@ -3,26 +3,27 @@
 #include "Enemy.h"
 #include "Board.h"
 
-#include <iostream>
 Player::Player(const sf::Vector2f& position)
 	: MovableGameObject(PLAYER, position)
 {
 	m_speed = 400.f;
 }
 
-void Player::update()
+void Player::update(const sf::Time& dt)
 {
 	m_gotHit = false;
-	m_moveDirctaion = { 0.f, 0.f };
+	sf::Vector2f dir = { 0.f, 0.f };
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && isOnLadder())
-		m_moveDirctaion += UP;
+		dir += UP;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-		m_moveDirctaion += DOWN;
+		dir += DOWN;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-		m_moveDirctaion += RIGHT;
+		dir += RIGHT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-		m_moveDirctaion += LEFT;
+		dir += LEFT;
+
+	updatePositon(dir, dt);
 }
 
 void Player::setPosition(const sf::Vector2f& position)
@@ -38,8 +39,6 @@ sf::Vector2f Player::getPositon() const
 
 void Player::handleColliton(const Enemy& other)
 {
-	std::cout << "HIT" << std::endl;
-
 	if (!m_gotHit)
 	{
 		m_lives--;
