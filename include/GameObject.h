@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Animator.h"
 #include "macros.h"
+#include "Animator.h"
 
 class Rail;
 class Player;
@@ -14,9 +15,11 @@ class BreakableFloor;
 class GameObject
 {
 public:
-	GameObject(Types type, const sf::Vector2f& position);
+	GameObject(ID type, const sf::Vector2f& position);
 	virtual ~GameObject() = default;
-	virtual void draw(sf::RenderWindow& window) const;
+	void draw(sf::RenderWindow& window) const;
+
+	virtual void update(const sf::Time& time);
 
 	bool collidedWith(const GameObject& other);
 	virtual void handleColliton(GameObject& other) = 0;
@@ -29,11 +32,14 @@ public:
 	virtual void handleColliton(const Coin& other);
 	virtual void handleColliton(const BreakableFloor& other);
 
-	sf::FloatRect getGlobalBounds() const;
+	sf::FloatRect getGlobalBounds() const; 
+
+private:
+	sf::Sprite m_sprite;
 
 protected:
 	void moveMe(const sf::Vector2f& pos);
 	void setMyPosition(const sf::Vector2f& position);
 
-	sf::Sprite m_sprite;
+	Animator m_animator;
 };

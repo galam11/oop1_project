@@ -1,9 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-enum Types
+enum ID
 {
 	PLAYER			= '@',
+	PLAYER_SINGLE,
 	ENEMY			= '%',
+	ENEMY_SINGLE,
 	COIN			= '*',
 	FLOOR			= '#',
 	BREAKABLE_FLOOR	= '^',

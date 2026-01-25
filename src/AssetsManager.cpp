@@ -12,7 +12,11 @@ AssetsManager &AssetsManager::instance() { return m_instance; }
 AssetsManager::AssetsManager() 
 {
 	m_textures[PLAYER] = loadTexture("player_spright_sheet.png");
-	m_textures[ENEMY] = loadTexture("enemy.png");
+	m_textures[PLAYER_SINGLE] = loadTexture("player.png");
+
+	m_textures[ENEMY] = loadTexture("enemy_sheet.png");
+	m_textures[ENEMY_SINGLE] = loadTexture("enemy.png");
+
 	m_textures[COIN] = loadTexture("coin.png");
 	m_textures[FLOOR] = loadTexture("floor.png");
 	m_textures[BREAKABLE_FLOOR] = loadTexture("breakable_floor.png");
@@ -26,7 +30,7 @@ AssetsManager::AssetsManager()
 
 }
 
-const sf::Texture &AssetsManager::getTexture(const Types id) const 
+const sf::Texture &AssetsManager::getTexture(const ID id) const 
 {
 	auto it = m_textures.find(id);
 	if (it != m_textures.end())

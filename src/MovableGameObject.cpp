@@ -9,12 +9,18 @@
 
 #include "Player.h"
 
-MovableGameObject::MovableGameObject(Types type, const sf::Vector2f& position)
+MovableGameObject::MovableGameObject(ID type, const sf::Vector2f& position)
 	: GameObject(type, position), m_startPosition(position) { }
 
-void MovableGameObject::updatePositon(sf::Vector2f moveDirctaion, const sf::Time& dt)
+void MovableGameObject::update(const sf::Time& dt)
 {
-	m_moveDirctaion = moveDirctaion;
+	m_moveDirctaion = updateMovingGameobject(dt);
+	updatePositon(dt);
+	animate(dt);
+}
+
+void MovableGameObject::updatePositon(const sf::Time& dt)
+{
 	auto gravityVec = VEC2_ZERO;
 
 	if (m_moveDirctaion != VEC2_ZERO)
@@ -26,6 +32,17 @@ void MovableGameObject::updatePositon(sf::Vector2f moveDirctaion, const sf::Time
 	moveMe((m_moveDirctaion * m_speed + gravityVec) * dt.asSeconds());
 
 	m_onLadder = m_onRail = m_onGround = false;
+}
+
+void MovableGameObject::animate(const sf::Time& dt)
+{
+	if (m_moveDirctaion == VEC2_ZERO)
+		m_animator.resetAnimation();
+	else
+	{
+		m_animator.setAnimation(m_moveDirctaion.x > 0 ? 0 : 1);
+		m_animator.animate(dt);
+	}
 }
 
 void MovableGameObject::resetGameObject()

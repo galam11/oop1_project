@@ -12,8 +12,9 @@
 #include "Coin.h"
 #include "BreakableFloor.h"
 
-GameObject::GameObject(Types type, const sf::Vector2f& positon) : 
-	m_sprite(AssetsManager::instance().getTexture(type))
+GameObject::GameObject(ID type, const sf::Vector2f& positon) : 
+	m_sprite(AssetsManager::instance().getTexture(type)) , 
+	m_animator(m_sprite)
 { 
 	m_sprite.setPosition(positon);
 }
@@ -22,6 +23,8 @@ void GameObject::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_sprite);
 }
+
+void GameObject::update(const sf::Time& time) { }
 
 bool GameObject::collidedWith(const GameObject& other)
 {

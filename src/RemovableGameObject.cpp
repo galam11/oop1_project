@@ -2,7 +2,7 @@
 #include "macros.h"
 
 
-RemovableGameObject::RemovableGameObject(Types type, const sf::Vector2f& position)
+RemovableGameObject::RemovableGameObject(ID type, const sf::Vector2f& position)
 	: GameObject(type, position) { }
 
 

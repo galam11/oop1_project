@@ -29,6 +29,9 @@ void Board::update(const sf::Time& dt)
 	for (const auto& movableObject : m_movableObjects)
 		movableObject->update(dt);
 
+	for (const auto& gameObjects : m_gameObjects)
+		gameObjects->update(dt);
+
 	handleCollisions();
 
 	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item)
@@ -103,7 +106,7 @@ void Board::loadFromRawBoard()
 
 	for (int i = 0; i < m_rawBoard.size(); ++i)
 		for (int j = 0; j < m_rawBoard[0].size(); ++j)
-			createGameObject((Types)m_rawBoard[i][j], sf::Vector2f(j * tileW, i * tileH));
+			createGameObject((ID)m_rawBoard[i][j], sf::Vector2f(j * tileW, i * tileH));
 
 	m_boardView.setSize(m_boardSize);
 	m_boardView.setCenter(m_boardSize * 0.5f);
@@ -144,7 +147,7 @@ bool Board::loadRawBoard()
 	return true;
 }
 
-void Board::createGameObject(Types type, const sf::Vector2f& position)
+void Board::createGameObject(ID type, const sf::Vector2f& position)
 {
 	switch (type)
 	{

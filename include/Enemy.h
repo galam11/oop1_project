@@ -4,13 +4,14 @@
 #include "macros.h"
 
 #include "Player.h"
+#include "Animator.h"
 
 class Enemy : public MovableGameObject
 {
 public:
 	Enemy(const sf::Vector2f& position, const Player& player);
 
-	void update(const sf::Time& dt) override;
+	sf::Vector2f updateMovingGameobject(const sf::Time& dt) override;
 
 	void setTarget(const sf::Vector2f& newTarget);
 

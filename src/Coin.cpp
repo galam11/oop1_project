@@ -1,7 +1,7 @@
 #include "Coin.h"
 #include "macros.h"
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
 
 int Coin::s_CoinCount = 0;
 
@@ -29,4 +29,9 @@ void Coin::handleColliton(GameObject& other)
 void Coin::handleColliton(const Player& other)
 {
 	m_isToBeRemoved = true;
+}
+
+void Coin::update(const sf::Time& dt)
+{
+	// to-do animate coin
 }

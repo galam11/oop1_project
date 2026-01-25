@@ -9,7 +9,7 @@ class Player : public MovableGameObject
 public:
 	Player(const sf::Vector2f& position = sf::Vector2f());
 
-	void update(const sf::Time& dt) override;
+	sf::Vector2f updateMovingGameobject(const sf::Time& dt) override;
 
 	int getScore() const;
 	int getLives() const;
@@ -31,6 +31,4 @@ private:
 	int m_currentLevel = 0;
 	int m_lives = 3;
 	bool m_gotHit = false;
-
-	Animator m_animator;
 };
