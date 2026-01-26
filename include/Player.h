@@ -24,8 +24,6 @@ public:
 
 	void handleColliton(Enemy& other) override;
 	void handleColliton(Coin& other) override;
-	
-	void resetPlayerHealth();
 
 	void initPlayer(const sf::Vector2f& position, RemoveMark* rightMark, RemoveMark* leftMark);
 	void nextLevel();

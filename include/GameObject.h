@@ -8,6 +8,7 @@ class Floor;
 class Enemy;
 class Coin;
 class BreakableFloor;
+class RemoveMark;
 
 class GameObject
 {
@@ -24,8 +25,11 @@ public:
 	virtual void handleColliton(Enemy& other);
 	virtual void handleColliton(Coin& other);
 	virtual void handleColliton(BreakableFloor& other);
+	virtual void handleColliton(RemoveMark& other);
 
 	bool collidedWith(const GameObject& other);
+
+	virtual void reset();
 	virtual sf::FloatRect getGlobalBounds() const = 0;
 
 protected:

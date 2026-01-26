@@ -12,7 +12,7 @@ public:
 
 	void update(const sf::Time& dt);
 	
-	void resetGameObject();
+	void reset() override;
 
 	virtual void handleColliton(GameObject& other) override = 0;
 	void handleColliton(Floor& other) override;

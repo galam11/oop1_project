@@ -4,11 +4,13 @@
 #include "Board.h"
 #include "BreakableFloor.h"
 #include <iostream>
+
+const int DIG_OFFSET_VERTICAL = 90;
+const int DIG_OFFSET_HORIZANTAL = 110;
+
 Player::Player(const sf::Vector2f& position) : 
 	MovableGameObject(PLAYER, position)
 {
-	std::cout << "Player!" << std::endl;
-
 	m_speed = 400.f;
 }
 
@@ -32,11 +34,11 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
 		dir += LEFT;
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
 		if (auto floorPtr = m_leftMark->takeHitFloor())
 			floorPtr->remove();
 		
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
 		if (auto floorPtr = m_rightMark->takeHitFloor())
 			floorPtr->remove();
 
@@ -62,17 +64,16 @@ void Player::handleColliton(Coin& other)
 	m_score += 2 * m_currentLevel;
 }
 
-void Player::resetPlayerHealth()
-{
-	m_lives = 3;
-}
-
 void Player::initPlayer(const sf::Vector2f& position, RemoveMark* rightMark, RemoveMark* leftMark)
 {
-	m_lives = 3;
+	m_startPosition = position;
+
+	setMyPosition(position);
 
 	m_rightMark = rightMark;
+	m_rightMark->setOffset({ DIG_OFFSET_HORIZANTAL , DIG_OFFSET_VERTICAL });
 	m_leftMark = leftMark;
+	m_leftMark->setOffset({ -DIG_OFFSET_HORIZANTAL , DIG_OFFSET_VERTICAL });
 }
 
 void Player::nextLevel()

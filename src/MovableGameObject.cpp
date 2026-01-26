@@ -45,7 +45,7 @@ void MovableGameObject::animate(const sf::Time& dt)
 	}
 }
 
-void MovableGameObject::resetGameObject()
+void MovableGameObject::reset()
 {
 	setMyPosition(m_startPosition);
 }

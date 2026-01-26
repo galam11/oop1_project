@@ -27,15 +27,12 @@ void Board::update(const sf::Time& dt)
 {
 	m_player.update(dt);
 
-	for (const auto& movableObject : m_movableObjects)
-		movableObject->update(dt);
-
 	for (const auto& gameObjects : m_gameObjects)
 		gameObjects->update(dt);
 
 	handleCollisions();
 
-	std::erase_if(m_gameObjects, [](const std::unique_ptr<SpiritGameObject>& item)
+	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item)
 		{
 			if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
 				return ptr->isToBeRemoved();
@@ -49,9 +46,6 @@ void Board::display(sf::RenderWindow& window) const
 
 	for (const auto& obj : m_gameObjects)
 		obj->draw(window);
-	
-	for (const auto& mobObj : m_movableObjects)
-		mobObj->draw(window);
 
 	m_player.draw(window);
 	
@@ -85,16 +79,14 @@ bool Board::loadNextLevel()
 
 void Board::Reset()
 {
-	m_player.resetGameObject();
-	for (const auto& mobObj : m_movableObjects)
-		mobObj->resetGameObject();
+	m_player.reset();
+	for (const auto& gameObject : m_gameObjects)
+		gameObject->reset();
 }
  
 void Board::loadFromRawBoard()
 {
-	m_movableObjects.clear();
 	m_gameObjects.clear();
-	m_player.resetPlayerHealth();
 
 	sf::Vector2u textureSize = AssetsManager::instance().getTexture(FLOOR).getSize();
 	float tileH = static_cast<float>(textureSize.y);
@@ -156,7 +148,7 @@ void Board::createGameObject(ID type, const sf::Vector2f& position)
 		initPlayer(position);
 		break;
 	case ENEMY:
-		m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
+		m_gameObjects.push_back(std::make_unique<Enemy>(position, m_player));
 		break;
 	case COIN:
 		m_gameObjects.push_back(std::make_unique<Coin>(position));
@@ -197,20 +189,11 @@ void Board::handleCollisions()
 			playerRef.handleColliton(*gameObject);
 		}
 
-	for (const auto& movableObject : m_movableObjects)
-		if (movableObject->collidedWith(playerRef))
+	for (int i = 0; i < m_gameObjects.size(); i++)
+		for (int j = 0; j < m_gameObjects.size(); j++)
 		{
-			movableObject->handleColliton(playerRef);
-			playerRef.handleColliton(*movableObject);
+			if (i != j && m_gameObjects[i]->collidedWith(*m_gameObjects[j].get()))
+				m_gameObjects[i]->handleColliton(*m_gameObjects[j].get());
 		}
-
-	// game objects with movable objects
-	for (const auto& movableObject : m_movableObjects)
-		for (const auto& gameObject : m_gameObjects)
-			if (movableObject->collidedWith(*gameObject))
-			{
-				movableObject->handleColliton(*gameObject);
-				gameObject->handleColliton(*movableObject);
-			}
 
 }
