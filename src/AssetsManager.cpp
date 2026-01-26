@@ -7,9 +7,9 @@
 
 AssetsManager AssetsManager::m_instance = AssetsManager();
 
-AssetsManager &AssetsManager::instance() { return m_instance; }
+AssetsManager& AssetsManager::instance() { return m_instance; }
 
-AssetsManager::AssetsManager() 
+AssetsManager::AssetsManager()
 {
 	m_textures[PLAYER] = loadTexture("player_spright_sheet.png");
 	m_textures[PLAYER_SINGLE] = loadTexture("player.png");
@@ -27,12 +27,23 @@ AssetsManager::AssetsManager()
 
 	m_errTexture = loadTexture("error.png");
 
-	if (!m_font.openFromFile("jersey10-Regular.ttf")) 
+	if (!m_font.openFromFile("jersey10-Regular.ttf"))
 		std::cout << "Error loading font" << std::endl;
 
+	m_soundBuffers[SoundID::COIN_PICKUP] = loadSoundBuffer("coin_pickup.wav");
+	m_soundBuffers[SoundID::DIGGING] = loadSoundBuffer("digging.wav");
+	m_soundBuffers[SoundID::DEATH] = loadSoundBuffer("death.wav");
+	m_soundBuffers[SoundID::LEVEL_VICTORY] = loadSoundBuffer("level_victory.wav");
+	m_soundBuffers[SoundID::VICTORY] = loadSoundBuffer("victory_sound.wav");
+	m_soundBuffers[SoundID::FAILURE] = loadSoundBuffer("failure_sound.wav");
+
+	if (!m_bgMusic.openFromFile("background_music.mp3"))
+		std::cout << "Error loading music" << std::endl;
+
+	m_bgMusic.setLooping(true);
 }
 
-const sf::Texture &AssetsManager::getTexture(const ID id) const 
+const sf::Texture& AssetsManager::getTexture(const ID id) const
 {
 	auto it = m_textures.find(id);
 	if (it != m_textures.end())
@@ -41,31 +52,38 @@ const sf::Texture &AssetsManager::getTexture(const ID id) const
 	return m_errTexture;
 }
 
-const sf::Font &AssetsManager::getFont() const { return m_font; }
+const sf::Font& AssetsManager::getFont() const { return m_font; }
 
-// temp
-const sf::SoundBuffer *AssetsManager::getSoundBuffer(const char id) const 
+const sf::SoundBuffer& AssetsManager::getSoundBuffer(const SoundID id) const
 {
-	auto it = m_soundBuffers.find(id);
-	if (it != m_soundBuffers.end())
-		return &(it->second);
-	return nullptr;
+	return m_soundBuffers.at(id);
 }
 
-sf::Texture AssetsManager::loadTexture(const std::string &filename) 
+void AssetsManager::playMusic()
+{
+	if (m_bgMusic.getStatus() != sf::SoundSource::Status::Playing)
+		m_bgMusic.play();
+}
+
+void AssetsManager::setMusicVolume(float volume)
+{
+	m_bgMusic.setVolume(volume);
+}
+
+sf::Texture AssetsManager::loadTexture(const std::string& filename)
 {
 	sf::Texture temp;
-	if (!temp.loadFromFile(filename)) 
-		std::cerr << "Error loading :" << filename << std::endl;
-	
+	if (!temp.loadFromFile(filename))
+		std::cerr << "Error loading texture: " << filename << std::endl;
+
 	return temp;
 }
 
-sf::SoundBuffer AssetsManager::loadSoundBuffer(const std::string &filename) 
+sf::SoundBuffer AssetsManager::loadSoundBuffer(const std::string& filename)
 {
 	sf::SoundBuffer temp;
-	if (!temp.loadFromFile(filename)) 
-		std::cerr << "Error loading :" << filename << std::endl;
-	
+	if (!temp.loadFromFile(filename))
+		std::cerr << "Error loading sound: " << filename << std::endl;
+
 	return temp;
 }

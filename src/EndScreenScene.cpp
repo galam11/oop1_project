@@ -8,24 +8,24 @@ EndScreenScene::EndScreenScene(bool victory, int score)
     : m_statusText(AssetsManager::instance().getFont()),
     m_scoreText(AssetsManager::instance().getFont())
 {
-    // Load a background level (re-using board logic for live background)
     m_board.loadNextLevel();
 
-    // Setup "Victory" or "Game Over"
+    m_sceneSound.emplace(AssetsManager::instance().getSoundBuffer(victory ? SoundID::VICTORY : SoundID::FAILURE));
+    m_sceneSound->play();
+    AssetsManager::instance().setMusicVolume(20.f);
+
     m_statusText.setString(victory ? "VICTORY!" : "GAME OVER");
     m_statusText.setCharacterSize(100);
     m_statusText.setFillColor(victory ? sf::Color::Green : sf::Color::Red);
     auto statusBounds = m_statusText.getGlobalBounds();
     m_statusText.setPosition({ WINDOW_SIZE.x / 2.f - statusBounds.size.x / 2.f, 100.f });
 
-    // Setup Score display
     m_scoreText.setString("Final Score: " + std::to_string(score));
     m_scoreText.setCharacterSize(50);
     m_scoreText.setFillColor(sf::Color::White);
     auto scoreBounds = m_scoreText.getGlobalBounds();
     m_scoreText.setPosition({ WINDOW_SIZE.x / 2.f - scoreBounds.size.x / 2.f, 250.f });
 
-    // Initialize Buttons
     initButton("RESTART", 450.f);
     initButton("MAIN MENU", 550.f);
     initButton("EXIT", 650.f);
@@ -51,7 +51,8 @@ void EndScreenScene::updateSelection()
 
 void EndScreenScene::update(const sf::Time& dt)
 {
-    m_board.update(dt); // Animate background elements
+    Scene::update(dt);
+    m_board.update(dt);
 }
 
 void EndScreenScene::onKeyPressed(const sf::Event::KeyPressed& event)
@@ -85,8 +86,7 @@ void EndScreenScene::onKeyPressed(const sf::Event::KeyPressed& event)
 
 void EndScreenScene::display(sf::RenderWindow& window) const
 {
-    m_board.display(window); // Draw background level
-
+    m_board.display(window);
     window.draw(m_statusText);
     window.draw(m_scoreText);
     for (const auto& btn : m_buttons)

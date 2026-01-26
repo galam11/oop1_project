@@ -2,6 +2,8 @@
 #include "MovableGameObject.h"
 #include "Animator.h"
 #include "RemoveMark.h"
+#include <SFML/Audio.hpp>
+#include <optional>
 
 class Enemy;
 class Coin;
@@ -19,7 +21,6 @@ public:
 	bool gotHit() const;
 	void handleColliton(GameObject& other) override;
 
-	
 	sf::Vector2f getPositon() const;
 
 	void handleColliton(Enemy& other) override;
@@ -29,11 +30,15 @@ public:
 	void nextLevel();
 
 private:
-	RemoveMark *m_rightMark = nullptr;
-	RemoveMark *m_leftMark = nullptr;
+	RemoveMark* m_rightMark = nullptr;
+	RemoveMark* m_leftMark = nullptr;
 
 	int m_score = 0;
 	int m_currentLevel = 0;
 	int m_lives = 3;
 	bool m_gotHit = false;
+
+	std::optional<sf::Sound> m_coinSound;
+	std::optional<sf::Sound> m_digSound;
+	std::optional<sf::Sound> m_deathSound;
 };

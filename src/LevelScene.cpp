@@ -6,11 +6,16 @@
 LevelScene::LevelScene()
     : m_hud(m_board.getPlayer(), m_timer, m_board)
 {
+    AssetsManager::instance().setMusicVolume(100.f);
+    AssetsManager::instance().playMusic();
+
     nextLevel();
 }
 
 void LevelScene::update(const sf::Time& dt)
 {
+    Scene::update(dt);
+
     m_hud.update();
     m_board.update(dt);
 
@@ -28,7 +33,6 @@ void LevelScene::update(const sf::Time& dt)
     }
     else if (m_board.getPlayer().getLives() == 0)
     {
-        // FIX: Pass false (loss) and final score
         m_nextSeane = std::make_unique<EndScreenScene>(false, m_board.getPlayer().getScore());
     }
 }
@@ -49,11 +53,19 @@ void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
 
 void LevelScene::nextLevel()
 {
+    bool isTransition = m_board.getPlayer().getCurrentLevel() > 0;
+
     if (!m_board.loadNextLevel())
     {
-        // FIX: Pass true (victory) and final score
         m_nextSeane = std::make_unique<EndScreenScene>(true, m_board.getPlayer().getScore());
         return;
+    }
+
+    if (isTransition)
+    {
+        m_sceneSound.emplace(AssetsManager::instance().getSoundBuffer(SoundID::LEVEL_VICTORY));
+        m_sceneSound->play();
+        AssetsManager::instance().setMusicVolume(30.f);
     }
 
     m_timer.reset();
