@@ -10,7 +10,7 @@
 #include "Player.h"
 
 MovableGameObject::MovableGameObject(ID type, const sf::Vector2f& position)
-	: GameObject(type, position), m_startPosition(position) { }
+	: SpiritGameObject(type, position), m_startPosition(position) { }
 
 void MovableGameObject::update(const sf::Time& dt)
 {
@@ -50,17 +50,17 @@ void MovableGameObject::resetGameObject()
 	setMyPosition(m_startPosition);
 }
 
-void MovableGameObject::handleColliton(const Floor& other)
+void MovableGameObject::handleColliton(Floor& other)
 {
 	handleSolidCollision(other);
 }
 
-void MovableGameObject::handleColliton(const BreakableFloor& other)
+void MovableGameObject::handleColliton(BreakableFloor& other)
 {
 	handleSolidCollision(other);
 }
 
-void MovableGameObject::handleColliton(const Ladder& other)
+void MovableGameObject::handleColliton(Ladder& other)
 {
 	m_onLadder = true;
 	if (!m_moveDirctaion.x != 0 && !m_onGround)
@@ -74,7 +74,7 @@ void MovableGameObject::handleColliton(const Ladder& other)
 }
 
 
-void MovableGameObject::handleColliton(const Rail& other)
+void MovableGameObject::handleColliton(Rail& other)
 {
 	if (!m_onLadder && !m_moveDirctaion.y > 0)
 	{
@@ -97,7 +97,7 @@ bool MovableGameObject::isOnRail() const
 	return m_onRail;
 }
 
-void MovableGameObject::handleSolidCollision(const GameObject& other)
+void MovableGameObject::handleSolidCollision(const SpiritGameObject& other)
 {
 	auto bounds = getGlobalBounds().findIntersection(other.getGlobalBounds()).value();
 

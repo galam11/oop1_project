@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "SpiritGameObject.h"
 #include "Player.h"
 #include "MovableGameObject.h"
 #include <memory>
@@ -39,6 +39,7 @@ private:
 	
 	bool loadRawBoard();
 	void createGameObject(ID type, const sf::Vector2f& position);
+	void initPlayer(const sf::Vector2f& position);
 	void handleCollisions();
 };
 

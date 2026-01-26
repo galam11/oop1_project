@@ -10,3 +10,8 @@ void BreakableFloor::handleColliton(GameObject& other)
 {
 	other.handleColliton(*this);
 }
+
+void BreakableFloor::remove()
+{
+	m_isToBeRemoved = true;
+}

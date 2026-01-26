@@ -1,25 +1,24 @@
 #pragma once
-#include "GameObject.h"
+#include "SpiritGameObject.h"
 #include <SFML/Graphics.hpp>
 
 
 enum ID;
 
-class MovableGameObject : public GameObject
+class MovableGameObject : public SpiritGameObject
 {
 public:
 	MovableGameObject(ID type, const sf::Vector2f& position);
 
 	void update(const sf::Time& dt);
 	
-
 	void resetGameObject();
 
 	virtual void handleColliton(GameObject& other) override = 0;
-	void handleColliton(const Floor& other) override;
-	void handleColliton(const BreakableFloor& other) override;
-	void handleColliton(const Ladder& other) override;
-	void handleColliton(const Rail& other) override;
+	void handleColliton(Floor& other) override;
+	void handleColliton(BreakableFloor& other) override;
+	void handleColliton(Ladder& other) override;
+	void handleColliton(Rail& other) override;
 protected:
 	float m_speed = 1.0f;
 	sf::Vector2f m_startPosition;
@@ -32,7 +31,7 @@ private:
 
 	void updatePositon(const sf::Time& dt);
 	void animate(const sf::Time& dt);
-	void handleSolidCollision(const GameObject& other);
+	void handleSolidCollision(const SpiritGameObject& other);
 	sf::Vector2f m_moveDirctaion = VEC2_ZERO;
 
 	bool m_onLadder = false;

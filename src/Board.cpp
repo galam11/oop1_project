@@ -11,6 +11,7 @@
 #include "Ladder.h"
 #include "BreakableFloor.h"
 #include "Floor.h"
+#include "RemoveMark.h"
 
 Board::Board()
 {
@@ -34,7 +35,7 @@ void Board::update(const sf::Time& dt)
 
 	handleCollisions();
 
-	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item)
+	std::erase_if(m_gameObjects, [](const std::unique_ptr<SpiritGameObject>& item)
 		{
 			if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
 				return ptr->isToBeRemoved();
@@ -152,7 +153,7 @@ void Board::createGameObject(ID type, const sf::Vector2f& position)
 	switch (type)
 	{
 	case PLAYER:
-		m_player.setPosition(position);
+		initPlayer(position);
 		break;
 	case ENEMY:
 		m_movableObjects.push_back(std::make_unique<Enemy>(position, m_player));
@@ -175,9 +176,20 @@ void Board::createGameObject(ID type, const sf::Vector2f& position)
 	}
 }
 
+void Board::initPlayer(const sf::Vector2f& position)
+{
+	auto right = std::make_unique<RemoveMark>();
+	auto left = std::make_unique<RemoveMark>();
+
+	m_player.initPlayer(position, right.get(), left.get());
+
+	m_gameObjects.push_back(std::move(right));
+	m_gameObjects.push_back(std::move(left));
+}
+
 void Board::handleCollisions()
 {
-	GameObject& playerRef = m_player;
+	SpiritGameObject& playerRef = m_player;
 	for (const auto& gameObject : m_gameObjects)
 		if (gameObject->collidedWith(playerRef))
 		{

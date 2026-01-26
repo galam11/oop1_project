@@ -31,7 +31,7 @@ void Coin::handleColliton(GameObject& other)
 	other.handleColliton(*this);
 }
 
-void Coin::handleColliton(const Player& other)
+void Coin::handleColliton(Player& other)
 {
 	m_isToBeRemoved = true;
 }
