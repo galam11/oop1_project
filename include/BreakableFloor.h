@@ -9,4 +9,6 @@ public:
 	BreakableFloor(const sf::Vector2f& position);
 
 	void handleColliton(GameObject& other) override;
+	
+	void remove();
 };

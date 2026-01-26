@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "SpiritGameObject.h"
 #include "RemovableGameObject.h"
 #include <SFML/Graphics.hpp>
 
@@ -15,7 +15,7 @@ public:
 	
 	void handleColliton(GameObject& other) override;
 
-	void handleColliton(const Player& other);
+	void handleColliton(Player& other);
 
 	void update(const sf::Time& dt) override;
 	

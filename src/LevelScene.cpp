@@ -2,6 +2,7 @@
 #include "Coin.h"
 #include "AssetsManager.h"
 
+#include "EndScreenScene.h"
 
 LevelScene::LevelScene()
     : m_hud(m_board.getPlayer(), m_timer, m_board)
@@ -13,8 +14,7 @@ void LevelScene::update(const sf::Time& dt)
 {
     m_hud.update();
 
-	m_board.update(dt);
-   
+	m_board.update(dt); 
 
     if (Coin::getCoinCount() == 0)
     {
@@ -24,10 +24,12 @@ void LevelScene::update(const sf::Time& dt)
     {
         softResetLevel();
     }
-    else if (m_timer.getElapsedTime() > m_board.getTimeOut() || m_board.getPlayer().getLives() == 0)
+    else if (m_timer.getElapsedTime() > m_board.getTimeOut())
     {
         hardResetLevel();
     }
+    else if (m_board.getPlayer().getLives() == 0)
+        m_nextSeane = std::make_unique<EndScreenScene>();
     
 }
 
@@ -50,7 +52,12 @@ void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
 
 void LevelScene::nextLevel()
 {
-    m_board.loadNextLevel();
+    if (!m_board.loadNextLevel()) 
+    {
+        m_nextSeane = std::make_unique<EndScreenScene>();
+        return;
+    }
+
     m_timer.reset();
 
     if (m_board.getTimeOut().asSeconds() != 0)

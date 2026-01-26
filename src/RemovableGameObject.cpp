@@ -3,7 +3,7 @@
 
 
 RemovableGameObject::RemovableGameObject(ID type, const sf::Vector2f& position)
-	: GameObject(type, position) { }
+	: SpiritGameObject(type, position) { }
 
 
 bool RemovableGameObject::isToBeRemoved() const

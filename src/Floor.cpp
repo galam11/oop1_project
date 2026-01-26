@@ -2,7 +2,7 @@
 #include "macros.h"
 
 Floor::Floor(const sf::Vector2f& position)
-	: GameObject(FLOOR, position)
+	: SpiritGameObject(FLOOR, position)
 {
 }
 

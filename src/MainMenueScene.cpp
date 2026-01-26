@@ -2,6 +2,7 @@
 #include "macros.h"
 #include "memory.h"
 #include "LevelScene.h"
+
 void MainMenuScene::update(const sf::Time& dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))

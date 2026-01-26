@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "SpiritGameObject.h"
 #include "Player.h"
 #include "MovableGameObject.h"
 #include <memory>
@@ -26,19 +26,18 @@ public:
 	sf::Time getTimeOut() const;
 private:
 	std::ifstream m_file;
-	int m_currentLevel = 0;
 
 	Player m_player;
 	sf::View m_boardView;
 	sf::Vector2f m_boardSize;
 	sf::Time m_levelTime;
 
-	std::vector<std::unique_ptr<MovableGameObject>> m_movableObjects;
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 	std::vector<std::string> m_rawBoard;
 	
 	bool loadRawBoard();
 	void createGameObject(ID type, const sf::Vector2f& position);
+	void initPlayer(const sf::Vector2f& position);
 	void handleCollisions();
 };
 

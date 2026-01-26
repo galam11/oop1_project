@@ -1,8 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "Animator.h"
 #include "macros.h"
-#include "Animator.h"
 
 class Rail;
 class Player;
@@ -11,35 +8,31 @@ class Floor;
 class Enemy;
 class Coin;
 class BreakableFloor;
+class RemoveMark;
 
 class GameObject
 {
 public:
-	GameObject(ID type, const sf::Vector2f& position);
 	virtual ~GameObject() = default;
-	void draw(sf::RenderWindow& window) const;
-
+	virtual void draw(sf::RenderWindow& window) const;
 	virtual void update(const sf::Time& time);
 
-	bool collidedWith(const GameObject& other);
 	virtual void handleColliton(GameObject& other) = 0;
+	virtual void handleColliton(Rail& other);
+	virtual void handleColliton(Player& other);
+	virtual void handleColliton(Ladder& other);
+	virtual void handleColliton(Floor& other);
+	virtual void handleColliton(Enemy& other);
+	virtual void handleColliton(Coin& other);
+	virtual void handleColliton(BreakableFloor& other);
+	virtual void handleColliton(RemoveMark& other);
 
-	virtual void handleColliton(const Rail& other);
-	virtual void handleColliton(const Player& other);
-	virtual void handleColliton(const Ladder& other);
-	virtual void handleColliton(const Floor& other);
-	virtual void handleColliton(const Enemy& other);
-	virtual void handleColliton(const Coin& other);
-	virtual void handleColliton(const BreakableFloor& other);
+	bool collidedWith(const GameObject& other);
 
-	sf::FloatRect getGlobalBounds() const; 
-
-private:
-	sf::Sprite m_sprite;
+	virtual void reset();
+	virtual sf::FloatRect getGlobalBounds() const = 0;
 
 protected:
-	void moveMe(const sf::Vector2f& pos);
-	void setMyPosition(const sf::Vector2f& position);
-
-	Animator m_animator;
+	virtual void moveMe(const sf::Vector2f& pos) = 0;
+	virtual void setMyPosition(const sf::Vector2f& position) = 0;
 };

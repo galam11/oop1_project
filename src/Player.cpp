@@ -2,40 +2,47 @@
 #include "macros.h"
 #include "Enemy.h"
 #include "Board.h"
+#include "BreakableFloor.h"
 #include <iostream>
+
+const int DIG_OFFSET_VERTICAL = 90;
+const int DIG_OFFSET_HORIZANTAL = 110;
+
 Player::Player(const sf::Vector2f& position) : 
 	MovableGameObject(PLAYER, position)
 {
-	std::cout << "Player!" << std::endl;
-
 	m_speed = 400.f;
 }
 
 sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 {
+	m_leftMark->follow(*this);
+	m_rightMark->follow(*this);
+
 	m_gotHit = false;
 	sf::Vector2f dir = { 0.f, 0.f };
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && isOnLadder())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && isOnLadder())
 		dir += UP;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 		dir += DOWN;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
 		dir += RIGHT;
 	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
 		dir += LEFT;
 	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
+		if (auto floorPtr = m_leftMark->takeHitFloor())
+			floorPtr->remove();
+		
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
+		if (auto floorPtr = m_rightMark->takeHitFloor())
+			floorPtr->remove();
 
 	return dir;
-}
-
-void Player::setPosition(const sf::Vector2f& position)
-{
-	setMyPosition(position);
-	m_startPosition = position;
 }
 
 sf::Vector2f Player::getPositon() const
@@ -43,7 +50,7 @@ sf::Vector2f Player::getPositon() const
 	return getGlobalBounds().getCenter();
 }
 
-void Player::handleColliton(const Enemy& other)
+void Player::handleColliton(Enemy& other)
 {
 	if (!m_gotHit)
 	{
@@ -52,14 +59,21 @@ void Player::handleColliton(const Enemy& other)
 	}
 }
 
-void Player::handleColliton(const Coin& other)
+void Player::handleColliton(Coin& other)
 {
 	m_score += 2 * m_currentLevel;
 }
 
-void Player::resetPlayerHealth()
+void Player::initPlayer(const sf::Vector2f& position, RemoveMark* rightMark, RemoveMark* leftMark)
 {
-	m_lives = 3;
+	m_startPosition = position;
+
+	setMyPosition(position);
+
+	m_rightMark = rightMark;
+	m_rightMark->setOffset({ DIG_OFFSET_HORIZANTAL , DIG_OFFSET_VERTICAL });
+	m_leftMark = leftMark;
+	m_leftMark->setOffset({ -DIG_OFFSET_HORIZANTAL , DIG_OFFSET_VERTICAL });
 }
 
 void Player::nextLevel()
