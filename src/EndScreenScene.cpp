@@ -16,10 +16,14 @@ EndScreenScene::EndScreenScene(bool victory, int score) : Scene(MENUE_BORAD_FILE
     m_statusText.setFillColor(victory ? sf::Color::Green : sf::Color::Red);
     auto statusBounds = m_statusText.getGlobalBounds();
     m_statusText.setPosition({ WINDOW_SIZE.x / 2.f - statusBounds.size.x / 2.f, 100.f });
+    m_statusText.setOutlineColor(sf::Color::Black);
+    m_statusText.setOutlineThickness(5.f);
 
     m_scoreText.setFillColor(sf::Color::White);
     auto scoreBounds = m_scoreText.getGlobalBounds();
     m_scoreText.setPosition({ WINDOW_SIZE.x / 2.f - scoreBounds.size.x / 2.f, 250.f });
+    m_scoreText.setOutlineColor(sf::Color::Black);
+    m_scoreText.setOutlineThickness(3.f);
 
     initButton("RESTART", 450.f);
     initButton("MAIN MENU", 550.f);
@@ -33,6 +37,9 @@ void EndScreenScene::initButton(const std::string& str, float yPos)
     sf::Text text(AssetsManager::instance().getFont(), str, 50);
     auto bounds = text.getGlobalBounds();
     text.setPosition({ WINDOW_SIZE.x / 2.f - bounds.size.x / 2.f, yPos });
+    text.setOutlineColor(sf::Color::Black);
+    text.setOutlineThickness(3.f);
+
     m_buttons.push_back(std::move(text));
 }
 
