@@ -1,13 +1,11 @@
 #include "Player.h"
 #include "macros.h"
 #include "Enemy.h"
-#include "Board.h"
 #include "BreakableFloor.h"
 #include "AssetsManager.h"
-#include <iostream>
 
-const int DIG_OFFSET_VERTICAL = 90;
-const int DIG_OFFSET_HORIZANTAL = 110;
+const float DIG_OFFSET_VERTICAL = 90.0f;
+const float DIG_OFFSET_HORIZANTAL = 110.0f;
 
 Player::Player(const sf::Vector2f& position) :
 	MovableGameObject(PLAYER, position),
@@ -15,14 +13,13 @@ Player::Player(const sf::Vector2f& position) :
 	m_digSound(AssetsManager::instance().getSoundBuffer(SoundID::DIGGING)),
 	m_deathSound(AssetsManager::instance().getSoundBuffer(SoundID::DEATH))
 {
-
 	m_speed = 400.f;
 }
 
 sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 {
-	m_leftMark->follow(*this);
-	m_rightMark->follow(*this);
+	if (m_leftMark) m_leftMark->follow(*this);
+	if (m_rightMark) m_rightMark->follow(*this);
 
 	m_gotHit = false;
 	sf::Vector2f dir = { 0.f, 0.f };
@@ -41,7 +38,6 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z) && !m_justPresdZ)
 	{
-
 		if (auto floorPtr = m_leftMark->takeHitFloor())
 		{
 			floorPtr->remove();
@@ -64,15 +60,11 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 	return dir;
 }
 
-sf::Vector2f Player::getPositon() const
-{
-	return getGlobalBounds().getCenter();
-}
+sf::Vector2f Player::getPositon() const { return getGlobalBounds().getCenter(); }
 
 void Player::handleColliton(Enemy& other)
 {
-	if (!m_gotHit)
-	{
+	if (!m_gotHit) {
 		m_lives--;
 		m_gotHit = true;
 		m_deathSound.play();
@@ -105,5 +97,4 @@ int Player::getScore() const { return m_score; }
 int Player::getLives() const { return m_lives; }
 int Player::getCurrentLevel() const { return m_currentLevel; }
 bool Player::gotHit() const { return m_gotHit; }
-
 void Player::handleColliton(GameObject& other) { other.handleColliton(*this); }

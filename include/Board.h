@@ -19,11 +19,15 @@ public:
 
 	void update(const sf::Time& dt);
 	void display(sf::RenderWindow& window) const;
-	
+
 	const Player& getPlayer() const;
 	bool isInBounds(const sf::Vector2f vec) const;
 
 	sf::Time getTimeOut() const;
+
+	char getTile(int r, int c) const;
+	sf::Vector2u getGridSize() const;
+
 private:
 	std::ifstream m_file;
 
@@ -41,4 +45,3 @@ private:
 	void handleCollisions();
 	void calculateViewSize();
 };
-
