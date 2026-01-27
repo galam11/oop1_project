@@ -45,12 +45,6 @@ void LevelScene::display(sf::RenderWindow& window) const
     m_hud.dispaly(window);
 }
 
-void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
-{
-    if (event.code == sf::Keyboard::Key::Space)
-        nextLevel();
-}
-
 void LevelScene::nextLevel()
 {
     bool isTransition = m_board.getPlayer().getCurrentLevel() > 0;
