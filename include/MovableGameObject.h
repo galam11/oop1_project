@@ -15,8 +15,6 @@ public:
 	void reset() override;
 	sf::FloatRect getGlobalBounds() const override;
 
-
-
 	virtual void handleColliton(GameObject& other) override = 0;
 	void handleColliton(Floor& other) override;
 	void handleColliton(BreakableFloor& other) override;
@@ -35,9 +33,15 @@ private:
 	void updatePositon(const sf::Time& dt);
 	void animate(const sf::Time& dt);
 	void handleSolidCollision(const SpiritGameObject& other);
+
 	sf::Vector2f m_moveDirctaion = VEC2_ZERO;
 
 	bool m_onLadder = false;
 	bool m_onRail = false;
 	bool m_onGround = false;
+
+
+	bool m_colidedWithRailLastFrame = false;
+	bool m_colidedWithRail = false;
+	bool m_ignoreRail = false;
 };

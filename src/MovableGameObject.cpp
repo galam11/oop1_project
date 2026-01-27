@@ -9,14 +9,24 @@
 
 #include "Player.h"
 
+#include <iostream>
+
 MovableGameObject::MovableGameObject(ID type, const sf::Vector2f& position)
 	: SpiritGameObject(type, position), m_startPosition(position) { }
 
 void MovableGameObject::update(const sf::Time& dt)
 {
+	if (!m_colidedWithRail && m_colidedWithRailLastFrame)
+		m_ignoreRail = false;
+
 	m_moveDirctaion = updateMovingGameobject(dt);
 	updatePositon(dt);
 	animate(dt);
+
+	m_colidedWithRailLastFrame = m_colidedWithRail;
+	m_colidedWithRail = false;
+
+	m_onLadder = m_onRail = m_onGround = false;
 }
 
 void MovableGameObject::updatePositon(const sf::Time& dt)
@@ -30,8 +40,6 @@ void MovableGameObject::updatePositon(const sf::Time& dt)
 		gravityVec = DOWN * (m_onGround ? 50.f : GRAVITY);
 
 	moveMe((m_moveDirctaion * m_speed + gravityVec) * dt.asSeconds());
-
-	m_onLadder = m_onRail = m_onGround = false;
 }
 
 void MovableGameObject::animate(const sf::Time& dt)
@@ -74,21 +82,27 @@ void MovableGameObject::handleColliton(Ladder& other)
 		diff.y = 0.f;
 
 		if (diff.x != 0)
-			moveMe(diff.normalized() * 3.f);
+			moveMe(diff.normalized());
 	}
 }
 
 
 void MovableGameObject::handleColliton(Rail& other)
 {
-	if (!m_onLadder && !m_moveDirctaion.y > 0)
+	m_colidedWithRail = true;
+
+	if (m_moveDirctaion.y > 0)
+		m_ignoreRail = true;
+
+
+	if (!m_onLadder && !m_ignoreRail)
 	{
 		m_onRail = true;
 		auto diff = other.getGlobalBounds().getCenter() - getGlobalBounds().getCenter();
 		diff.x = 0.f;
 
 		if (diff.y != 0)
-			moveMe(diff.normalized() * 3.f);
+			moveMe(diff.normalized());
 	}
 }
 
