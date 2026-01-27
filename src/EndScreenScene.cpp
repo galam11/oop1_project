@@ -4,7 +4,8 @@
 #include "AssetsManager.h"
 #include "macros.h"
 
-EndScreenScene::EndScreenScene(bool victory, int score) : Scene(MENUE_BORAD_FILE_PATH, victory ? SoundID::VICTORY : SoundID::FAILURE),
+EndScreenScene::EndScreenScene(bool victory, int score)
+    : MenuScene(MENUE_BORAD_FILE_PATH, victory ? SoundID::VICTORY : SoundID::FAILURE),
     m_statusText(AssetsManager::instance().getFont(), victory ? WIN_TEXT : LOOS_TEXT, LARG_FONT_SIZE),
     m_scoreText(AssetsManager::instance().getFont(), SCORE_SHOWCASE_TEXT + std::to_string(score), FORNT_SIZE)
 {
@@ -25,45 +26,18 @@ EndScreenScene::EndScreenScene(bool victory, int score) : Scene(MENUE_BORAD_FILE
     m_scoreText.setOutlineColor(sf::Color::Black);
     m_scoreText.setOutlineThickness(3.f);
 
-    initButton("RESTART", 450.f);
-    initButton("MAIN MENU", 550.f);
-    initButton("EXIT", 650.f);
+    initButton("RESTART", 450.f, 50);
+    initButton("MAIN MENU", 550.f, 50);
+    initButton("EXIT", 650.f, 50);
 
     updateSelection();
 }
 
-void EndScreenScene::initButton(const std::string& str, float yPos)
-{
-    sf::Text text(AssetsManager::instance().getFont(), str, 50);
-    auto bounds = text.getGlobalBounds();
-    text.setPosition({ WINDOW_SIZE.x / 2.f - bounds.size.x / 2.f, yPos });
-    text.setOutlineColor(sf::Color::Black);
-    text.setOutlineThickness(3.f);
-
-    m_buttons.push_back(std::move(text));
-}
-
-void EndScreenScene::updateSelection()
-{
-    for (int i = 0; i < (int)m_buttons.size(); ++i)
-    {
-        m_buttons[i].setFillColor(i == m_selectedIndex ? sf::Color::Red : sf::Color::White);
-    }
-}
-
 void EndScreenScene::onKeyPressed(const sf::Event::KeyPressed& event)
 {
-    if (event.code == sf::Keyboard::Key::Up)
-    {
-        m_selectedIndex = (m_selectedIndex - 1 + Count) % Count;
-        updateSelection();
-    }
-    else if (event.code == sf::Keyboard::Key::Down)
-    {
-        m_selectedIndex = (m_selectedIndex + 1) % Count;
-        updateSelection();
-    }
-    else if (event.code == sf::Keyboard::Key::Enter)
+    MenuScene::onKeyPressed(event);
+
+    if (event.code == sf::Keyboard::Key::Enter)
     {
         switch (m_selectedIndex)
         {
@@ -85,14 +59,5 @@ void EndScreenScene::display(sf::RenderWindow& window) const
     m_board.display(window);
     window.draw(m_statusText);
     window.draw(m_scoreText);
-    for (const auto& btn : m_buttons)
-    {
-        window.draw(btn);
-    }
-}
-
-void EndScreenScene::update(const sf::Time& dt)
-{
-    Scene::update(dt);
-    m_board.update(dt);
+    drawButtons(window);
 }
