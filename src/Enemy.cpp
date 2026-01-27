@@ -8,7 +8,7 @@ Enemy::Enemy(const sf::Vector2f& position, const Player& player, const Board& bo
 	m_player(player),
 	m_board(board)
 {
-	m_speed = 100.f;
+	m_speed = 300.f;
 }
 
 sf::Vector2f Enemy::updateMovingGameobject(const sf::Time& dt)
