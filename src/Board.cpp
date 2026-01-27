@@ -144,7 +144,7 @@ void Board::initPlayer(const sf::Vector2f& position)
 
 void Board::handleCollisions()
 {
-	SpiritGameObject& playerRef = m_player;
+	SpriteGameObject& playerRef = m_player;
 	for (const auto& gameObject : m_gameObjects)
 		if (gameObject->collidedWith(playerRef)) 
 		{

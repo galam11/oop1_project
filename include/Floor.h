@@ -1,8 +1,8 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 #include <SFML/Graphics.hpp>
 
-class Floor : public SpiritGameObject
+class Floor : public SpriteGameObject
 {
 public:
 	Floor(const sf::Vector2f& position);

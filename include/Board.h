@@ -1,5 +1,5 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 #include "Player.h"
 #include "MovableGameObject.h"
 #include <memory>

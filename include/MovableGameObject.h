@@ -1,10 +1,10 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 #include <SFML/Graphics.hpp>
 
 enum ID;
 
-class MovableGameObject : public SpiritGameObject
+class MovableGameObject : public SpriteGameObject
 {
 public:
 	MovableGameObject(ID type, const sf::Vector2f& position);
@@ -32,7 +32,7 @@ private:
 
 	void updatePositon(const sf::Time& dt);
 	void animate(const sf::Time& dt);
-	void handleSolidCollision(const SpiritGameObject& other);
+	void handleSolidCollision(const SpriteGameObject& other);
 
 	sf::Vector2f m_moveDirctaion = VEC2_ZERO;
 

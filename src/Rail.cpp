@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 Rail::Rail(const sf::Vector2f& position)
-	: SpiritGameObject(RAIL, position)
+	: SpriteGameObject(RAIL, position)
 {
 }
 

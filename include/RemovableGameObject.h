@@ -1,8 +1,8 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 
 enum ID;
-class RemovableGameObject : public SpiritGameObject
+class RemovableGameObject : public SpriteGameObject
 {
 public:
 	RemovableGameObject(ID type, const sf::Vector2f& position);

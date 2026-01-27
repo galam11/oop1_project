@@ -16,7 +16,7 @@ enum
 };
 
 MovableGameObject::MovableGameObject(ID type, const sf::Vector2f& position)
-	: SpiritGameObject(type, position), m_startPosition(position) { }
+	: SpriteGameObject(type, position), m_startPosition(position) { }
 
 void MovableGameObject::update(const sf::Time& dt)
 {
@@ -112,7 +112,7 @@ void MovableGameObject::handleColliton(Rail& other)
 	}
 }
 
-void MovableGameObject::handleSolidCollision(const SpiritGameObject& other)
+void MovableGameObject::handleSolidCollision(const SpriteGameObject& other)
 {
 	auto intersection = getGlobalBounds().findIntersection(other.getGlobalBounds());
 

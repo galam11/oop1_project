@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 Ladder::Ladder(const sf::Vector2f& position)
-	: SpiritGameObject(LADDER, position)
+	: SpriteGameObject(LADDER, position)
 {
 }
 

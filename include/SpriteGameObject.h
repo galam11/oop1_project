@@ -13,10 +13,10 @@ class Enemy;
 class Coin;
 class BreakableFloor;
 
-class SpiritGameObject : public GameObject
+class SpriteGameObject : public GameObject
 {
 public:
-	SpiritGameObject(ID type, const sf::Vector2f& position);
+	SpriteGameObject(ID type, const sf::Vector2f& position);
 	void draw(sf::RenderWindow& window) const override;
 	sf::FloatRect getGlobalBounds() const override; 
 

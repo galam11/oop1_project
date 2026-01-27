@@ -1,8 +1,8 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 #include <SFML/Graphics.hpp>
 
-class Ladder : public SpiritGameObject
+class Ladder : public SpriteGameObject
 {
 public:
 	Ladder(const sf::Vector2f& position);

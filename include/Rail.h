@@ -1,8 +1,8 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 #include <SFML/Graphics.hpp>
 
-class Rail : public SpiritGameObject
+class Rail : public SpriteGameObject
 {
 public:
 	Rail(const sf::Vector2f& position);

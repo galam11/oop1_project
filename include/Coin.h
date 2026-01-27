@@ -1,5 +1,5 @@
 #pragma once
-#include "SpiritGameObject.h"
+#include "SpriteGameObject.h"
 #include "RemovableGameObject.h"
 #include <SFML/Graphics.hpp>
 
