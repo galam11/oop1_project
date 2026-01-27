@@ -18,7 +18,9 @@ public:
 	void handleColliton(Coin& other) override;
 
 	void initPlayer(const sf::Vector2f& position, RemoveMark* rightMark, RemoveMark* leftMark);
+
 	void nextLevel();
+	void die();
 
 	int getScore() const;
 	int getLives() const;
@@ -26,7 +28,6 @@ public:
 	bool gotHit() const;
 
 	sf::Vector2f getPositon() const;
-
 
 private:
 	int m_lives = 3;

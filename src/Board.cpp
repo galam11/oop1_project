@@ -26,12 +26,16 @@ void Board::update(const sf::Time& dt)
 	m_player.update(dt);
 	for (const auto& gameObjects : m_gameObjects)
 		gameObjects->update(dt);
+
 	handleCollisions();
-	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item) {
-		if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
-			return ptr->isToBeRemoved();
-		return false;
-		});
+
+	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item) 
+		{
+			if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
+				return ptr->isToBeRemoved();
+			return false;
+		}
+	);
 }
 
 void Board::display(sf::RenderWindow& window) const
@@ -42,8 +46,11 @@ void Board::display(sf::RenderWindow& window) const
 	window.setView(window.getDefaultView());
 }
 
+
 const Player& Board::getPlayer() const { return m_player; }
+
 bool Board::isInBounds(const sf::Vector2f vec) const { return !(vec.x > m_boardSize.x || vec.x < 0 || vec.y > m_boardSize.y || vec.y < 0); }
+
 sf::Time Board::getTimeOut() const { return m_levelTime; }
 
 bool Board::loadNextLevel()
@@ -56,8 +63,10 @@ bool Board::loadNextLevel()
 
 void Board::Reset()
 {
+	m_player.die();
 	m_player.reset();
-	for (const auto& gameObject : m_gameObjects) gameObject->reset();
+	for (const auto& gameObject : m_gameObjects) 
+		gameObject->reset();
 }
 
 void Board::loadFromRawBoard()

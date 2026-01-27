@@ -20,7 +20,6 @@ void Player::update(const sf::Time& dt)
 {
 	MovableGameObject::update(dt);
 
-	// Sync marks AFTER movement so the next collision phase detects the correct floor
 	if (m_leftMark) m_leftMark->follow(*this);
 	if (m_rightMark) m_rightMark->follow(*this);
 }
@@ -70,11 +69,7 @@ sf::Vector2f Player::getPositon() const { return getGlobalBounds().getCenter(); 
 
 void Player::handleColliton(Enemy& other)
 {
-	if (!m_gotHit) {
-		m_lives--;
-		m_gotHit = true;
-		m_deathSound.play();
-	}
+	m_gotHit = true;
 }
 
 void Player::handleColliton(Coin& other)
@@ -97,6 +92,12 @@ void Player::nextLevel()
 {
 	m_score += 50 * m_currentLevel;
 	m_currentLevel++;
+}
+
+void Player::die()
+{
+	m_lives--;
+	m_deathSound.play();
 }
 
 int Player::getScore() const { return m_score; }

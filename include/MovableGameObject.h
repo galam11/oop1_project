@@ -19,6 +19,7 @@ public:
 	void handleColliton(BreakableFloor& other) override;
 	void handleColliton(Ladder& other) override;
 	void handleColliton(Rail& other) override;
+
 protected:
 	float m_speed = 1.0f;
 	sf::Vector2f m_startPosition;

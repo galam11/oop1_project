@@ -27,7 +27,7 @@ void Animator::animate(const sf::Time& dt)
 		m_frame = (m_frame + 1) % m_totalFrames;
 		m_sprite.setTextureRect(
 			{
-				{m_frame * GO_TEXTURE_DIMANTION, m_animation * GO_TEXTURE_DIMANTION} ,
+				{ m_frame * GO_TEXTURE_DIMANTION, m_animation * GO_TEXTURE_DIMANTION } ,
 				{ GO_TEXTURE_DIMANTION, GO_TEXTURE_DIMANTION }
 			}
 		);

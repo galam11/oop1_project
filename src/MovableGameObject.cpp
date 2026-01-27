@@ -37,7 +37,6 @@ void MovableGameObject::updatePositon(const sf::Time& dt)
 {
 	auto gravityVec = VEC2_ZERO;
 
-	// Mid-air logic
 	if (!m_onGround && !m_onLadder && !m_onRail)
 		m_moveDirctaion.x = 0;
 
@@ -70,7 +69,13 @@ void MovableGameObject::animate(const sf::Time& dt)
 	
 }
 
-void MovableGameObject::reset() { setMyPosition(m_startPosition); }
+void MovableGameObject::reset() 
+{ 
+	m_animator.setAnimation(ANIMATION_WALK_RIGHT);
+	m_animator.resetAnimation();
+
+	setMyPosition(m_startPosition); 
+}
 
 sf::FloatRect MovableGameObject::getGlobalBounds() const
 {
@@ -111,7 +116,6 @@ void MovableGameObject::handleColliton(Rail& other)
 void MovableGameObject::handleSolidCollision(const SpiritGameObject& other)
 {
 	auto intersection = getGlobalBounds().findIntersection(other.getGlobalBounds());
-	if (!intersection) return;
 
 	auto bounds = intersection.value();
 	auto dir = other.getGlobalBounds().position - getGlobalBounds().position;
