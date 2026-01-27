@@ -18,7 +18,6 @@ Hud::Hud(const Player& player, const sf::Clock& timer, const Board& board) :
 	m_TimerText.setPosition({ width * 0.5f  , 25.f });
 	m_LevelText.setPosition({ width * 0.93f , 25.f });
 
-
 	m_playerSpright.scale({ 0.4f, 0.5f });
 	m_playerSpright.setPosition(m_LivesText.getPosition() - sf::Vector2f(60.f, 10.f));
 }
