@@ -3,8 +3,9 @@
 #include "AssetsManager.h"
 #include "EndScreenScene.h"
 
-LevelScene::LevelScene()
-    : m_hud(m_board.getPlayer(), m_timer, m_board)
+LevelScene::LevelScene() : 
+    Scene(SoundID::VICTORY),
+    m_hud(m_board.getPlayer(), m_timer, m_board)
 {
     AssetsManager::instance().setMusicVolume(100.f);
     AssetsManager::instance().playMusic();
@@ -43,14 +44,6 @@ void LevelScene::display(sf::RenderWindow& window) const
     m_hud.dispaly(window);
 }
 
-void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
-{
-    if (event.code == sf::Keyboard::Key::Space)
-        nextLevel();
-    else if (event.code == sf::Keyboard::Key::R)
-        hardResetLevel();
-}
-
 void LevelScene::nextLevel()
 {
     bool isTransition = m_board.getPlayer().getCurrentLevel() > 0;
@@ -63,8 +56,7 @@ void LevelScene::nextLevel()
 
     if (isTransition)
     {
-        m_sceneSound.emplace(AssetsManager::instance().getSoundBuffer(SoundID::LEVEL_VICTORY));
-        m_sceneSound->play();
+        m_sceneSound.play();
         AssetsManager::instance().setMusicVolume(30.f);
     }
 

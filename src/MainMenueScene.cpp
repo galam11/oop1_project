@@ -3,8 +3,8 @@
 #include "AssetsManager.h"
 #include "macros.h"
 
-MainMenuScene::MainMenuScene()
-    : m_title(AssetsManager::instance().getFont()),
+MainMenuScene::MainMenuScene() : Scene(SoundID::COIN_PICKUP),
+    m_title(AssetsManager::instance().getFont()),
     m_rulesText(AssetsManager::instance().getFont())
 {
     // Start music and ensure full volume in menu
@@ -75,6 +75,7 @@ void MainMenuScene::onKeyPressed(const sf::Event::KeyPressed& event)
     }
     else if (event.code == sf::Keyboard::Key::Enter)
     {
+        m_sceneSound.play();
         switch (m_selectedIndex)
         {
         case Start:

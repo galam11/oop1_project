@@ -23,7 +23,7 @@ private:
     sf::Text m_statusText;
     sf::Text m_scoreText;
     std::vector<sf::Text> m_buttons;
-
+    
     void updateSelection();
     void initButton(const std::string& str, float yPos);
 };

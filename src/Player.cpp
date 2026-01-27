@@ -10,11 +10,11 @@ const int DIG_OFFSET_VERTICAL = 90;
 const int DIG_OFFSET_HORIZANTAL = 110;
 
 Player::Player(const sf::Vector2f& position) :
-	MovableGameObject(PLAYER, position)
+	MovableGameObject(PLAYER, position),
+	m_coinSound(AssetsManager::instance().getSoundBuffer(SoundID::COIN_PICKUP)),
+	m_digSound(AssetsManager::instance().getSoundBuffer(SoundID::DIGGING)),
+	m_deathSound(AssetsManager::instance().getSoundBuffer(SoundID::DEATH))
 {
-	m_coinSound.emplace(AssetsManager::instance().getSoundBuffer(SoundID::COIN_PICKUP));
-	m_digSound.emplace(AssetsManager::instance().getSoundBuffer(SoundID::DIGGING));
-	m_deathSound.emplace(AssetsManager::instance().getSoundBuffer(SoundID::DEATH));
 
 	m_speed = 400.f;
 }
@@ -44,7 +44,7 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 		if (auto floorPtr = m_leftMark->takeHitFloor())
 		{
 			floorPtr->remove();
-			m_digSound->play();
+			m_digSound.play();
 		}
 	}
 
@@ -53,7 +53,7 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 		if (auto floorPtr = m_rightMark->takeHitFloor())
 		{
 			floorPtr->remove();
-			m_digSound->play();
+			m_digSound.play();
 		}
 	}
 
@@ -71,14 +71,14 @@ void Player::handleColliton(Enemy& other)
 	{
 		m_lives--;
 		m_gotHit = true;
-		m_deathSound->play();
+		m_deathSound.play();
 	}
 }
 
 void Player::handleColliton(Coin& other)
 {
 	m_score += 2 * m_currentLevel;
-	m_coinSound->play();
+	m_coinSound.play();
 }
 
 void Player::initPlayer(const sf::Vector2f& position, RemoveMark* rightMark, RemoveMark* leftMark)

@@ -13,8 +13,6 @@ public:
     void update(const sf::Time& dt) override;
     void display(sf::RenderWindow& window) const override;
 
-    void onKeyReleased(const sf::Event::KeyReleased& event) override;
-
 private:
     Hud m_hud;
     sf::Clock m_timer;

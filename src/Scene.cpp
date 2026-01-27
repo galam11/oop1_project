@@ -1,12 +1,14 @@
 #include "Scene.h"
 #include "AssetsManager.h"
 
-Scene::Scene() = default;
+
+Scene::Scene(SoundID soundId)
+	: m_sceneSound(AssetsManager::instance().getSoundBuffer(soundId)) { }
 Scene::~Scene() = default;
 
 void Scene::update(const sf::Time& dt)
 {
-	if (m_sceneSound.has_value() && m_sceneSound->getStatus() == sf::SoundSource::Status::Stopped)
+	if (m_sceneSound.getStatus() == sf::SoundSource::Status::Stopped)
 	{
 		AssetsManager::instance().setMusicVolume(100.f);
 	}

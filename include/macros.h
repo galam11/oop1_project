@@ -15,7 +15,7 @@ enum ID
 	EMPTY = ' '
 };
 
-enum class SoundID
+enum SoundID
 {
 	COIN_PICKUP,
 	DIGGING,

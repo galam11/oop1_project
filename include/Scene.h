@@ -10,7 +10,7 @@ class Scene
 {
 public:
 
-	Scene();
+	Scene(SoundID soundId);
 	virtual ~Scene();
 
 	virtual void update(const sf::Time& dt);
@@ -25,7 +25,6 @@ public:
 
 protected:
 	Board m_board;
+	sf::Sound m_sceneSound;
 	std::unique_ptr<Scene> m_nextSeane = nullptr;
-
-	std::optional<sf::Sound> m_sceneSound;
 };

@@ -25,8 +25,6 @@ AssetsManager::AssetsManager()
 	m_textures[LADDER] = loadTexture("ladder.png");
 	m_textures[RAIL] = loadTexture("rail.png");
 
-	m_errTexture = loadTexture("error.png");
-
 	if (!m_font.openFromFile("jersey10-Regular.ttf"))
 		std::cout << "Error loading font" << std::endl;
 
@@ -45,11 +43,7 @@ AssetsManager::AssetsManager()
 
 const sf::Texture& AssetsManager::getTexture(const ID id) const
 {
-	auto it = m_textures.find(id);
-	if (it != m_textures.end())
-		return (it->second);
-
-	return m_errTexture;
+	return m_textures.at(id);
 }
 
 const sf::Font& AssetsManager::getFont() const { return m_font; }

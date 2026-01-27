@@ -38,7 +38,7 @@ private:
 	int m_lives = 3;
 	bool m_gotHit = false;
 
-	std::optional<sf::Sound> m_coinSound;
-	std::optional<sf::Sound> m_digSound;
-	std::optional<sf::Sound> m_deathSound;
+	sf::Sound m_coinSound;
+	sf::Sound m_digSound;
+	sf::Sound m_deathSound;
 };

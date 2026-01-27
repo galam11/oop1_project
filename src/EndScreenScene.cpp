@@ -4,14 +4,13 @@
 #include "AssetsManager.h"
 #include "macros.h"
 
-EndScreenScene::EndScreenScene(bool victory, int score)
-    : m_statusText(AssetsManager::instance().getFont()),
+EndScreenScene::EndScreenScene(bool victory, int score) : Scene(victory ? SoundID::VICTORY : SoundID::FAILURE),
+    m_statusText(AssetsManager::instance().getFont()),
     m_scoreText(AssetsManager::instance().getFont())
 {
     m_board.loadNextLevel();
+    m_sceneSound.play();
 
-    m_sceneSound.emplace(AssetsManager::instance().getSoundBuffer(victory ? SoundID::VICTORY : SoundID::FAILURE));
-    m_sceneSound->play();
     AssetsManager::instance().setMusicVolume(20.f);
 
     m_statusText.setString(victory ? "VICTORY!" : "GAME OVER");
