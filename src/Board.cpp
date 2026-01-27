@@ -101,8 +101,8 @@ void Board::loadFromRawBoard()
 		for (int j = 0; j < m_rawBoard[0].size(); ++j)
 			createGameObject((ID)m_rawBoard[i][j], sf::Vector2f(j * tileW, i * tileH));
 
-	m_boardView.setSize(m_boardSize);
-	m_boardView.setCenter(m_boardSize * 0.5f);
+
+	calculateViewSize();
 }
 
 bool Board::loadRawBoard()
@@ -196,4 +196,13 @@ void Board::handleCollisions()
 				m_gameObjects[i]->handleColliton(*m_gameObjects[j].get());
 		}
 
+}
+
+void Board::calculateViewSize()
+{
+	float widthHightRasiio = (float)WINDOW_SIZE.y / (float)WINDOW_SIZE.x;
+
+	sf::Vector2f viewSize = { m_boardSize.x, m_boardSize.x * widthHightRasiio };
+	m_boardView.setSize(viewSize);
+	m_boardView.setCenter(viewSize * 0.5f);
 }

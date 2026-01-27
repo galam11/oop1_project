@@ -39,5 +39,6 @@ private:
 	void createGameObject(ID type, const sf::Vector2f& position);
 	void initPlayer(const sf::Vector2f& position);
 	void handleCollisions();
+	void calculateViewSize();
 };
 
