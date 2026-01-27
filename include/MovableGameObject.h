@@ -13,6 +13,9 @@ public:
 	void update(const sf::Time& dt);
 	
 	void reset() override;
+	sf::FloatRect getGlobalBounds() const override;
+
+
 
 	virtual void handleColliton(GameObject& other) override = 0;
 	void handleColliton(Floor& other) override;

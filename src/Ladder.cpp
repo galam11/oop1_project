@@ -11,3 +11,8 @@ void Ladder::handleColliton(GameObject& other)
 {
 	other.handleColliton(*this);
 }
+
+sf::FloatRect Ladder::getGlobalBounds() const
+{
+	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 0.7f, 1.f);
+}

@@ -39,8 +39,9 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
 		dir += LEFT;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z) && !m_justPresdZ)
 	{
+
 		if (auto floorPtr = m_leftMark->takeHitFloor())
 		{
 			floorPtr->remove();
@@ -48,7 +49,7 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X) && !m_justPresdX)
 	{
 		if (auto floorPtr = m_rightMark->takeHitFloor())
 		{
@@ -56,6 +57,9 @@ sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
 			m_digSound.play();
 		}
 	}
+
+	m_justPresdX = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X);
+	m_justPresdZ = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z);
 
 	return dir;
 }

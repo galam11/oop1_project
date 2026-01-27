@@ -41,7 +41,8 @@ void Animator::setAnimation(int anim)
 
 void Animator::setFramePerSecend(float framePerSecend)
 {
-	m_timePerFrame = 1 / framePerSecend;
+	if (framePerSecend > 0)
+		m_timePerFrame = 1 / framePerSecend;
 }
 
 void Animator::resetAnimation()

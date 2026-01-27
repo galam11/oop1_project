@@ -18,6 +18,8 @@ public:
 	void handleColliton(Player& other);
 
 	void update(const sf::Time& dt) override;
+
+	sf::FloatRect getGlobalBounds() const override;
 	
 private:
 	static int s_CoinCount;

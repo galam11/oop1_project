@@ -29,6 +29,7 @@ public:
 	void initPlayer(const sf::Vector2f& position, RemoveMark* rightMark, RemoveMark* leftMark);
 	void nextLevel();
 
+
 private:
 	RemoveMark* m_rightMark = nullptr;
 	RemoveMark* m_leftMark = nullptr;
@@ -37,6 +38,9 @@ private:
 	int m_currentLevel = 0;
 	int m_lives = 3;
 	bool m_gotHit = false;
+
+	bool m_justPresdX = false;
+	bool m_justPresdZ = false;
 
 	sf::Sound m_coinSound;
 	sf::Sound m_digSound;

@@ -2,6 +2,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+// האם כדי להוסיף לסיום _t ?
+// ID -> ID_t ?
 enum ID
 {
 	PLAYER = '@',
@@ -52,3 +54,6 @@ const std::string SCORE_SHOWCASE_TEXT = "Final Score: ";
 const int TITLE_FONT_SIZE = 150;
 const int LARG_FONT_SIZE = 100;
 const int FORNT_SIZE = 50;
+
+sf::FloatRect scaleRectFromCenter(const sf::FloatRect& rect, float factorX, float factorY);
+sf::FloatRect scaleRectFromCenter(const sf::FloatRect& rect, float factor);

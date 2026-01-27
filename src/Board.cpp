@@ -12,6 +12,23 @@
 #include "BreakableFloor.h"
 #include "Floor.h"
 #include "RemoveMark.h"
+// FOR DEBUGING ==================================================================================
+void drawFloatRect(sf::RenderWindow& window, const sf::FloatRect& rect, sf::Color color) {
+	sf::RectangleShape shape;
+
+	// SFML 3 allows assigning position/size directly from the rect
+	shape.setPosition(rect.position);
+	shape.setSize(rect.size);
+
+	// Style the box (transparent center, colored outline)
+	shape.setFillColor(sf::Color::Transparent);
+	shape.setOutlineColor(color);
+	shape.setOutlineThickness(2.0f);
+
+	window.draw(shape);
+}
+// ================================================================================================
+
 
 Board::Board(const std::string& filePath)
 {
@@ -49,6 +66,13 @@ void Board::display(sf::RenderWindow& window) const
 
 	m_player.draw(window);
 	
+	// FOR DEBUGING ===================================================================================
+	for (const auto& obj : m_gameObjects)
+		drawFloatRect(window, obj->getGlobalBounds(), sf::Color::White);
+
+	drawFloatRect(window, m_player.getGlobalBounds(), sf::Color::Yellow);
+	// ================================================================================================
+
 	window.setView(window.getDefaultView());
 }
 

@@ -50,6 +50,11 @@ void MovableGameObject::reset()
 	setMyPosition(m_startPosition);
 }
 
+sf::FloatRect MovableGameObject::getGlobalBounds() const
+{
+	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 0.6f, 1.f);
+}
+
 void MovableGameObject::handleColliton(Floor& other)
 {
 	handleSolidCollision(other);
@@ -69,7 +74,7 @@ void MovableGameObject::handleColliton(Ladder& other)
 		diff.y = 0.f;
 
 		if (diff.x != 0)
-			moveMe(diff.normalized());
+			moveMe(diff.normalized() * 3.f);
 	}
 }
 
@@ -83,7 +88,7 @@ void MovableGameObject::handleColliton(Rail& other)
 		diff.x = 0.f;
 
 		if (diff.y != 0)
-			moveMe(diff.normalized());
+			moveMe(diff.normalized() * 3.f);
 	}
 }
 

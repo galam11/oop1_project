@@ -11,3 +11,8 @@ void Rail::handleColliton(GameObject& other)
 {
 	other.handleColliton(*this);
 }
+
+sf::FloatRect Rail::getGlobalBounds() const
+{
+	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 1.f, 0.2f);
+}
