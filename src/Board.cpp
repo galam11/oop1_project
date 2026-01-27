@@ -95,7 +95,7 @@ void Board::createGameObject(ID type, const sf::Vector2f& position)
 	switch (type)
 	{
 	case PLAYER: initPlayer(position); break;
-	case ENEMY: m_gameObjects.push_back(std::make_unique<Enemy>(position, m_player, *this)); break; // Using *this
+	case ENEMY: m_gameObjects.push_back(std::make_unique<Enemy>(position, m_player, *this)); break;
 	case COIN: m_gameObjects.push_back(std::make_unique<Coin>(position)); break;
 	case FLOOR: m_gameObjects.push_back(std::make_unique<Floor>(position)); break;
 	case BREAKABLE_FLOOR: m_gameObjects.push_back(std::make_unique<BreakableFloor>(position)); break;
@@ -146,4 +146,63 @@ sf::Vector2u Board::getGridSize() const
 {
 	if (m_rawBoard.empty()) return { 0, 0 };
 	return { (unsigned int)m_rawBoard[0].size(), (unsigned int)m_rawBoard.size() };
+}
+
+bool Board::isWalkable(int r, int c) const
+{
+	auto size = getGridSize();
+	if (r < 0 || r >= (int)size.y || c < 0 || c >= (int)size.x) return false;
+	char t = getTile(r, c);
+	return (t != '#' && t != '^');
+}
+
+std::vector<sf::Vector2i> Board::getValidNeighbors(const sf::Vector2i& curr) const
+{
+	std::vector<sf::Vector2i> neighbors;
+
+	auto isSupported = [&](int r, int c) {
+		char t = getTile(r, c);
+		char tBelow = getTile(r + 1, c);
+		return (t == '-' || t == 'H' || tBelow == '#' || tBelow == '^' || tBelow == 'H');
+		};
+
+	char tile = getTile(curr.y, curr.x);
+	char tileBelow = getTile(curr.y + 1, curr.x);
+
+	bool solidBelow = (tileBelow == '#' || tileBelow == '^');
+	bool onRail = (tile == '-');
+	bool onLadder = (tile == 'H');
+
+	bool freeMove = solidBelow || onRail;
+
+	bool climbingMove = onLadder && !freeMove;
+
+	if (freeMove || climbingMove) {
+		// Left
+		if (isWalkable(curr.y, curr.x - 1)) {
+			if (freeMove || isSupported(curr.y, curr.x - 1)) {
+				neighbors.push_back({ curr.x - 1, curr.y });
+			}
+		}
+		// Right
+		if (isWalkable(curr.y, curr.x + 1)) {
+			if (freeMove || isSupported(curr.y, curr.x + 1)) {
+				neighbors.push_back({ curr.x + 1, curr.y });
+			}
+		}
+	}
+
+	// Vertical: Up (only if currently on a ladder)
+	if (onLadder && isWalkable(curr.y - 1, curr.x))
+		neighbors.push_back({ curr.x, curr.y - 1 });
+
+	// Vertical: Down
+	// Valid if:
+	// 1. On ladder (climbing down)
+	// 2. Falling (tile below is empty/rail/ladder etc.)
+	bool canGoDown = (onLadder || tileBelow == ' ' || tileBelow == '-' || tileBelow == 'H' || tileBelow == '*');
+	if (canGoDown && isWalkable(curr.y + 1, curr.x))
+		neighbors.push_back({ curr.x, curr.y + 1 });
+
+	return neighbors;
 }

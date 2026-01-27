@@ -2,8 +2,6 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-// האם כדי להוסיף לסיום _t ?
-// ID -> ID_t ?
 enum ID
 {
 	PLAYER = '@',

@@ -25,8 +25,7 @@ public:
 
 	sf::Time getTimeOut() const;
 
-	char getTile(int r, int c) const;
-	sf::Vector2u getGridSize() const;
+	std::vector<sf::Vector2i> getValidNeighbors(const sf::Vector2i& node) const;
 
 private:
 	std::ifstream m_file;
@@ -44,4 +43,8 @@ private:
 	void initPlayer(const sf::Vector2f& position);
 	void handleCollisions();
 	void calculateViewSize();
+
+	char getTile(int r, int c) const;
+	sf::Vector2u getGridSize() const;
+	bool isWalkable(int r, int c) const;
 };

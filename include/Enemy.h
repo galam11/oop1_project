@@ -18,10 +18,6 @@ public:
 
 	void handleColliton(GameObject& other) override;
 
-protected:
-	// Enemies must complete climbs before moving horizontally
-	bool canJumpOffClimbables() const override { return false; }
-
 private:
 	sf::Vector2f m_target;
 	const Player& m_player;

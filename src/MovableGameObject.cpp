@@ -7,6 +7,14 @@
 #include "Player.h"
 #include <cmath>
 
+enum
+{
+	ANIMATION_WALK_RIGHT = 0,
+	ANIMATION_WALK_LEFT = 1,
+	ANIMATION_LADDER = 2,
+	ANIMATION_RAIL = 3
+};
+
 MovableGameObject::MovableGameObject(ID type, const sf::Vector2f& position)
 	: SpiritGameObject(type, position), m_startPosition(position) {
 }
@@ -64,10 +72,20 @@ void MovableGameObject::animate(const sf::Time& dt)
 {
 	if (m_moveDirctaion == VEC2_ZERO)
 		m_animator.resetAnimation();
-	else {
-		m_animator.setAnimation(m_moveDirctaion.x > 0 ? 0 : 1);
+	else
+	{
+		m_animator.setAnimation(m_moveDirctaion.x > 0 ? ANIMATION_WALK_RIGHT : ANIMATION_WALK_LEFT);
+
+		if (m_onLadder && m_moveDirctaion.y != 0)
+			m_animator.setAnimation(ANIMATION_LADDER);
+
+
+		if (m_onRail && m_moveDirctaion.x != 0)
+			m_animator.setAnimation(ANIMATION_RAIL);
+
 		m_animator.animate(dt);
 	}
+	
 }
 
 void MovableGameObject::reset() { setMyPosition(m_startPosition); }
@@ -84,6 +102,10 @@ void MovableGameObject::handleColliton(Ladder& other)
 {
 	m_onLadder = true;
 
+	// FIX: If the object is actively moving sideways, DO NOT pull them back to the center.
+	// This allows the Player and Enemy to step off the ladder.
+	if (std::abs(m_moveDirctaion.x) > 0.1f) return;
+
 	// Stricter alignment logic to keep characters centered on the ladder
 	auto ladderCenter = other.getGlobalBounds().getCenter();
 	float diffX = ladderCenter.x - getGlobalBounds().getCenter().x;
@@ -97,7 +119,7 @@ void MovableGameObject::handleColliton(Ladder& other)
 void MovableGameObject::handleColliton(Rail& other)
 {
 	m_colidedWithRail = true;
-	if (m_moveDirctaion.y > 0) m_ignoreRail = true;
+	if (m_moveDirctaion.y > 0.2) m_ignoreRail = true;
 	if (!m_onLadder && !m_ignoreRail) {
 		m_onRail = true;
 		auto diff = other.getGlobalBounds().getCenter() - getGlobalBounds().getCenter();
