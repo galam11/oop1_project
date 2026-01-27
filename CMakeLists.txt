@@ -1,16 +1,16 @@
 cmake_minimum_required (VERSION 3.26)
 
 project (oop1_project)
-set (MY_AUTHORS "YOUR-NAME-HERE")
+set (MY_AUTHORS "Gal_Amar-Tomer_Shovav")
 
 include (cmake/CompilerSettings.cmake)
 
 add_executable (${CMAKE_PROJECT_NAME})
 
-#target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
-#if (NOT MSVC)
-#    target_link_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
-#endif()
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
+if (NOT MSVC)
+    target_link_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
+endif()
 
 add_subdirectory (include)
 add_subdirectory (src)
