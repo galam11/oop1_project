@@ -2,7 +2,6 @@
 #include "SpiritGameObject.h"
 #include <SFML/Graphics.hpp>
 
-
 enum ID;
 
 class MovableGameObject : public SpiritGameObject
@@ -10,8 +9,8 @@ class MovableGameObject : public SpiritGameObject
 public:
 	MovableGameObject(ID type, const sf::Vector2f& position);
 
-	void update(const sf::Time& dt);
-	
+	virtual void update(const sf::Time& dt) override;
+
 	void reset() override;
 	sf::FloatRect getGlobalBounds() const override;
 
@@ -23,10 +22,13 @@ public:
 protected:
 	float m_speed = 1.0f;
 	sf::Vector2f m_startPosition;
-	
 
 	bool isOnLadder() const;
 	bool isOnRail() const;
+
+	// Allows subclasses to define if they can move horizontally off climbables mid-air
+	virtual bool canJumpOffClimbables() const { return true; }
+
 private:
 	virtual sf::Vector2f updateMovingGameobject(const sf::Time& dt) = 0;
 
@@ -39,7 +41,6 @@ private:
 	bool m_onLadder = false;
 	bool m_onRail = false;
 	bool m_onGround = false;
-
 
 	bool m_colidedWithRailLastFrame = false;
 	bool m_colidedWithRail = false;

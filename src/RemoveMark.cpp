@@ -10,6 +10,11 @@ sf::FloatRect RemoveMark::getGlobalBounds() const
     return m_bounds;
 }
 
+void RemoveMark::update(const sf::Time& dt)
+{
+    m_hitFloor = nullptr;
+}
+
 void RemoveMark::follow(const GameObject& other)
 {
     setMyPosition(other.getGlobalBounds().getCenter() + m_offset);

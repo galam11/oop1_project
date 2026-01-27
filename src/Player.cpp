@@ -16,11 +16,17 @@ Player::Player(const sf::Vector2f& position) :
 	m_speed = 400.f;
 }
 
-sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
+void Player::update(const sf::Time& dt)
 {
+	MovableGameObject::update(dt);
+
+	// Sync marks AFTER movement so the next collision phase detects the correct floor
 	if (m_leftMark) m_leftMark->follow(*this);
 	if (m_rightMark) m_rightMark->follow(*this);
+}
 
+sf::Vector2f Player::updateMovingGameobject(const sf::Time& dt)
+{
 	m_gotHit = false;
 	sf::Vector2f dir = { 0.f, 0.f };
 
