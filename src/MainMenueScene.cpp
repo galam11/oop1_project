@@ -30,7 +30,7 @@ MainMenuScene::MainMenuScene() : Scene(MENUE_BORAD_FILE_PATH),
     m_rulesText.setCharacterSize(FORNT_SIZE);
     m_rulesText.setFillColor(sf::Color::White);
     auto rulesBounds = m_rulesText.getGlobalBounds();
-    m_rulesText.setPosition({ WINDOW_SIZE.x / 2.f - rulesBounds.size.x / 2.f, 350.f });
+    m_rulesText.setPosition({ WINDOW_SIZE.x / 2.f - rulesBounds.size.x / 2.f, 100.f });
 
     updateSelection();
 }
@@ -107,4 +107,10 @@ void MainMenuScene::display(sf::RenderWindow& window) const
             window.draw(btn);
         }
     }
+}
+
+void MainMenuScene::update(const sf::Time& dt)
+{
+    Scene::update(dt);
+    m_board.update(dt);
 }

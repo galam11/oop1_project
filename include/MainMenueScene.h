@@ -11,7 +11,7 @@ public:
     virtual ~MainMenuScene() = default;
 
     void display(sf::RenderWindow& window) const override;
-
+    void update(const sf::Time& dt) override;
     void onKeyPressed(const sf::Event::KeyPressed& event) override;
 
 private:

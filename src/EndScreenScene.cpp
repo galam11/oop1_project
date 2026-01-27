@@ -90,3 +90,9 @@ void EndScreenScene::display(sf::RenderWindow& window) const
         window.draw(btn);
     }
 }
+
+void EndScreenScene::update(const sf::Time& dt)
+{
+    Scene::update(dt);
+    m_board.update(dt);
+}
