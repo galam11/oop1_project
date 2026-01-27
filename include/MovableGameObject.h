@@ -26,9 +26,6 @@ protected:
 	bool isOnLadder() const;
 	bool isOnRail() const;
 
-	// Allows subclasses to define if they can move horizontally off climbables mid-air
-	virtual bool canJumpOffClimbables() const { return true; }
-
 private:
 	virtual sf::Vector2f updateMovingGameobject(const sf::Time& dt) = 0;
 

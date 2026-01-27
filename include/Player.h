@@ -27,8 +27,6 @@ public:
 
 	sf::Vector2f getPositon() const;
 
-protected:
-	bool canJumpOffClimbables() const override { return true; }
 
 private:
 	int m_lives = 3;

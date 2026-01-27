@@ -37,24 +37,6 @@ void MovableGameObject::updatePositon(const sf::Time& dt)
 {
 	auto gravityVec = VEC2_ZERO;
 
-	// Enemy-specific movement logic
-	if (!canJumpOffClimbables() && m_onLadder && !m_onGround)
-	{
-		// If climbing, prioritize vertical movement to avoid hitting floor sides
-		if (std::abs(m_moveDirctaion.y) > 0.01f)
-		{
-			m_moveDirctaion.x = 0;
-		}
-		else
-		{
-			// Only allow horizontal transition if vertically aligned with a tile center
-			float currentY = getGlobalBounds().getCenter().y;
-			float tileCenterY = (std::floor(currentY / GO_TEXTURE_DIMANTION) + 0.5f) * GO_TEXTURE_DIMANTION;
-			if (std::abs(currentY - tileCenterY) > 2.0f)
-				m_moveDirctaion.x = 0;
-		}
-	}
-
 	// Mid-air logic
 	if (!m_onGround && !m_onLadder && !m_onRail)
 		m_moveDirctaion.x = 0;
@@ -102,17 +84,15 @@ void MovableGameObject::handleColliton(Ladder& other)
 {
 	m_onLadder = true;
 
-	// FIX: If the object is actively moving sideways, DO NOT pull them back to the center.
-	// This allows the Player and Enemy to step off the ladder.
 	if (std::abs(m_moveDirctaion.x) > 0.1f) return;
 
-	// Stricter alignment logic to keep characters centered on the ladder
+
 	auto ladderCenter = other.getGlobalBounds().getCenter();
 	float diffX = ladderCenter.x - getGlobalBounds().getCenter().x;
 
-	if (std::abs(diffX) < GO_TEXTURE_DIMANTION * 0.5f) {
-		float alignSpeed = canJumpOffClimbables() ? 0.2f : 0.5f;
-		moveMe({ diffX * alignSpeed, 0.f });
+	if (std::abs(diffX) < GO_TEXTURE_DIMANTION * 0.5f) 
+	{
+		moveMe({ diffX * 0.2f, 0.f });
 	}
 }
 
