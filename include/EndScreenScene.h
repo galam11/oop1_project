@@ -9,7 +9,6 @@ class EndScreenScene : public Scene
 {
 public:
     EndScreenScene(bool victory, int score);
-    virtual ~EndScreenScene() = default;
 
     void display(sf::RenderWindow& window) const override;
 

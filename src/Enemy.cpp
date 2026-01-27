@@ -11,6 +11,8 @@ Enemy::Enemy(const sf::Vector2f& position, const Player& player, const Board& bo
 	m_speed = 300.f;
 }
 
+void Enemy::handleColliton(GameObject& other) { other.handleColliton(*this); }
+
 sf::Vector2f Enemy::updateMovingGameobject(const sf::Time& dt)
 {
 	sf::Vector2i start(getGlobalBounds().getCenter().x / GO_TEXTURE_DIMANTION,
@@ -29,5 +31,3 @@ sf::Vector2f Enemy::updateMovingGameobject(const sf::Time& dt)
 	return targetPixelPos - getGlobalBounds().getCenter();
 }
 
-void Enemy::setTarget(const sf::Vector2f& newTarget) { m_target = newTarget; }
-void Enemy::handleColliton(GameObject& other) { other.handleColliton(*this); }

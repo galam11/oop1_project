@@ -23,7 +23,7 @@ private:
 	AssetsManager();
 	AssetsManager(const AssetsManager&) = default;
 	AssetsManager& operator=(const AssetsManager&) = default;
-	static AssetsManager m_instance;
+	static AssetsManager s_instance;
 
 	sf::Texture loadTexture(const std::string& filename);
 	sf::SoundBuffer loadSoundBuffer(const std::string& filename);

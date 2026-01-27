@@ -26,7 +26,6 @@ public:
 	int getLives() const;
 	int getCurrentLevel() const;
 	bool gotHit() const;
-
 	sf::Vector2f getPositon() const;
 
 private:

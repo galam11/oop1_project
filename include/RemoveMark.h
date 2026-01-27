@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "macros.h"
 
+const const sf::Vector2f BOUNDS_SIZE = sf::Vector2f{ GO_TEXTURE_DIMANTION , GO_TEXTURE_DIMANTION } * 0.1f ;
+
 class RemoveMark : public GameObject
 {
 public:
@@ -16,7 +18,7 @@ public:
 
 	BreakableFloor* takeHitFloor();
 private:
-	sf::FloatRect m_bounds = { {0, 0} , sf::Vector2f{ GO_TEXTURE_DIMANTION , GO_TEXTURE_DIMANTION } * 0.1f };
+	sf::FloatRect m_bounds = { {0, 0} , BOUNDS_SIZE };
 	sf::Vector2f m_offset;
 	BreakableFloor* m_hitFloor = nullptr;
 

@@ -27,5 +27,8 @@ protected:
 	void moveMe(const sf::Vector2f& pos) override;
 	void setMyPosition(const sf::Vector2f& position) override;
 
+	sf::FloatRect scaleBoundingBoxFromCenter(float factorX, float factorY) const;
+	sf::FloatRect scaleBoundingBoxFromCenter(float factor) const;
+
 	Animator m_animator;
 };

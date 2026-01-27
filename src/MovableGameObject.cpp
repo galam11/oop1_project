@@ -16,8 +16,7 @@ enum
 };
 
 MovableGameObject::MovableGameObject(ID type, const sf::Vector2f& position)
-	: SpiritGameObject(type, position), m_startPosition(position) {
-}
+	: SpiritGameObject(type, position), m_startPosition(position) { }
 
 void MovableGameObject::update(const sf::Time& dt)
 {
@@ -79,7 +78,7 @@ void MovableGameObject::reset()
 
 sf::FloatRect MovableGameObject::getGlobalBounds() const
 {
-	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 0.6f, 1.f);
+	return scaleBoundingBoxFromCenter(0.6f, 1.f);
 }
 
 void MovableGameObject::handleColliton(Floor& other) { handleSolidCollision(other); }

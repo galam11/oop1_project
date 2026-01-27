@@ -14,5 +14,5 @@ void Ladder::handleColliton(GameObject& other)
 
 sf::FloatRect Ladder::getGlobalBounds() const
 {
-	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 0.7f, 1.f);
+	return scaleBoundingBoxFromCenter(0.7f , 1.f);
 }

@@ -36,7 +36,7 @@ const sf::Vector2f LEFT = { -1.f, 0.f };
 const sf::Vector2f RIGHT = { 1.f, 0.f };
 const sf::Vector2f VEC2_ZERO = { 0.f, 0.f };
 
-const float GRAVITY = 900.f;
+const float GRAVITY = 700.f;
 
 const int GO_TEXTURE_DIMANTION = 128;
 
@@ -52,6 +52,3 @@ const std::string SCORE_SHOWCASE_TEXT = "Final Score: ";
 const int TITLE_FONT_SIZE = 150;
 const int LARG_FONT_SIZE = 100;
 const int FORNT_SIZE = 50;
-
-sf::FloatRect scaleRectFromCenter(const sf::FloatRect& rect, float factorX, float factorY);
-sf::FloatRect scaleRectFromCenter(const sf::FloatRect& rect, float factor);

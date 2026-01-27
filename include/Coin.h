@@ -14,11 +14,8 @@ public:
 	~Coin();
 	
 	void handleColliton(GameObject& other) override;
-
-	void handleColliton(Player& other);
-
+	void handleColliton(Player& other) override;
 	void update(const sf::Time& dt) override;
-
 	sf::FloatRect getGlobalBounds() const override;
 	
 private:

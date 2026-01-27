@@ -14,8 +14,6 @@ public:
 
 	sf::Vector2f updateMovingGameobject(const sf::Time& dt) override;
 
-	void setTarget(const sf::Vector2f& newTarget);
-
 	void handleColliton(GameObject& other) override;
 
 private:

@@ -11,7 +11,6 @@ public:
 
 	void run();
 private:
-	std::unique_ptr<Scene> m_nextScene = nullptr;
 	std::unique_ptr<Scene> m_currentScene;
 	sf::RenderWindow m_window;
 	sf::RectangleShape m_backround;

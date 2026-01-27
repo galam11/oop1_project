@@ -41,5 +41,5 @@ void Coin::update(const sf::Time& dt)
 
 sf::FloatRect Coin::getGlobalBounds() const
 {
-	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), .2f);
+	return scaleBoundingBoxFromCenter(.2f);
 }

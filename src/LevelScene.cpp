@@ -16,6 +16,7 @@ void LevelScene::update(const sf::Time& dt)
 {
     Scene::update(dt);
 
+
     m_hud.update();
     m_board.update(dt);
 
@@ -23,7 +24,7 @@ void LevelScene::update(const sf::Time& dt)
     {
         nextLevel();
     }
-    else if (m_board.getPlayer().gotHit() || !m_board.isInBounds(m_board.getPlayer().getPositon()))
+    else if (m_board.getPlayer().gotHit() || !m_board.isPlayerInBounds())
     {
         softResetLevel();
     }
@@ -41,6 +42,12 @@ void LevelScene::display(sf::RenderWindow& window) const
 {
     m_board.display(window);
     m_hud.dispaly(window);
+}
+
+void LevelScene::onKeyReleased(const sf::Event::KeyReleased& event)
+{
+    if (event.code == sf::Keyboard::Key::Space)
+        nextLevel();
 }
 
 void LevelScene::nextLevel()

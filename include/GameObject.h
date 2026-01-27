@@ -16,8 +16,12 @@ public:
 	virtual ~GameObject() = default;
 	virtual void draw(sf::RenderWindow& window) const;
 	virtual void update(const sf::Time& time);
+	virtual void reset();
 
 	virtual void handleColliton(GameObject& other) = 0;
+	virtual sf::FloatRect getGlobalBounds() const = 0;
+
+
 	virtual void handleColliton(Rail& other);
 	virtual void handleColliton(Player& other);
 	virtual void handleColliton(Ladder& other);
@@ -28,9 +32,6 @@ public:
 	virtual void handleColliton(RemoveMark& other);
 
 	bool collidedWith(const GameObject& other);
-
-	virtual void reset();
-	virtual sf::FloatRect getGlobalBounds() const = 0;
 
 protected:
 	virtual void moveMe(const sf::Vector2f& pos) = 0;

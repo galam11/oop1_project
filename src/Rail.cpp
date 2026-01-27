@@ -14,5 +14,5 @@ void Rail::handleColliton(GameObject& other)
 
 sf::FloatRect Rail::getGlobalBounds() const
 {
-	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 1.f, 0.2f);
+	return scaleBoundingBoxFromCenter(1.f ,.2f);
 }

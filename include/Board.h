@@ -13,20 +13,18 @@ class Board
 public:
 	Board(const std::string& filePath);
 
-	bool loadNextLevel();
-	void Reset();
-	void loadFromRawBoard();
-
 	void update(const sf::Time& dt);
 	void display(sf::RenderWindow& window) const;
 
+	bool loadNextLevel();
+	void loadFromRawBoard();
+	void Reset();
+	
 	const Player& getPlayer() const;
-	bool isInBounds(const sf::Vector2f vec) const;
-
 	sf::Time getTimeOut() const;
-
 	std::vector<sf::Vector2i> getValidNeighbors(const sf::Vector2i& node) const;
 
+	bool isPlayerInBounds() const;
 private:
 	std::ifstream m_file;
 
@@ -38,10 +36,12 @@ private:
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 	std::vector<std::string> m_rawBoard;
 
-	bool loadRawBoard();
+	void handleCollisions();
+
 	void createGameObject(ID type, const sf::Vector2f& position);
 	void initPlayer(const sf::Vector2f& position);
-	void handleCollisions();
+
+	bool loadRawBoard();
 	void calculateViewSize();
 
 	char getTile(int r, int c) const;

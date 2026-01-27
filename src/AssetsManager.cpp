@@ -5,9 +5,9 @@
 #include <map>
 #include <string>
 
-AssetsManager AssetsManager::m_instance = AssetsManager();
+AssetsManager AssetsManager::s_instance = AssetsManager();
 
-AssetsManager& AssetsManager::instance() { return m_instance; }
+AssetsManager& AssetsManager::instance() { return s_instance; }
 
 AssetsManager::AssetsManager()
 {
