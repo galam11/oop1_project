@@ -28,14 +28,32 @@ void MovableGameObject::update(const sf::Time& dt)
 void MovableGameObject::updatePositon(const sf::Time& dt)
 {
 	auto gravityVec = VEC2_ZERO;
-	if (m_moveDirctaion != VEC2_ZERO)
-		m_moveDirctaion = m_moveDirctaion.normalized();
 
-	// Fix: Restrict mid-air movement (Lode Runner mechanics)
+	// Enemy-specific movement logic
+	if (!canJumpOffClimbables() && m_onLadder && !m_onGround)
+	{
+		// If climbing, prioritize vertical movement to avoid hitting floor sides
+		if (std::abs(m_moveDirctaion.y) > 0.01f)
+		{
+			m_moveDirctaion.x = 0;
+		}
+		else
+		{
+			// Only allow horizontal transition if vertically aligned with a tile center
+			float currentY = getGlobalBounds().getCenter().y;
+			float tileCenterY = (std::floor(currentY / GO_TEXTURE_DIMANTION) + 0.5f) * GO_TEXTURE_DIMANTION;
+			if (std::abs(currentY - tileCenterY) > 2.0f)
+				m_moveDirctaion.x = 0;
+		}
+	}
+
+	// Mid-air logic
 	if (!m_onGround && !m_onLadder && !m_onRail)
 		m_moveDirctaion.x = 0;
 
-	// Apply gravity only if not supported by a ladder or rail
+	if (m_moveDirctaion != VEC2_ZERO)
+		m_moveDirctaion = m_moveDirctaion.normalized();
+
 	if (!m_onLadder && !m_onRail)
 		gravityVec = DOWN * (m_onGround ? 50.f : GRAVITY);
 
@@ -56,7 +74,6 @@ void MovableGameObject::reset() { setMyPosition(m_startPosition); }
 
 sf::FloatRect MovableGameObject::getGlobalBounds() const
 {
-	// Narrowed collision box allows character to fit through 1-tile gaps even if slightly off-center
 	return scaleRectFromCenter(SpiritGameObject::getGlobalBounds(), 0.6f, 1.f);
 }
 
@@ -65,19 +82,15 @@ void MovableGameObject::handleColliton(BreakableFloor& other) { handleSolidColli
 
 void MovableGameObject::handleColliton(Ladder& other)
 {
-	// FIX: Interaction depends on simply overlapping the ladder
 	m_onLadder = true;
 
-	// Only align to the vertical center axis if there is vertical intent (climbing)
-	if (std::abs(m_moveDirctaion.y) > 0.1f)
-	{
-		auto ladderCenter = other.getGlobalBounds().getCenter();
-		float diffX = ladderCenter.x - getGlobalBounds().getCenter().x;
+	// Stricter alignment logic to keep characters centered on the ladder
+	auto ladderCenter = other.getGlobalBounds().getCenter();
+	float diffX = ladderCenter.x - getGlobalBounds().getCenter().x;
 
-		// Snap to ladder vertical line if within reasonable distance
-		if (std::abs(diffX) < GO_TEXTURE_DIMANTION * 0.5f) {
-			moveMe({ diffX * 0.2f, 0.f }); // Proportional centering alignment
-		}
+	if (std::abs(diffX) < GO_TEXTURE_DIMANTION * 0.5f) {
+		float alignSpeed = canJumpOffClimbables() ? 0.2f : 0.5f;
+		moveMe({ diffX * alignSpeed, 0.f });
 	}
 }
 
@@ -103,17 +116,13 @@ void MovableGameObject::handleSolidCollision(const SpiritGameObject& other)
 	dir.x = (dir.x == 0) ? 0 : ((dir.x > 0) ? -1 : 1);
 	dir.y = (dir.y == 0) ? 0 : ((dir.y > 0) ? -1 : 1);
 
-	// FIX: Ladder-Floor blockage at the top
-	// Allow characters to move through floor overlap if they are climbing UP a ladder
 	if (m_onLadder && m_moveDirctaion.y < 0 && bounds.size.y < 15.0f)
 		return;
 
 	if (bounds.size.x < bounds.size.y) {
-		// Horizontal pushback: ensures character fits in narrow passages correctly
 		moveMe({ bounds.size.x * dir.x, 0.f });
 	}
 	else {
-		// Vertical pushback
 		moveMe({ 0.f, bounds.size.y * dir.y });
 		if (dir.y < 0) m_onGround = true;
 	}

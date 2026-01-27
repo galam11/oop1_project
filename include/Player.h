@@ -10,6 +10,7 @@ class Player : public MovableGameObject
 public:
 	Player(const sf::Vector2f& position = { 0,0 });
 
+	void update(const sf::Time& dt) override;
 	sf::Vector2f updateMovingGameobject(const sf::Time& dt) override;
 
 	void handleColliton(GameObject& other) override;
@@ -25,6 +26,9 @@ public:
 	bool gotHit() const;
 
 	sf::Vector2f getPositon() const;
+
+protected:
+	bool canJumpOffClimbables() const override { return true; }
 
 private:
 	int m_lives = 3;

@@ -20,6 +20,7 @@ private:
 	sf::Vector2f m_offset;
 	BreakableFloor* m_hitFloor = nullptr;
 
+	void update(const sf::Time& dt);
 	void moveMe(const sf::Vector2f& pos) override;
 	void setMyPosition(const sf::Vector2f& position) override;
 };
