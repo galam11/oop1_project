@@ -14,6 +14,7 @@ private:
 	std::unique_ptr<Scene> m_nextScene = nullptr;
 	std::unique_ptr<Scene> m_currentScene;
 	sf::RenderWindow m_window;
+	sf::RectangleShape m_backround;
 
 	void handleEvent(const auto& event);
 	void handleEvent(const sf::Event::Closed& event);

@@ -2,16 +2,17 @@
 #include "AssetsManager.h"
 
 
-Scene::Scene(SoundID soundId)
-	: m_sceneSound(AssetsManager::instance().getSoundBuffer(soundId)) { }
+Scene::Scene(const std::string& boardFilePath, SoundID soundId) : 
+	m_board(boardFilePath),
+	m_sceneSound(AssetsManager::instance().getSoundBuffer(soundId)) { }
+
 Scene::~Scene() = default;
 
 void Scene::update(const sf::Time& dt)
 {
 	if (m_sceneSound.getStatus() == sf::SoundSource::Status::Stopped)
-	{
 		AssetsManager::instance().setMusicVolume(100.f);
-	}
+	
 }
 
 void Scene::onKeyPressed(const sf::Event::KeyPressed& event)

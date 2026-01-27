@@ -2,9 +2,8 @@
 #include "Coin.h"
 #include "AssetsManager.h"
 #include "EndScreenScene.h"
-
-LevelScene::LevelScene() : 
-    Scene(SoundID::VICTORY),
+#include "macros.h"
+LevelScene::LevelScene() : Scene(BORAD_FILE_PATH),
     m_hud(m_board.getPlayer(), m_timer, m_board)
 {
     AssetsManager::instance().setMusicVolume(100.f);

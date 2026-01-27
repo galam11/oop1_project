@@ -4,23 +4,19 @@
 #include "AssetsManager.h"
 #include "macros.h"
 
-EndScreenScene::EndScreenScene(bool victory, int score) : Scene(victory ? SoundID::VICTORY : SoundID::FAILURE),
-    m_statusText(AssetsManager::instance().getFont()),
-    m_scoreText(AssetsManager::instance().getFont())
+EndScreenScene::EndScreenScene(bool victory, int score) : Scene(MENUE_BORAD_FILE_PATH, victory ? SoundID::VICTORY : SoundID::FAILURE),
+    m_statusText(AssetsManager::instance().getFont(), victory ? WIN_TEXT : LOOS_TEXT, LARG_FONT_SIZE),
+    m_scoreText(AssetsManager::instance().getFont(), SCORE_SHOWCASE_TEXT + std::to_string(score), FORNT_SIZE)
 {
     m_board.loadNextLevel();
     m_sceneSound.play();
 
     AssetsManager::instance().setMusicVolume(20.f);
 
-    m_statusText.setString(victory ? "VICTORY!" : "GAME OVER");
-    m_statusText.setCharacterSize(100);
     m_statusText.setFillColor(victory ? sf::Color::Green : sf::Color::Red);
     auto statusBounds = m_statusText.getGlobalBounds();
     m_statusText.setPosition({ WINDOW_SIZE.x / 2.f - statusBounds.size.x / 2.f, 100.f });
 
-    m_scoreText.setString("Final Score: " + std::to_string(score));
-    m_scoreText.setCharacterSize(50);
     m_scoreText.setFillColor(sf::Color::White);
     auto scoreBounds = m_scoreText.getGlobalBounds();
     m_scoreText.setPosition({ WINDOW_SIZE.x / 2.f - scoreBounds.size.x / 2.f, 250.f });
@@ -48,12 +44,6 @@ void EndScreenScene::updateSelection()
     }
 }
 
-void EndScreenScene::update(const sf::Time& dt)
-{
-    Scene::update(dt);
-    m_board.update(dt);
-}
-
 void EndScreenScene::onKeyPressed(const sf::Event::KeyPressed& event)
 {
     if (event.code == sf::Keyboard::Key::Up)
@@ -77,7 +67,7 @@ void EndScreenScene::onKeyPressed(const sf::Event::KeyPressed& event)
             m_nextSeane = std::make_unique<MainMenuScene>();
             break;
         case Exit:
-            exit(0);
+            exit(EXIT_SUCCESS);
             break;
         }
     }

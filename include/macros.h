@@ -1,5 +1,7 @@
 #pragma once
+#include <string>
 #include <SFML/Graphics.hpp>
+
 enum ID
 {
 	PLAYER = '@',
@@ -12,7 +14,8 @@ enum ID
 	BREAKABLE_FLOOR = '^',
 	LADDER = 'H',
 	RAIL = '-',
-	EMPTY = ' '
+	EMPTY = ' ',
+	BACKROUND
 };
 
 enum SoundID
@@ -37,4 +40,15 @@ const float GRAVITY = 900.f;
 
 const int GO_TEXTURE_DIMANTION = 128;
 
-#define Debug(x) " | "<< #x << ": "<< (x)
+const std::string BORAD_FILE_PATH = "Board.txt";
+const std::string MENUE_BORAD_FILE_PATH = "MenueBoard.txt";
+
+const std::string TITLE_TEXT = "LODE RUNNER";
+const std::string RULES_TEXT = "Rules:\n- Collect all coins \n- Avoid enemies \n- Go up and down on ladders\n- Go left or right on rails\n\nPress Enter to return";
+const std::string WIN_TEXT = "VICTORY!";
+const std::string LOOS_TEXT = "GAME OVER";
+const std::string SCORE_SHOWCASE_TEXT = "Final Score: ";
+
+const int TITLE_FONT_SIZE = 150;
+const int LARG_FONT_SIZE = 100;
+const int FORNT_SIZE = 50;

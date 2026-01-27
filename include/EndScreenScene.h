@@ -11,7 +11,6 @@ public:
     EndScreenScene(bool victory, int score);
     virtual ~EndScreenScene() = default;
 
-    void update(const sf::Time& dt) override;
     void display(sf::RenderWindow& window) const override;
 
     void onKeyPressed(const sf::Event::KeyPressed& event) override;

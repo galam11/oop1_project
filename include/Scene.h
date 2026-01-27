@@ -10,7 +10,7 @@ class Scene
 {
 public:
 
-	Scene(SoundID soundId);
+	Scene(const std::string& boardFilePath = BORAD_FILE_PATH, SoundID soundId = SoundID::VICTORY);
 	virtual ~Scene();
 
 	virtual void update(const sf::Time& dt);
@@ -18,7 +18,6 @@ public:
 
 	virtual void onKeyPressed(const sf::Event::KeyPressed& event);
 	virtual void onKeyReleased(const sf::Event::KeyReleased& event);
-
 
 	bool isSceneFinished() const;
 	std::unique_ptr<Scene>& getNextSeane();

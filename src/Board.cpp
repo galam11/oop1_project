@@ -13,12 +13,12 @@
 #include "Floor.h"
 #include "RemoveMark.h"
 
-Board::Board()
+Board::Board(const std::string& filePath)
 {
-	m_file.open("Board.txt");
+	m_file.open(filePath);
 	if (!m_file.is_open())
 	{
-		std::cerr << "Failed to open Board.txt" << std::endl;
+		std::cerr << ("Failed to open " + filePath) << std::endl;
 		exit(EXIT_FAILURE);
 	}
 }
@@ -33,11 +33,11 @@ void Board::update(const sf::Time& dt)
 	handleCollisions();
 
 	std::erase_if(m_gameObjects, [](const std::unique_ptr<GameObject>& item)
-		{
-			if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
-				return ptr->isToBeRemoved();
-			return false;
-		});
+	{
+		if (auto ptr = dynamic_cast<RemovableGameObject*>(item.get()))
+			return ptr->isToBeRemoved();
+		return false;
+	});
 }
 
 void Board::display(sf::RenderWindow& window) const

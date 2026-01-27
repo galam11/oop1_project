@@ -25,6 +25,9 @@ AssetsManager::AssetsManager()
 	m_textures[LADDER] = loadTexture("ladder.png");
 	m_textures[RAIL] = loadTexture("rail.png");
 
+	m_textures[BACKROUND] = loadTexture("Bacround.png");
+	m_textures[BACKROUND].setRepeated(true);
+
 	if (!m_font.openFromFile("jersey10-Regular.ttf"))
 		std::cout << "Error loading font" << std::endl;
 

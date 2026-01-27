@@ -11,7 +11,7 @@
 class Board
 {
 public:
-	Board();
+	Board(const std::string& filePath);
 
 	bool loadNextLevel();
 	void Reset();
@@ -34,7 +34,7 @@ private:
 
 	std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 	std::vector<std::string> m_rawBoard;
-	
+
 	bool loadRawBoard();
 	void createGameObject(ID type, const sf::Vector2f& position);
 	void initPlayer(const sf::Vector2f& position);
